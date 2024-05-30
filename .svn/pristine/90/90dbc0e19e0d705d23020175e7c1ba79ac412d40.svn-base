@@ -1,0 +1,95 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+        <!-- Default box -->
+<h3 class="box-title text-blue">Add Strength:</h3>
+
+@if(!empty($errors->all()) or !empty(Session::get('error')))
+    <div class="alert alert-danger" role="alert">
+        {{Session::get('error')}}
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(!empty(Session::get('success')))
+    <div class="alert alert-success" role="alter">
+        {{Session::get('success')}}
+    </div>
+@endif
+
+{!! Form::open(array('url' => 'strength/set_strength', 'class'=>'form-horizontal')) !!}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Strength Detail</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="form-group">
+            {!! Form::label('strength_name', 'Strength Name:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-4">
+                {!! Form::text('strength_name', null, ['class' => 'form-control', 'placeholder' => 'Enter Strength Name']) !!}
+            </div><!-- /.col-sm-7 -->
+
+            {!! Form::label('app_direct', 'App Direct:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-4">
+                {!! Form::text('app_direct', null, ['class' => 'form-control', 'placeholder' => 'Enter App Direct']) !!}
+            </div><!-- /.col-sm-7 -->
+        </div><!-- /.form-group -->
+
+        <div class="form-group">
+            {!! Form::label('work_direct', 'Work Direct:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-4">
+                {!! Form::text('work_direct', null, ['class' => 'form-control', 'placeholder' => 'Enter Work Direct']) !!}
+            </div><!-- /.col-sm-7 -->
+
+            {!! Form::label('work_deputation', 'Work Deputation:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-4">
+                {!! Form::text('work_deputation', null, ['class' => 'form-control', 'placeholder' => 'Enter Work Deputation']) !!}
+            </div><!-- /.col-sm-7 -->
+        </div><!-- /.form-group -->
+
+        <div class="form-group">
+            {!! Form::label('work_promotion_acting', 'Work Promotion Acting:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-4">
+                {!! Form::text('work_promotion_acting', null, ['class' => 'form-control', 'placeholder' => 'Enter Work Promotion Acting']) !!}
+            </div><!-- /.col-sm-7 -->
+
+            {!! Form::label('work_regular_adj', 'Work Regular Adjusted:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-4">
+                {!! Form::text('work_regular_adj', null, ['class' => 'form-control', 'placeholder' => 'Enter Work Regular Adjusted']) !!}
+            </div><!-- /.col-sm-7 -->
+        </div><!-- /.form-group -->
+
+        <div class="form-group">
+            {!! Form::label('comments', 'Comments:', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-8">
+                {!! Form::textarea('comments', null, ['class' => 'form-control']) !!}
+            </div><!-- /.col-sm-7 -->
+        </div><!-- /.form-group -->
+
+    </div><!-- /.box-body -->
+
+    <div class="box-footer">
+        <div class="col-md-3 col-md-offset-6 text-right">
+            <input class="btn btn-primary" type="submit" name="save" value="Add Strength" />
+        </div><!-- /.col-md-3 -->
+    </div><!-- /.box-footer -->
+
+</div><!-- /.box-primary -->
+
+
+{!! Form::close() !!}
+
+
+@endsection
+@stop

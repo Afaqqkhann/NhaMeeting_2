@@ -1,0 +1,155 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Trainings</h1>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+
+        <!-- Main content -->
+        <section class="content">
+		  
+		 <!-- Charts row -->
+		 <div class="row">
+			<div class="col-lg-12">
+			  
+			  <div class="box box-success">
+                <div class="box-header">
+                  <i class="fa fa-bar-chart-o"></i>
+                  <h3 class="box-title">Training Chart</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+				  <div class="row col-xs-12">
+					  <div class="chart" id="training_chart" style="margin:0 auto; height: 430px;"></div>
+				  </div><!-- /.row -->
+			     </div><!-- /.box-body -->
+                <div class="box-footer text-center">
+                  <form class="form-horizontal">
+                    <div class="form-group">
+                      <div class="col-md-6 col-md-offset-2">
+                        <label class="control-label col-md-6">Training Title:</label>
+                        <div class="col-md-6">
+                          <select class="form-control">
+                            <option value="">Select Title</option>
+                            <option value="0">Computer</option>
+                            <option value="1">Engineer</option>
+                            <option value="2">Exploration</option>
+                            <option value="3">File Tracking</option>
+                            <option value="4">Firt Aid</option>
+                          </select>
+                        </div>
+                      </div><!-- /.col-md-4 -->
+                    </div><!-- /.form-group -->
+
+                    <div class="form-group">
+                      <div class="col-md-6 col-md-offset-2">
+                        <label class="control-label col-md-6">Start Date:</label>
+                        <div class="col-md-6">
+                          <input type="text" name="sdate" class="date_field form-control" placeholder="Select Start Date" />
+                        </div><!-- /.col-md-6 -->
+                      </div><!-- /.col-md-4 -->
+                    </div><!-- /.form-group -->
+
+                    <div class="form-group">
+                      <div class="col-md-6 col-md-offset-2">
+                        <label class="control-label col-md-6">End Date:</label>
+                        <div class="col-md-6">
+                          <input type="text" name="sdate" class="date_field form-control" placeholder="Select End Date" />
+                        </div><!-- /.col-md-6 -->
+                      </div><!-- /.col-md-4 -->
+                    </div><!-- /.form-group -->
+
+                    <div class="form-group">
+                      <div class="col-md-6 col-md-offset-2 text-right">
+                        <input type="submit" name="submit_training_chart" value=" Search " class="btn btn-primary" />
+                      </div><!-- /.col-md-4 -->
+                    </div><!-- /.form-group -->
+
+                  </form>
+                </div><!-- /.box-footer -->
+			   </div><!-- /.box -->
+			   
+			</div><!-- /.col-lg-12 -->
+
+		 </div><!-- /.row -->
+
+        </section><!-- /.content -->
+
+
+        <script src="public/js/highcharts/highcharts.js"></script>
+        <script src="public/js/highcharts/exporting.js"></script>
+
+
+        <!-- script -->
+        <script>
+          $(function () {
+            $('#training_chart').highcharts({
+              chart: {
+                type: 'column',
+                panning: true,
+                panKey: 'shift'
+              },
+              title: {
+                text: 'Trainings'
+              },
+              xAxis: {
+                type: 'category',
+
+              },
+              yAxis: {
+                min: 0,
+                title: {
+                  text: 'Participants'
+                }
+              },
+              legend: {
+                enabled: false
+              },
+              tooltip: {
+                pointFormat: 'Participants: <b>{point.y:.1f} </b>'
+              },
+              plotOptions: {
+                column: {
+                  stacking: 'normal',
+                  dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                      textShadow: '0 0 3px black'
+                    }
+                  }
+                }
+              },
+              series: [{
+                name: 'Participants',
+                data: [
+                  ['Computer 21/10/2014', 237],
+                  ['Engineer 14/11/2014', 161],
+                  ['Exploration 29/04/2014', 142],
+                  ['File Tracking 25/10/2014', 140],
+                  ['First Aid 13/09/2014', 125],
+                  ['Computer 15/04/2015', 121],
+                  ['Engineer 10/01/2015', 118]
+                ],
+                dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  format: '{point.y}', // one decimal
+                  y: 10, // 10 pixels down from the top
+                  style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                  }
+                }
+              }]
+            });
+          });
+        </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

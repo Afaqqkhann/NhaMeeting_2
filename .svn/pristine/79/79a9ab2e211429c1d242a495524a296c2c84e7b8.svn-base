@@ -1,0 +1,140 @@
+@extends("base")
+
+@section('sidebar')
+    @parent
+
+@endsection
+
+@section('content')
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Trainings</h3>
+
+            <div class="box-tools">
+
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+            <table class="table" id="training_table" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Expenditure</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Total Days</th>
+                    <th>Year</th>
+                    <th>Reference No</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <thead class="multi_search">
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Expenditure</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Total Days</th>
+                    <th>Year</th>
+                    <th>Reference No</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+            </table>
+        </div><!-- /.box-body -->
+
+    </div><!-- /.box -->
+
+    {!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
+
+    <style>
+        div.dataTables_wrapper {
+            width: 100% !important;
+            margin: 0 auto;
+        }
+    </style>
+
+@section('js')
+
+    $('#training_table thead th').each( function () {
+    var title = $(this).text();
+
+    if(title == 'ID')
+    $(this).html( '<div style="width:60px">'+title+'</div>' );
+    else
+    $(this).html( '<div style="width:155px">'+title+'</div>' );
+    } );
+
+    // Setup - add a text input to each header cell
+    $('#training_table thead.multi_search th').each( function () {
+    var title = $(this).text();
+    var css;
+
+    if(title == 'ID') css = 'style="width:60px;"';
+    if(title == 'Action') return;
+    $(this).html( '<input type="text" placeholder="Search '+title+'" '+css+'/>' );
+    } );
+
+    var table = $('#training_table').DataTable({
+    processing: true,
+    serverSide: true,
+    scrollX: true,
+    scrollXInner: '100%',
+    scrollCollapse: true,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    // to export data
+    dom: 'lrtipB',
+    buttons: [
+
+    'copy', 'csv', 'excel', 'pdf', 'print'
+
+    ],
+    ajax: '{{ url("trainings/training_list_data") }}',
+    columns: [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {orderable: false, searchable: false},
+    {orderable: false, searchable: false}
+    ]
+    });
+
+    /* Apply the search for individual columns*/
+    table.columns().every( function () {
+
+    var that = this;
+
+    $( 'input', this.footer() ).on( 'keydown', function (ev) {
+
+    if (ev.keyCode == 13) { //only on enter keypress (code 13)
+
+    that
+    .column( $(this).parent().index()+':visible')
+    .search( this.value )
+    .draw();
+    }
+    });
+    });
+
+@endsection
+
+{!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js") !!}
+{!! Html::script("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js") !!}
+
+@stop

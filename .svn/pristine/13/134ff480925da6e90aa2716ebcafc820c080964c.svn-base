@@ -1,0 +1,599 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+		  <!-- Default box -->
+          <h3 class="box-title text-blue">Add Employee:</h3>
+
+			<?php if(!empty($errors->all()) or !empty(Session::get('error'))): ?>
+				<div class="alert alert-danger" role="alert">
+					<?php echo e(Session::get('error')); ?>
+
+					<ul>
+						<?php foreach($errors->all() as $error): ?>
+							<li><?php echo e($error); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+
+			<?php if(!empty(Session::get('success'))): ?>
+				<div class="alert alert-success" role="alter">
+					<?php echo e(Session::get('success')); ?>
+
+				</div>
+			<?php endif; ?>
+
+		  <?php echo Form::open(array('url' => 'employees/set_employee', 'class'=>'form-horizontal')); ?>
+
+		  
+		<div class="box box-primary">
+		   <div class="box-header with-border">
+			<h3 class="box-title">Employee Detail</h3>
+		   </div><!-- /.box-header -->
+            <div class="box-body">
+				<div class="form-group">
+					<?php echo Form::label('emp_name', 'Employee Name:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::text('emp_name', null, ['class' => 'form-control', 'placeholder' => 'Enter Employee Name']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				
+					<?php echo Form::label('f_h_name', 'Father\'s Name:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::text('f_h_name', null, ['class' => 'form-control', 'placeholder' => 'Enter Father\'s Name']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				</div><!-- /.form-group -->
+				
+				<div class="form-group">
+					<?php echo Form::label('dob', 'Date of Birth:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::text('dob', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Date of Birth']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				
+					<?php echo Form::label('gender', 'Gender:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::select('gender', Helper::get_gender(), null, array('class' => 'form-control')); ?>
+
+					</div><!-- /.col-sm-7 -->
+				</div><!-- /.form-group -->
+				
+				<div class="form-group">
+					<?php echo Form::label('cnic', 'CNIC Number:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::text('cnic', null, ['class' => 'form-control', 'placeholder' => 'Enter CNIC Number', 'onkeypress' => 'return onlyCNIC($(this), event);', 'required'=>'required']); ?>
+
+					</div><!-- /.col-sm-7 -->
+
+					<?php echo Form::label('domicile', 'Domicile:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+						<?php echo Form::text('domicile', null, ['class' => 'form-control', 'placeholder'=>'Enter Domicile']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Place of Posting:</label>
+					<div class="col-sm-7">
+					<select class="form-control" name="place_of_posting">
+							<option>Select Place</option>
+							<option>Islamabad</option>
+							<option>Multan</option>
+							<option>Lahore</option>
+							<option>Karachi</option>
+							<option>Peshawar</option>
+							<option>Chitral</option>
+							<option>Quetta</option>
+						</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					  <?php echo Form::label('marital_status', 'Marital Status:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+						<?php echo Form::select('marital_status', Helper::get_marital_status(), null, ['class' => 'form-control']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					  <?php echo Form::label('religion', 'Religion:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+						<?php echo Form::select('religion', Helper::get_religion(), null, ['class' => 'form-control']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Home District:</label>
+					<div class="col-sm-7">
+					<input type="text" name="home_district" value="" placeholder="Enter Home District" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">VI Mark:</label>
+					<div class="col-sm-7">
+					<input type="text" name="vi_mark" value="" placeholder="Enter VI Mark" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					  <?php echo Form::label('languages', 'Languages:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+						<?php echo Form::text('languages', null, ['class' => 'form-control', 'placeholder'=>'Enter Languages']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					  <?php echo Form::label('highest_qualification', 'Highest Qualification:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+						<?php echo Form::select('highest_qualification', Helper::get_degree_type(), null, ['class' => 'form-control']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					  <?php echo Form::label('dual_nationality', 'Dual Nationality:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<input type="text" name="dual_nationality" value="" placeholder="Enter Dual Nationality" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+					<div class="form-group">
+					<label class="col-sm-2 control-label">Ref. File Number:</label>
+					<div class="col-sm-7">
+					<input type="text" name="ref_file_no" value="" placeholder="Enter File Number" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Designation:</label>
+					<div class="col-sm-7">
+					<input type="text" name="designation" value="" placeholder="Enter Designation" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">BS:</label>
+					<div class="col-sm-7">
+						<?php echo Form::select('bs', Helper::get_grade_bs(), null, ['class' => 'form-control']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">SG:</label>
+					<div class="col-sm-7">
+						<select class="form-control" name="sg">
+							<option selected>Select SG</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+						</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Service Type:</label>
+					<div class="col-sm-7">
+						<?php echo Form::select('service_type', Helper::get_strength(), null, ['class' => 'form-control']); ?>
+
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">CADRE:</label>
+					<div class="col-sm-7">
+						<input type="text" name="cadre" value="" placeholder="Enter CADRE" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Seniority Position:</label>
+					<div class="col-sm-7">
+						<input type="text" name="seniority_position" value="" placeholder="Enter Seniority Position" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Section:</label>
+					<div class="col-sm-7">
+						<input type="text" name="section" value="" placeholder="Enter Section" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Wing:</label>
+					<div class="col-sm-7">
+						<input type="text" name="wing" class="form-control" value="" placeholder="Enter WING" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Region:</label>
+
+					<div class="col-sm-7">
+						<input type="text" name="region" value="" placeholder="Enter Region" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Current Status:</label>
+					<div class="col-sm-7">
+						<input type="text" name="current_status" value="" placeholder="Enter Current Status" class="form-control">
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Salary Account:</label>
+					<div class="col-sm-7">
+						<input type="text" name="salary_account" value="" placeholder="Enter Salary Account" class="form-control">
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">App Against Project:</label>
+					<div class="col-sm-7">
+						<input type="text" name="app_against_project" value="" placeholder="Enter Project" class="form-control">
+					</div><!-- /.col-sm-10 -->
+                    </div>				
+					
+				  <div class="form-group">
+					<?php echo Form::label('off_phone_no', 'Office Phone No:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('off_phone_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Phone Number']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('off_ext_no', 'Office Ext. No:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('off_ext_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Ext. No']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('fax_no', 'Fax Number:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('fax_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Fax Number']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('res_phone_no', 'Resident Phone No:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('res_phone_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Resident Phone No']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('mobile_no', 'Mobile No:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('mobile_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Mobile Number']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('emrgcy_contact_name', 'Emergency Contact Name:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('emrgcy_contact_name', null, ['class' => 'form-control', 'placeholder' => 'Enter Contact Name']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('emrgcy_contact_phoneno', 'Emergency Contact No:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('emrgcy_contact_phoneno', null, ['class' => 'form-control', 'placeholder' => 'Enter Contact No']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('emrgcy_contact_address', 'Emergency Contact Address:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('emrgcy_contact_address', null, ['class' => 'form-control', 'placeholder' => 'Enter Contact Address']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('date_of_joining', 'Date of Joining:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('date_of_joining', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Date of Joining']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('recruitment_quota', 'Recruitment Quota :', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('recruitment_quota', null, ['class' => 'form-control', 'placeholder' => 'Enter Recruitment Quota']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('quota_adv_date', 'Quota Adv. Date:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('quota_adv_date', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Quota Adv. Date']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('date_of_expiry', 'Date of Expiry:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('date_of_expiry', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Date of Expiry']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('date_of_25yr_service', 'Date of 25Y Service:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('date_of_25yr_service', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Service Date']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('date_of_superannuation', 'Date of Superannuation:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('date_of_superannuation', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Superannuation Date']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('probation', 'Probation:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('probation', null, ['class' => 'form-control', 'placeholder' => 'Enter Probation']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('mailing_address', 'Mailing Address:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('mailing_address', null, ['class' => 'form-control', 'placeholder' => 'Enter Mailing Address']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('permenent_address', 'Permanent Address:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('permenent_address', null, ['class' => 'form-control', 'placeholder' => 'Enter Permanent Address']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('e_pic', 'Employee Picture:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::file('e_pic', null, ['class' => 'form-control', 'placeholder' => 'Browse Picture']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('working_as_desig', 'Working As Designation:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('working_as_desig', null, ['class' => 'form-control', 'placeholder' => 'Enter Designation']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('working_as_bs', 'Working As BS:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+						<?php echo Form::select('working_as_bs', Helper::get_grade_bs(), null, ['class' => 'form-control']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('blood_group', 'Blood Group:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('blood_group', null, ['class' => 'form-control', 'placeholder' => 'Enter Blood Group']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('ttl_leave_bal', 'TTL Leave Balance:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('ttl_leave_bal', null, ['class' => 'form-control', 'placeholder' => 'Enter Leave Balance']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('move_over', 'Move Over:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('move_over', null, ['class' => 'form-control', 'placeholder' => 'Enter Move Over']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('verified_on', 'Verified On:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('verified_on', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Verified Date']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('pers_no', 'PERS No:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('pers_no', null, ['class' => 'form-control', 'placeholder' => 'Enter PERS Number']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('regularization_from', 'Regularization From:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('regularization_from', null, ['class' => 'form-control', 'placeholder' => 'Enter Regularization From']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('regularization_date', 'Regularization Date:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('regularization_date', null, ['class' => 'form-control date_field', 'placeholder' => 'Pick Regularization Date']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('regularization_recomend', 'Regularization Recommend:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('regularization_recomend', null, ['class' => 'form-control', 'placeholder' => 'Enter Regularization Recommend']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  <div class="form-group">
+					<?php echo Form::label('nature_of_appointment', 'Nature of Appointment:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('nature_of_appointment', null, ['class' => 'form-control', 'placeholder' => 'Enter Nature of Appointment']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				  
+				  <div class="form-group">
+					<?php echo Form::label('adjusted_against', 'Adjusted Against:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::text('adjusted_against', null, ['class' => 'form-control', 'placeholder' => 'Enter Adjusted Against']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				        
+				  <div class="form-group">
+					<?php echo Form::label('e_doc', 'Employee Document:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-7">
+					<?php echo Form::file('e_doc', null, ['class' => 'form-control', 'placeholder' => 'Enter Employee Document']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				  </div><!-- /.form-group -->
+				    
+				  
+		  </div><!-- /.box-body -->
+
+		  <div class="box-footer">
+			<div class="col-md-3 col-md-offset-6 text-right">
+				<input class="btn btn-primary" type="submit" name="save" value="Add Employee" />
+			</div><!-- /.col-md-3 -->
+		  </div><!-- /.box-footer -->
+		  
+		</div><!-- /.box-primary -->
+		
+			
+		<?php echo Form::close(); ?>
+
+
+	<?php $__env->startSection('js'); ?>
+
+		//// function to validate cnic
+		function onlyCNIC(obj, evt) {
+
+		obj.on('paste', function(e){
+		/// v variable have paste value
+		//var v = e.originalEvent.clipboardData.getData('Text');
+		return false;
+		obj.val('');
+		});
+
+		var charCode = (evt.which) ? evt.which : event.keyCode;
+
+		if(obj.val().length < 15)
+		{
+		if(onlyDigits(charCode))
+		{
+		if(obj.val().length == 5 || obj.val().length == 13)
+		obj.val(obj.val()+'-');
+		}
+		else
+		return false;
+		}
+		else
+		return false;
+		}
+
+
+		//// only digits function
+		function onlyDigits(charCode)
+		{
+
+		if(charCode > 31 && (charCode < 48 || charCode > 57)) {
+		return false;
+		}
+		else
+		{
+		return true;
+		}
+		}
+	<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

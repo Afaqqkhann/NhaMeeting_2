@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class BookIssue extends Model
+{
+    //
+    protected $table = 'TBL_BOOK_ISSUE';
+    protected $primaryKey = 'BI_ID';
+
+    public $timestamps = false;
+
+    public function book() {
+        return $this->belongsTo('App\Models\Books', 'book_id');
+    }
+
+    public function employee() {
+        return $this->belongsTo('App\Models\Employees\Employees', 'emp_id');
+    }
+}

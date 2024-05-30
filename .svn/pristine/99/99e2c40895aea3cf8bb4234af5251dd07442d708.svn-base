@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CommunityMsg extends Model
+{
+    //
+    protected $table = 'TBL_COMMUNITY_MSG';
+    protected $primaryKey = 'COMMUNITY_ID';
+
+    public function employees(){
+        return $this->belongsTo(\App\Models\Employees::class);
+    }
+
+    public function message_type() {
+        return $this->belongsTo(\App\Models\MessageType::class);
+    }
+
+    public function relation() {
+        return $this->belongsTo(\App\Models\Relation::class);
+    }
+
+    public function message_pictures() {
+        return $this->hasMany('App\Models\CommunityPicture', 'COMMUNITY_ID');
+    }
+}

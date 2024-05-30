@@ -1,0 +1,47 @@
+<?php $__env->startSection('content'); ?>
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header" data-original-title>
+            <h2><i class="icon-user-md"></i><span class="break"></span>Role Update Form</h2>
+        </div>
+        <div class="box-content">
+            <?php if($errors->first()): ?>
+                <div class="alert alert-danger">
+                    <?php echo e($errors->first()); ?>
+
+                </div>
+            <?php endif; ?>
+                <?php echo Form::model($role, array('method' => 'PUT', 'route' => array('role.update', $role->id))); ?>
+
+                <fieldset>
+                  <div class="control-group">
+                    <label class="control-label">Role Name</label>
+                    <div class="controls">
+                      <?php echo Form::text('role_name', $role->display_name, array('class' => 'input-xlarge', 'placeholder' => 'Type Role Name')); ?>
+
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Role Short Name</label>
+                    <div class="controls">
+                       <?php echo Form::text('role_short_name', $role->name, array('class' => 'input-xlarge', 'placeholder' => 'Role Short Name')); ?>
+
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                        <a href="<?php echo e(URL::to('role')); ?>" class="btn">Back</a>
+                    </div>
+                  </div>
+                </fieldset>
+                 <?php echo Form::close(); ?>
+
+
+        </div>
+    </div><!--/span-->
+</div><!--/row-->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

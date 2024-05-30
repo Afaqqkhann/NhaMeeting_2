@@ -1,0 +1,71 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+    <h1>Roles</h1>
+@endsection
+
+@section('content')
+
+    @if(!empty(Session::get('success')))
+        <div class="alert alert-success" role="alter">
+            {{Session::get('success')}}
+        </div>
+    @endif
+
+<div class="box  box-primary">
+    <div class="box-header">
+      <h3 class="box-title">Roles</h3>
+      <a href="{{ URL::to('role/create') }}" class="btn btn-primary btn-sm btn-success pull-right">Add New Role</a>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+          <table class="table table-bordered table-striped theDataTable" id="project_record_table">
+            <thead  class="bg-gray">
+              <tr>
+                <th>#</th>
+                <th>Role Name</th>
+                <th>Role Display Name</th>
+                <th class="col-xs-6">Permissions</th>
+                <th class="col-xs-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                @foreach($roles as $key => $role)
+                <tr>
+                  <td>{{ $key + 1 }}</td>
+                  <td>{{$role->name or '' }}</td>
+                  <td>{{$role->display_name or '' }}</td>
+                  <td>@foreach($role->permissions as $permission) <div class="badge"> {{ $permission->display_name  }} </div> @endforeach</td>
+                  <td>
+                    <a class="btn btn-xs pull-left" href="{{ URL::to('role/') . '/' . $role->id }}" title="Show">
+                      <i class="fa fa-eye"></i>
+                    </a>
+                    <a class="btn btn-xs pull-left" href="{{ URL::to('role/') . '/' . $role->id . '/edit' }}"  title="Edit">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+					@if ( $role->id <> 21)
+                      {!! Form::open(['url'=>'/role/'.$role->id, 'class'=>'pull-left', 'id'=>'delete_form']) !!}
+                      {!! Form::hidden('_method', 'DELETE') !!}
+                      <button class="btn btn-xs">
+                          <i class="fa fa-times text-danger"></i>
+                      </button>
+                      {!! Form::close() !!}
+					@endif
+                  </td>
+                </tr>
+                @endforeach
+
+            </tbody>
+           </table>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<script>
+	$("#delete_form").submit(function(e) {
+		e.preventDefault();
+		return confirm('Are you sure to delete?');
+	});
+</script>
+
+@stop

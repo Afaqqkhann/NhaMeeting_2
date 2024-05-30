@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class MessageType extends Model
+{
+    //
+    protected $table = 'TBL_MESSAGE_TYPE';
+    protected $primaryKey = 'MSG_TYPE_ID';
+
+}

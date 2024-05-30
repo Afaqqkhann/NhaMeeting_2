@@ -1,0 +1,604 @@
+@extends("base")
+
+@section('sidebar')
+	@parent
+
+@endsection
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employee Profile</h3>
+
+			<div class="box-tools">
+
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table" id="employee_table" cellspacing="0">
+				<thead>
+				<tr>
+					<th>Picture</th>
+					<th>EMP ID</th>
+					<th>EMP NAME</th>
+					<th>F H NAME</th>
+					<th>CURRENT DESIGNATION</th>
+					<th>CURRENT BS</th>
+					<th>JOB STATUS</th>
+					<th>DOB</th>
+					<th>GENDER</th>
+					<th>CNIC</th>
+					<th>DOMICILE</th>
+					<th>HOME DISTRICT</th>
+					<th>RELIGION</th>
+					<th>MARITAL STATUS</th>
+					<th>DUAL NATIONALITY</th>
+					<th>HIGHEST QUALIFICATION</th>
+					<th>REF FILE NO</th>
+					<th>OFF PHONE NO</th>
+					<th>OFF EXT NO</th>
+					<th>RES PHONE NO</th>
+					<th>MOBILE NO</th>
+					<th>PERMENENT ADDRESS</th>
+					<th>FP ID</th>
+					<th>APPOINTMENT POST</th>
+					<th>APPOINTMENT BS</th>
+					<th>DATE OF APPOINTMENT</th>
+					<th>TYPE OF APPOINTMENT</th>
+					<th>APPOINTMENT QUOTA</th>
+					<th>SERVICE TYPE</th>
+					<th>THROUGH ADVER</th>
+					<th>TOTAL CONTRACT EXT</th>
+					<th>TOTAL EXT DURATION</th>
+					<th>WORKING POST</th>
+					<th>WORKING BS</th>
+					<th>STATION STATUS</th>
+					<th>POSTING STATUS</th>
+					<th>JOINING DATE</th>
+					<th>RELIEVING DATE</th>
+					<th>POSTING DATE</th>
+					<th>POSTING TENURE</th>
+					<th>TRANSFER DATE</th>
+					<th>TRANSFER TENURE</th>
+					<th>TOTAL POSTING</th>
+					<th>TOTAL TRANSFER</th>
+					<th>ORDER ID</th>
+					<th>REPORTING OFF ID</th>
+					<th>REPORTING OFFICER</th>
+					<th>REMARKS</th>
+					<th>CARRIER STATUS</th>
+					<th>SECTION ID</th>
+					<th>ZONE TITLE</th>
+					<th>REGION NAME</th>
+					<th>PLACE TITLE</th>
+					<th>PLACE TYPE</th>
+					<th>PACKAGE ID</th>
+					<th>PACKAGE NAME</th>
+					<th>WING NAME</th>
+					<th>SECTION NAME</th>
+					<th>WING HEAD</th>
+					<th>P CHARGE ID</th>
+					<th>CHARGE INFO</th>
+					<th>CARRIER ID</th>
+					<th>SANCTION ID</th>
+					<th>ACR TOTAL</th>
+					<th>ACR SUBMITTIED</th>
+					<th>ACR REMAINING</th>
+					<th>ASSET TOTAL</th>
+					<th>ASSET SUBMITTIED</th>
+					<th>ASSET REMAINING</th>
+					<th>TOTAL REWARD</th>
+					<th>TOTAL DEPENDENTS</th>
+					<th>TOTAL PANELTIES</th>
+					<th>TOTAL TRAINING</th>
+				</tr>
+				</thead>
+
+				<thead class="multi_search">
+				<tr>
+					<th>Picture</th>
+					<th>EMP ID</th>
+					<th>EMP NAME</th>
+					<th>F H NAME</th>
+					<th>CURRENT DESIGNATION</th>
+					<th>CURRENT BS</th>
+					<th>JOB STATUS</th>
+					<th>DOB</th>
+					<th>GENDER</th>
+					<th>CNIC</th>
+					<th>DOMICILE</th>
+					<th>HOME DISTRICT</th>
+					<th>RELIGION</th>
+					<th>MARITAL STATUS</th>
+					<th>DUAL NATIONALITY</th>
+					<th>HIGHEST QUALIFICATION</th>
+					<th>REF FILE NO</th>
+					<th>OFF PHONE NO</th>
+					<th>OFF EXT NO</th>
+					<th>RES PHONE NO</th>
+					<th>MOBILE NO</th>
+					<th>PERMENENT ADDRESS</th>
+					<th>FP ID</th>
+					<th>APPOINTMENT POST</th>
+					<th>APPOINTMENT BS</th>
+					<th>DATE OF APPOINTMENT</th>
+					<th>TYPE OF APPOINTMENT</th>
+					<th>APPOINTMENT QUOTA</th>
+					<th>SERVICE TYPE</th>
+					<th>THROUGH ADVER</th>
+					<th>TOTAL CONTRACT EXT</th>
+					<th>TOTAL EXT DURATION</th>
+					<th>WORKING POST</th>
+					<th>WORKING BS</th>
+					<th>STATION STATUS</th>
+					<th>POSTING STATUS</th>
+					<th>JOINING DATE</th>
+					<th>RELIEVING DATE</th>
+					<th>POSTING DATE</th>
+					<th>POSTING TENURE</th>
+					<th>TRANSFER DATE</th>
+					<th>TRANSFER TENURE</th>
+					<th>TOTAL POSTING</th>
+					<th>TOTAL TRANSFER</th>
+					<th>ORDER ID</th>
+					<th>REPORTING OFF ID</th>
+					<th>REPORTING OFFICER</th>
+					<th>REMARKS</th>
+					<th>CARRIER STATUS</th>
+					<th>SECTION ID</th>
+					<th>ZONE TITLE</th>
+					<th>REGION NAME</th>
+					<th>PLACE TITLE</th>
+					<th>PLACE TYPE</th>
+					<th>PACKAGE ID</th>
+					<th>PACKAGE NAME</th>
+					<th>WING NAME</th>
+					<th>SECTION NAME</th>
+					<th>WING HEAD</th>
+					<th>P CHARGE ID</th>
+					<th>CHARGE INFO</th>
+					<th>CARRIER ID</th>
+					<th>SANCTION ID</th>
+					<th>ACR TOTAL</th>
+					<th>ACR SUBMITTIED</th>
+					<th>ACR REMAINING</th>
+					<th>ASSET TOTAL</th>
+					<th>ASSET SUBMITTIED</th>
+					<th>ASSET REMAINING</th>
+					<th>TOTAL REWARD</th>
+					<th>TOTAL DEPENDENTS</th>
+					<th>TOTAL PANELTIES</th>
+					<th>TOTAL TRAINING</th>
+				</tr>
+				</thead>
+
+				<tfoot>
+				<tr>
+					<th>Picture</th>
+					<th>EMP ID</th>
+					<th>EMP NAME</th>
+					<th>F H NAME</th>
+					<th>CURRENT DESIGNATION</th>
+					<th>CURRENT BS</th>
+					<th>JOB STATUS</th>
+					<th>DOB</th>
+					<th>GENDER</th>
+					<th>CNIC</th>
+					<th>DOMICILE</th>
+					<th>HOME DISTRICT</th>
+					<th>RELIGION</th>
+					<th>MARITAL STATUS</th>
+					<th>DUAL NATIONALITY</th>
+					<th>HIGHEST QUALIFICATION</th>
+					<th>REF FILE NO</th>
+					<th>OFF PHONE NO</th>
+					<th>OFF EXT NO</th>
+					<th>RES PHONE NO</th>
+					<th>MOBILE NO</th>
+					<th>PERMENENT ADDRESS</th>
+					<th>FP ID</th>
+					<th>APPOINTMENT POST</th>
+					<th>APPOINTMENT BS</th>
+					<th>DATE OF APPOINTMENT</th>
+					<th>TYPE OF APPOINTMENT</th>
+					<th>APPOINTMENT QUOTA</th>
+					<th>SERVICE TYPE</th>
+					<th>THROUGH ADVER</th>
+					<th>TOTAL CONTRACT EXT</th>
+					<th>TOTAL EXT DURATION</th>
+					<th>WORKING POST</th>
+					<th>WORKING BS</th>
+					<th>STATION STATUS</th>
+					<th>POSTING STATUS</th>
+					<th>JOINING DATE</th>
+					<th>RELIEVING DATE</th>
+					<th>POSTING DATE</th>
+					<th>POSTING TENURE</th>
+					<th>TRANSFER DATE</th>
+					<th>TRANSFER TENURE</th>
+					<th>TOTAL POSTING</th>
+					<th>TOTAL TRANSFER</th>
+					<th>ORDER ID</th>
+					<th>REPORTING OFF ID</th>
+					<th>REPORTING OFFICER</th>
+					<th>REMARKS</th>
+					<th>CARRIER STATUS</th>
+					<th>SECTION ID</th>
+					<th>ZONE TITLE</th>
+					<th>REGION NAME</th>
+					<th>PLACE TITLE</th>
+					<th>PLACE TYPE</th>
+					<th>PACKAGE ID</th>
+					<th>PACKAGE NAME</th>
+					<th>WING NAME</th>
+					<th>SECTION NAME</th>
+					<th>WING HEAD</th>
+					<th>P CHARGE ID</th>
+					<th>CHARGE INFO</th>
+					<th>CARRIER ID</th>
+					<th>SANCTION ID</th>
+					<th>ACR TOTAL</th>
+					<th>ACR SUBMITTIED</th>
+					<th>ACR REMAINING</th>
+					<th>ASSET TOTAL</th>
+					<th>ASSET SUBMITTIED</th>
+					<th>ASSET REMAINING</th>
+					<th>TOTAL REWARD</th>
+					<th>TOTAL DEPENDENTS</th>
+					<th>TOTAL PANELTIES</th>
+					<th>TOTAL TRAINING</th>
+				</tr>
+				</tfoot>
+
+				<tbody>
+					@foreach($data as $key => $row)
+					<tr>
+						<td>
+							@if(file_exists('storage/emp_pic/'.$row->fp_id.'.jpg'))
+								<img src="{{url('/storage/emp_pic').'/'.$row->fp_id}}.jpg" style="width:60px;" class="img-responsive">
+							@else
+								<img src="{{url('/storage/emp_pic')}}/default.png" style="width:60px;" class="img-responsive">
+							@endif
+						</td>
+						<td>{{$row->emp_id}}</td>
+						<td>{{$row->emp_name}}</td>
+						<td>{{$row->f_h_name}}</td>
+						<td>{{$row->current_designation}}</td>
+						<td>{{$row->current_bs}}</td>
+						<td>{{$row->job_status}}</td>
+						<td>{{$row->dob}}</td>
+						<td>{{$row->gender}}</td>
+						<td>{{$row->cnic}}</td>
+						<td>{{$row->domicle}}</td>
+						<td>{{$row->home_district}}</td>
+						<td>{{$row->religion}}</td>
+						<td>{{$row->marital_status}}</td>
+						<td>{{$row->dual_nationality}}</td>
+						<td>{{$row->highest_qualification}}</td>
+						<td>{{$row->ref_file_no}}</td>
+						<td>{{$row->off_phone_no}}</td>
+						<td>{{$row->off_ext_no}}</td>
+						<td>{{$row->res_phone_no}}</td>
+						<td>{{$row->mobile_no}}</td>
+						<td>{{$row->permenent_address}}</td>
+						<td>{{$row->fp_id}}</td>
+						<td>{{$row->appointment_post}}</td>
+						<td>{{$row->appointment_bs}}</td>
+						<td>{{$row->date_of_appointment}}</td>
+						<td>{{$row->type_of_appointment}}</td>
+						<td>{{$row->appointment_quota}}</td>
+						<td>{{$row->service_type}}</td>
+						<td>{{$row->through_adver}}</td>
+						<td>{{$row->total_contract_ext}}</td>
+						<td>{{$row->total_ext_duration}}</td>
+						<td>{{$row->working_post}}</td>
+						<td>{{$row->working_bs}}</td>
+						<td>{{$row->station_status}}</td>
+						<td>{{$row->posting_status}}</td>
+						<td>{{$row->joining_date}}</td>
+						<td>{{$row->relieving_date}}</td>
+						<td>{{$row->posting_date}}</td>
+						<td>{{$row->posting_tenure}}</td>
+						<td>{{$row->transfer_date}}</td>
+						<td>{{$row->transfer_tenure}}</td>
+						<td>{{$row->total_posting}}</td>
+						<td>{{$row->total_transfer}}</td>
+						<td>{{$row->order_id}}</td>
+						<td>{{$row->reporting_off_id}}</td>
+						<td>{{$row->reporting_officer}}</td>
+						<td>{{$row->remarks}}</td>
+						<td>{{$row->carrier_status}}</td>
+						<td>{{$row->section_id}}</td>
+						<td>{{$row->zone_title}}</td>
+						<td>{{$row->region_name}}</td>
+						<td>{{$row->place_title}}</td>
+						<td>{{$row->place_type}}</td>
+						<td>{{$row->package_id}}</td>
+						<td>{{$row->package_name}}</td>
+						<td>{{$row->wing_name}}</td>
+						<td>{{$row->section_name}}</td>
+						<td>{{$row->wing_head}}</td>
+						<td>{{$row->p_charge_id}}</td>
+						<td>{{$row->charge_info}}</td>
+						<td>{{$row->carrier_id}}</td>
+						<td>{{$row->sanction_id}}</td>
+						<td>{{$row->acr_total}}</td>
+						<td>{{$row->acr_submittied}}</td>
+						<td>{{$row->acr_remaining}}</td>
+						<td>{{$row->asset_total}}</td>
+						<td>{{$row->asset_submittied}}</td>
+						<td>{{$row->asset_remaining}}</td>
+						<td>{{$row->total_reward}}</td>
+						<td>{{$row->total_dependents}}</td>
+						<td>{{$row->total_panelties}}</td>
+						<td>{{$row->total_training}}</td>
+					</tr>
+					@endforeach
+				</tbody>
+
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+	{!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
+
+
+	<style>
+		div.dataTables_wrapper {
+			width: 100% !important;
+			margin: 0 auto;
+		}
+	</style>
+
+@section('js')
+
+	$('#employee_table thead th').each( function () {
+		var title = $(this).text();
+
+		if(title == 'ID')
+			$(this).html( '<div style="width:60px">'+title+'</div>' );
+		else
+			$(this).html( '<div style="width:155px">'+title+'</div>' );
+	} );
+
+	// Setup - add a text input to each header cell
+	$('#employee_table thead.multi_search th').each( function () {
+		var title = $(this).text();
+		var css;
+
+		if(title == 'ID') css = 'style="width:60px;"';
+		if(title == 'Action') return;
+		if(title == 'Picture') return;
+		$(this).html( '<input type="text" placeholder="Search '+title+'" '+css+'/>' );
+	} );
+
+	var table = $('#employee_table').DataTable({
+		"order": [[ 6, "desc" ]],
+		scrollX: true,
+		//scrollXInner: '100%',
+		//scrollCollapse: true,
+		lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		// to export data
+		dom: 'lBrtip',
+		buttons: [
+
+		'copy', 'csv', 'excel', 'pdf', 'print'
+
+		],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                if(column.index() == 6 || column.index() == 8 || column.index() == 10 || column.index() == 12 || column.index() == 13 || column.index() == 14 || column.index() == 28 || column.index() == 34 || column.index() == 48 || column.index() == 50 || column.index() == 51 || column.index() == 53 || column.index() == 57 )
+                {
+                    var select = $('<select><option style="width:100px !important" value=""></option></select>')
+                        .appendTo($(column.header()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            } );
+        }/*,
+		columns: [
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		null,
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null
+		]*/
+	});
+
+	/* Apply the search for individual columns*/
+	table.columns().every( function () {
+
+		var that = this;
+
+		$( 'input', this.footer() ).on( 'keydown', function (ev) {
+
+			if (ev.keyCode == 13) { //only on enter keypress (code 13)
+
+				that
+				.column( $(this).parent().index()+':visible')
+				.search( this.value )
+				.draw();
+			}
+		});
+	});
+
+@endsection
+
+{!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js") !!}
+{!! Html::script("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js") !!}
+
+@stop

@@ -1,0 +1,77 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+    <h1>Trainings HRD</h1>
+@endsection
+
+@section('content')
+     <div class="box box-primary">
+         <div class="box-header">
+            <h4>Add Trainings HRD </h4>
+
+             @if(!empty($errors->all()) or !empty(Session::get('error')))
+                 <div class="alert alert-danger" role="alert">
+                     {{Session::get('error')}}
+                     <ul>
+                         @foreach($errors->all() as $error)
+                             <li>{{ $error }}</li>
+                         @endforeach
+                     </ul>
+                 </div>
+             @endif
+
+             @if(!empty(Session::get('success')))
+                 <div class="alert alert-success" role="alter">
+                     {{Session::get('success')}}
+                 </div>
+             @endif
+
+         </div>
+         <div class="box-body">
+
+          {!! Form::open(array('url'=>'trainings_hrd/store', 'class' => 'form-horizontal', 'files'=>true))!!}
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Course Title</label>
+                <div class="col-xs-4">
+                {!! Form::text('course_title', null, array('class' => 'form-control input-sm', 'id' => 'course_title')) !!}
+                </div>
+                <label class="col-xs-2 control-label">Duration Days</label>
+                <div class="col-xs-4">
+                    {!! Form::text('duration_days', null, array('class' => 'form-control input-sm only_digits')) !!}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Start Date</label>
+                <div class="col-xs-4">
+                    {!! Form::text('start_dated', null, array('class' => 'form-control input-sm dateMask', 'placeholder' => 'dd-mm-yyyy', 'data-inputmask' => "'alias': 'dd-mm-yyyy'")) !!}
+                </div>
+                <label class="col-xs-2 control-label">Apply Date</label>
+                <div class="col-xs-4">
+                    {!! Form::text('apply_dated', null, array('class' => 'form-control input-sm dateMask', 'placeholder' => 'dd-mm-yyyy', 'data-inputmask' => "'alias': 'dd-mm-yyyy'")) !!}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Training LOC</label>
+                <div class="col-xs-4">
+                    {!! Form::text('training_loc', null, array('class' => 'form-control input-sm')) !!}
+                </div>
+                <label class="col-xs-2 control-label">E-Document</label>
+                <div class="col-xs-4">
+                    {!! Form::file('edoc', null) !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Comments</label>
+                <div class="col-xs-10">
+                    {!! Form::textarea('comments', null, array('class' => 'form-control input-sm')) !!}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary pull-right">Save</button>
+          {!! Form::close()!!}
+         </div>
+     </div>
+
+@stop

@@ -1,0 +1,379 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+    <h1>Contractor's and Consultant's Monthly Performance Report on Construction Projects</h1>
+@endsection
+
+
+
+@section('content')
+          <form role="form">
+          <!-- Default box -->
+          <h3 class="box-title text-blue">Part"A" - Contract Information:</h3>
+          <h4 >Planning</h4>
+          <div class="box box-primary">
+            <div class="box-body">
+
+
+
+
+                    <div class="form-group">
+                        <label >1 - PC-1 (Cost) Revised:</label>
+                        <input class="form-control" type="text" name="pc1_cost" >
+                    </div>
+                    <div class="form-group">
+                        <label>2 - Project Name:</label>
+                        <input class="form-control" type="text" name="project_name" >
+                    </div>
+            </div></div>
+            <h4 >Design</h4>
+            <div class="box box-primary">
+                        <div class="box-body">
+
+
+                    <div class="form-group">
+                        <label>Tender Drawing:</label>
+                        <input class="form-control" type="text" name="tender_drawing" >
+                    </div>
+                    <div class="form-group">
+                        <label>Tender Documents:</label>
+                        <input class="form-control" type="text" name="tender_documents" >
+                    </div>
+                    <div class="form-group">
+                        <label>Engineering Estimate:</label>
+                        <input class="form-control" type="text" name="engineering_estimate" >
+                    </div>
+            </div></div>
+            <h4>P & CA</h4>
+            <div class="box box-primary">
+                                    <div class="box-body">
+
+
+                     <div class="form-group">
+                        <label>3 - Name of Contractor</label>
+                        <input class="form-control" type="text" name="name_of_contractor" >
+                     </div>
+                     <div class="form-group">
+                        <label>4 - Name of Consultant</label>
+                        <input class="form-control" type="text" name="name_of_consultant" >
+                     </div>
+            </div></div>
+             <h4>Construction</h4>
+            <div class="box box-primary">
+                <div class="box-body">
+
+
+
+                    <div class="form-group">
+                        <label>5 - Date of Commencement</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        <input class="form-control date_field" type="text" name="date_of_commencement" id="date_of_commencement" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>6 - Date of Completion (Original / Revised)</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        <input class="form-control date_field" type="text" name="date_of_completion" id="date_of_completion">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label>7 - Amount of Contract (Original / Revised)</label>
+                        <input class="form-control" type="text" name="amount_of_contract" >
+                    </div>
+                  </div>
+                 </div>
+                  <h3 class="box-title  text-blue">Part"B-1" - Contractor Performance:</h3>
+                   <h4>8 - Variation Order</h4>
+                 <div class="box box-primary">
+                 <div class="box-body">
+
+
+
+                     <div class="row">
+                        <div class="col-xs-4">
+                            <label>Brief Description</label>
+                            <input class="form-control" type="text" name="variation_order" >
+                        </div>
+                        <div class="col-xs-4">
+                            <label>V.O.No</label>
+                            <input class="form-control" type="text" name="variation_order" >
+                        </div>
+                        <div class="col-xs-4">
+                            <label>Amount</label>
+                            <input class="form-control" type="text" name="variation_order" >
+                        </div>
+                     </div>
+
+                     <div class="checkbox">
+                        <label>
+                            <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                            a) Due to addtional requirements of employer
+                        </label>
+                        <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                     </div>
+                     <div class="checkbox">
+                        <label>
+                        <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                        b) Due to fault of design consultant
+                        </label>
+                        <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                     </div>
+                     <div class="checkbox">
+                        <label>
+                        <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                        c) Due to supervisory consultant
+                        </label>
+                        <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                     </div>
+                    </div></div>
+                                     <h4 >9 - Extension of Time</h4>
+                 <div class="box box-primary">
+                 <div class="box-body">
+
+                         <div class="row">
+                            <div class="col-xs-4">
+                                <label>No of Days</label>
+                                <input class="form-control" type="text" name="variation_order" >
+                            </div>
+                            <div class="col-xs-4">
+                                <label>V.O.No</label>
+                                <input class="form-control" type="text" name="variation_order" >
+                            </div>
+                            <div class="col-xs-4">
+                                <label>Amount</label>
+                                <input class="form-control" type="text" name="variation_order" >
+                            </div>
+                         </div>
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                a) Due to addtional requirements of employer
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                b) Due to fault of design consultant
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                c) Due to supervisory consultant
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="chk"  value="option1" name="optionsRadios">
+                                d) Due to land acquisition (Specify stretches in KM)
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                    </div></div>
+                 <h4>10 - Delay due to Contractor</h4>
+                 <div class="box box-primary">
+                 <div class="box-body">
+
+                            <div class="checkbox">
+                                <label>
+                                    <input  type="checkbox" class="chk"  value="option1" name="optionsRadios">
+                                    a) Due to addtional work by employer
+                                </label>
+                                <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                            </div>
+                            <div class="form-group">
+                                <label>Cash Flow</label>
+                                <select class="form-control">
+                                    <option>G</option>
+                                    <option>S</option>
+                                    <option>US</option>
+                                </select>
+                            </div>
+                        <br>
+                    </div></div>
+                    <h4 >11 - Delay due to Employer</h4>
+                 <div class="box box-primary">
+                 <div class="box-body">
+
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                a) Land Acquisition
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                c) Delay in Payment
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                         <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                c) Late Decision (Specify)
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                            </div></div>
+                        <h4 >12 - Quality of work produced by the contractor (Material & compaction)</h4>
+                         <div class="box box-primary">
+                         <div class="box-body">
+
+                        <div class="form-group">
+                            <label>a)Earth Work</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>b) Sub-Base</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>c) Asphaltic Base Course</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>d) Aggregate Base Course</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>e) Asphaltic Warning Course</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>f) Structure Work</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>g) Ancillary Work</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+
+                        </div>
+                  </div>
+                  <h3 class="box-title  text-blue">Part"B-2" - Consultant Performance:</h3>
+                                      <h4 >13 - Consultant</h4>
+                <div class="box box-primary">
+                  <div class="box-body">
+
+
+
+                        <div class="form-group">
+                            <label>a) Respose to check request</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>b) Standard of testings</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>c) Genral Specification</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>d) Decision</label>
+                            <select class="form-control">
+                                <option>G</option>
+                                <option>S</option>
+                                <option>US</option>
+                            </select>
+                        </div>
+                  </div></div>
+              <h3 class="box-title  text-blue">Part"C" - Comments</h3>
+                <div class="box box-primary">
+                  <div class="box-body">
+
+                        <label >14 - Pen Picture on Consultants Performance:</label>
+
+                    <div class="form-group">
+
+                        <select class="form-control">
+                            <option>G</option>
+                            <option>S</option>
+                            <option>US</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label >15 - Pen Picture on Contractors Performance:</label>
+                        <select class="form-control">
+                            <option>G</option>
+                            <option>S</option>
+                            <option>US</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="option1" class="chk" name="optionsRadios">
+                                16) Recommendation base upon performance of contractor & consultant
+                            </label>
+                            <input type="" value="" class="form-control dField" style="display:none"  name="reason" >
+                         </div>
+                    </div>
+                    <h4>17 - Progress</h4>
+                    <div class="form-group">
+                        <label >a) - (Overall) Achived VS Planned</label>
+                        <input class="form-control" type="text" name="pc1_cost" >
+                    </div>
+                    <div class="form-group">
+                        <label >b) - (Monthly) Achived VS Planned</label>
+                        <input class="form-control" type="text" name="project_name" >
+                    </div>
+            </div><!-- /.box-body -->
+          </div><!-- /.box -->
+
+          <button class="btn btn-primary">Save</button>&nbsp;<button class="btn btn-primary">Print</button>&nbsp;<button class="btn btn-primary">Submit</button>&nbsp;<button class="btn btn-primary">Attach Document</button>
+         </form>
+@stop

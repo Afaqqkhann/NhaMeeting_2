@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class SubCategory extends Model
+{
+    //
+    protected $table = 'TBL_SUB_CATEGORY';
+    protected $primaryKey = 'SC_ID';
+
+    public $timestamps = false;
+
+    public function category() {
+        return $this->belongsTo('App\Models\Category');
+    }
+}

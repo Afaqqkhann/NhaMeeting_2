@@ -1,0 +1,44 @@
+@extends('base')
+
+@section('content')
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header" data-original-title>
+            <h2><i class="icon-user-md"></i><span class="break"></span>Assign Permissions to <strong>{{ $userType->name  }}</strong></h2>
+        </div>
+        <div class="box-content">
+             {{ Form::open(array('url' => 'doAssign', 'role' => 'form', 'class' => 'form-horizontal')) }}
+            <table class="table table-striped">
+                  <thead>
+                    <tr>
+                        <th>Permission</th>
+                        <th>Check</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($permissions as $permission)
+                    <tr>
+                        <td><div class="label label-info">{{ $permission->permission_name }}</div></td>
+                        @if($userType->havePermission($userType->user_type_id, $permission->permission_id))
+                            <td>{{ Form::checkbox('permissions[]', $permission->permission_id, array('checked' => 'checked')) }}</td>
+                        @else
+                            <td>{{ Form::checkbox('permissions[]', $permission->permission_id) }}</td>
+                        @endif
+                    </tr>
+                    @endforeach
+                  </tbody>
+             </table>
+             <div class="form-actions">
+                 <div class="pull-right">
+                     <button type="submit" class="btn btn-primary">Assign</button>
+                     <a href="{{ URL::to('userType') }}" class="btn">Back</a>
+                 </div>
+             </div>
+             {{ Form::hidden('user_type_id', $userType->user_type_id) }}
+             {{ Form::close() }}
+        </div>
+    </div><!--/span-->
+</div><!--/row-->
+
+@stop

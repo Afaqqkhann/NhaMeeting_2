@@ -1,0 +1,256 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Recruitment Dashboard</h1>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+
+        <!-- Main content -->
+        <section class="content">
+		  
+			<div class="row">
+				<div class="col-sm-12">
+				  <div class="box box-success">
+				    <div class="box-header">
+					<label class="control-label col-md-3">Year wise Recruitment</label>
+					<div class="col-md-3">
+						<select name="years" class="form-control" id="years">
+                            <?php foreach($years as $year): ?>
+                                <?php if($year->years == 2015): ?>
+							        <option selected="selected" value="<?php echo e($year->years); ?>"><?php echo e($year->years); ?></option>
+                                <?php else: ?>
+							        <option value="<?php echo e($year->years); ?>"><?php echo e($year->years); ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+						</select>
+					</div><!-- /.col-md-6 -->
+					</div><!-- /.box-header -->
+					
+					<div class="box-body">
+						<div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+					</div><!-- /.box-body -->
+				  </div><!-- /.box -->
+				</div><!-- /.col-sm-12 -->
+			</div><!-- /.row -->
+			
+		
+			 <!-- Charts row -->
+			 <div class="row">
+				<div class="col-lg-12">
+				  
+				  <div class="box box-success">
+					<div class="box-header">
+					  <i class="fa fa-line-chart"></i>
+					  <h3 class="box-title">Advertisement Chart</h3>
+					  <div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					  </div>
+					</div><!-- /.box-header -->
+					<div class="box-body no-padding">
+					  <div class="row col-xs-12">
+						  <div class="chart" id="advertisement_chart" style="margin:0 auto; height: 300px;"></div>
+					  </div><!-- /.row -->
+					 </div><!-- /.box-body -->
+				   </div><!-- /.box -->
+				   
+				</div><!-- /.col-lg-12 -->
+
+			 </div><!-- /.row -->
+			 
+        </section><!-- /.content -->
+
+		<script src="public/js/highcharts/highcharts.js"></script>
+        <script src="public/js/highcharts/exporting.js"></script>
+
+		<?php $__env->startSection('js'); ?>
+			var yearly_chart = {
+				chart: {
+					renderTo: 'container',
+					type: 'column',
+					marginRight: 130,
+					marginBottom: 25
+				},
+				title: {
+					text: 'Recruitment of',
+					x: -20 //center
+				},
+				subtitle: {
+					text: '',
+					x: -20
+				},
+                xAxis: {
+                    categories: []
+                },
+                plotOptions: {
+                    series: {
+                        dataLabels: {
+                            enabled: true,
+                                formatter:function() {
+                                return this.point.t;
+                            }
+                        }
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Recruitment'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }],
+                    allowDecimals: false
+                },
+                tooltip: {
+                    //useHTML: true,
+                    pointFormat: 'Total Recruitment: <b>{point.y}</b>'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -10,
+                    y: 100,
+                    borderWidth: 0,
+                    enabled: false
+                },
+                dataLabels: {
+                        enabled: true,
+                        color: '#FFFFFF',
+                        align: 'center',
+                        format: '{point.y}',
+                        style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                },
+                series: [{dataLabels: {
+            enabled: true,
+            color: '#FFFFFF',
+            align: 'center',
+            format: '{point.y}',
+            style: {
+            fontSize: '13px',
+            fontFamily: 'Verdana, sans-serif'
+            }
+            }
+            }]
+            }
+
+
+		$(function () {
+
+            $("#years").change(function() {
+                var v = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "<?php echo e(URL::to('recruitment/get_yearwise_data')); ?>/"+v,
+                    dataType: "json",
+                    data: {_token: CSRF_TOKEN},
+                    success: function(data){
+                        console.log(data);
+                        yearly_chart.xAxis.categories = data[0];
+                        yearly_chart.xAxis.title = 'Total Recruitment';
+                        yearly_chart.series[0] = data[1];
+
+                        chart = new Highcharts.Chart(yearly_chart);
+                        chart.setTitle({text: 'Recruitment of '+v});
+                    }
+                });
+            });
+
+            $("#years").trigger('change');
+
+		});
+
+
+          $(function () {
+
+			// ADVERTISEMENT CHART
+			var advertisement_chart = {
+				chart: {
+                    renderTo: 'advertisement_chart',
+					type: 'area'
+				},
+				title: {
+					text: ''
+				},
+				/*legend: {
+					layout: 'vertical',
+					align: 'left',
+					verticalAlign: 'top',
+					x: 150,
+					y: 100,
+					floating: true,
+					borderWidth: 1,
+					backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+				},*/
+				xAxis: {
+					categories: [],
+					/*plotBands: [{ // visualize the weekend
+						from: 4.5,
+						to: 6.5,
+						color: 'rgba(68, 170, 213, .2)'
+					}]*/
+				},
+				yAxis: {
+					title: {
+						text: 'Total Apply'
+					}
+				},
+				tooltip: {
+					shared: true,
+					valueSuffix: ''
+				},
+				credits: {
+					enabled: false
+				},
+				plotOptions: {
+					areaspline: {
+						fillOpacity: 0.5
+					}
+				},
+				plotOptions: {
+				area: {
+						pointStart: 0,
+						marker: {
+							enabled: false,
+							symbol: 'circle',
+							radius: 2,
+							states: {
+								hover: {
+									enabled: true
+								}
+							}
+						}
+					}
+				},
+				series: [{},{},{}]
+			}
+
+            $.ajax({
+                type: "GET",
+                url: "<?php echo e(URL::to('recruitment/get_advertisement_data')); ?>",
+                dataType: "json",
+                data: {_token: CSRF_TOKEN},
+                success: function(data){
+
+                    advertisement_chart.xAxis.categories = data.categories;
+                    advertisement_chart.series[0].name = 'Total Applicants';
+                    advertisement_chart.series[1].name = 'Short Listed';
+                    advertisement_chart.series[2].name = 'Interview';
+
+                    var achart = new Highcharts.Chart(advertisement_chart);
+
+                    achart.series[0].setData(data.series.total_applicants);
+                    achart.series[1].setData(data.series.total_applicants_short);
+                    achart.series[2].setData(data.series.total_applicants_interview);
+                }
+            });
+        });
+		<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

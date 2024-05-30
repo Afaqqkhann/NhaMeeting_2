@@ -1,0 +1,207 @@
+<?php $__env->startSection('sidebar'); ?>
+    @parent
+    <h1>Community Message</h1>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4>New Community Message</h4>
+
+            <?php if(!empty($errors->all()) or !empty(Session::get('error'))): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo e(Session::get('error')); ?>
+
+                    <ul>
+                        <?php foreach($errors->all() as $error): ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <?php if(!empty(Session::get('success'))): ?>
+                <div class="alert alert-success" role="alter">
+                    <?php echo e(Session::get('success')); ?>
+
+                </div>
+            <?php endif; ?>
+
+        </div>
+        <div class="box-body">
+
+            <?php echo Form::open(array('url'=>'community_msg/store', 'class' => 'form-horizontal', 'files'=>true, 'id'=>'frm')); ?>
+
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Message Type</label>
+                <div class="col-xs-4">
+                    <?php echo Form::select('message_type_id', $message_type, null, array('class' => 'form-control input-sm')); ?>
+
+                </div>
+                <label class="col-xs-2 control-label">Relation</label>
+                <div class="col-xs-4">
+                    <?php echo Form::select('relation_id', $relation, null, array('class' => 'form-control input-sm')); ?>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Message</label>
+                <div class="col-xs-10">
+                    <?php echo Form::textarea('message', null, array('class' => 'form-control input-sm')); ?>
+
+                </div>
+                <?php echo Form::hidden('community_id', 0, array('class'=>'community_id')); ?>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Coordinates (Optional)</label>
+                <div class="col-xs-5">
+                    <label class="col-xs-4 control-label">Latitude</label>
+                    <div class="col-xs-8">
+                        <?php echo Form::text('lat', null, array('class' => 'form-control input-sm', 'id'=>'lat', 'placeholder'=>'Latitude')); ?>
+
+                    </div>
+                </div>
+
+                <div class="col-xs-5">
+                    <label class="col-xs-4 control-label">Longitude</label>
+                    <div class="col-xs-8" style="padding-right:0px;">
+                        <?php echo Form::text('lng', null, array('class' => 'form-control input-sm', 'id'=>'lng', 'placeholder'=>'Longitude')); ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 text-right" for="search_address">Search Map</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="search_address" name="search_address" placeholder="Enter address to search" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-10 pull-right" id="map-canvas" style="height:250px !important; margin-right:15px;"></div>
+            </div>
+
+            <?php echo Form::close(); ?>
+
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Upload Image(s)</label>
+                <div class="col-xs-10">
+                    <form action="<?php echo e(url('community_msg/upload_image')); ?>" class="dropzone" id="my-awesome-dropzone2">
+                        <?php echo e(csrf_field()); ?>
+
+                        <?php echo Form::hidden('community_id', 0, array('class'=>'community_id')); ?>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-12 pull-right">
+                    <button class="btn btn-primary pull-right" onclick="$('#frm').submit();">Save</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="<?php echo e(url('public/css/dropzone.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(url('public/css/dropzone_custom.css')); ?>">
+
+    <style>
+        .fa-trash { color: red;}
+        .overlay { display: none;}
+        #physical_progress_table td {padding:0px;}
+        .dropzone {
+            border: 2px dashed #0087F7;
+            border-radius: 5px;
+            background: white;
+            margin-bottom:20px;
+        }
+    </style>
+
+
+<?php $__env->startSection('js'); ?>
+
+    $("#my-awesome-dropzone2").dropzone({
+        acceptedFiles: "image/jpeg",
+        dictDefaultMessage: "Drop Images file here, one by one to upload",
+        parallelUploads: 8,
+        success: function(file, response) {
+            console.log(response.success);
+            if(response.success)
+                $(".community_id").val(response.success);
+        }
+    });
+
+    $(".delete_image").click(function() {
+        var me = $(this);
+        if(confirm('Are you sure to delete this image?'))
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': "<?php echo e(csrf_token()); ?>" },
+                url: '<?php echo e(url("community_msg/delete_image/")); ?>/'+$(this).data("id"),
+                success: function(data) {
+                    if(data == 'success')
+                        me.parent().parent().remove();
+                    }
+            });
+    });
+
+    <?php $__env->stopSection(); ?>
+
+<script>
+
+    function initMain() {
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {
+                lat: 33.71333479999999,
+                lng: 73.06192609999994
+            },
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        var marker = new google.maps.Marker({
+            position: {
+                lat: 33.71333479999999,
+                lng: 73.06192609999994
+            },
+            draggable: true,
+            map: map
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('search_address');
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        google.maps.event.addListener(searchBox, 'places_changed', function() {
+            var places = searchBox.getPlaces();
+            var bounds = new google.maps.LatLngBounds();
+            var i, place;
+
+            for(i=0;place=places[i];i++){
+                bounds.extend(place.geometry.location);
+                marker.setPosition(place.geometry.location);
+            }
+            map.fitBounds(bounds);
+            map.setZoom(15);
+        });
+
+        google.maps.event.addListener(marker, 'position_changed', function() {
+            var lat = marker.getPosition().lat();
+            var lng = marker.getPosition().lng();
+
+            $("#lat").val(lat);
+            $("#lng").val(lng);
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAw3lSrcwKAhj3uaJcjES87gG0bv1jtVu8&libraries=places&callback=initMain" async defer></script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

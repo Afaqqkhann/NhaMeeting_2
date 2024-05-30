@@ -1,0 +1,195 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+		  <!-- Default box -->
+          <h3 class="box-title text-blue">Add Employee:</h3>
+          <form class="form-horizontal">
+		  
+		<div class="box box-primary">
+		   <div class="box-header with-border">
+			<h3 class="box-title">Employee Detail</h3>
+		   </div><!-- /.box-header -->
+            <div class="box-body">
+								
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Employee Name:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_name" value="" placeholder="Enter Employee Name" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+				  
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Father's Name:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Employee Father's Name" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">DOB:</label>
+					<div class="col-sm-7">
+					<input class="form-control date_field" type="text" name="dob" value="31/01/1980" id="advert_date" placeholder="Pick Date of Birth" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Gender:</label>
+					<div class="col-sm-7">
+						<select class="form-control">
+							<option>Select Gender</option>
+							<option>Male</option>
+							<option>Female</option>
+						</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">CNIC:</label>
+					<div class="col-sm-7">
+					<input type="text" name="cnic" value="" placeholder="Enter Computerized National Identity Card Number" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Domicile:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Domicile" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Place of Posting:</label>
+					<div class="col-sm-7">
+					<select class="form-control">
+							<option>Select Place</option>
+							<option>Islamabad</option>
+							<option>Multan</option>
+							<option>Lahore</option>
+							<option>Karachi</option>
+							<option>Peshawar</option>
+							<option>Chitral</option>
+							<option>Quetta</option>
+						</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Marital Status:</label>
+					<div class="col-sm-7">
+					<select class="form-control">
+							<option>Select Status</option>
+							<option>Married</option>
+							<option>Unmarried</option>
+							<option>Widow</option>
+							<option>Divorce</option>
+						</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Religion:</label>
+					<div class="col-sm-7">
+					<select class="form-control">
+						<option>Select Religion</option>
+						<option>Muslim</option>
+						<option>Christian</option>
+						<option>Hindu</option>
+					</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Home District:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Home District" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">VI Mark:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter VI Mark" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Language:</label>
+					<div class="col-sm-7">
+					<select class="form-control">
+						<option>Select Language</option>
+						<option>Urdu</option>
+						<option>Punjabi</option>
+						<option>Pashto</option>
+						<option>Sindhi</option>
+						<option>Hindko</option>
+					</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Highest Qualification:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Qualification" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+					<div class="form-group">
+					<label class="col-sm-2 control-label">Dual Nationality:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Dual Nationality" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+					<div class="form-group">
+					<label class="col-sm-2 control-label">Ref. File Number:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter File Number" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+					<div class="form-group">
+					<label class="col-sm-2 control-label">Designation:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Designation" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+					<div class="form-group">
+					<label class="col-sm-2 control-label">BS:</label>
+					<div class="col-sm-7">
+						<select class="form-control">
+							<option>Select BS</option>
+							<option>BS-12</option>
+							<option>BS-13</option>
+							<option>BS-14</option>
+							<option>BS-15</option>
+							<option>BS-16</option>
+							<option>BS-17</option>
+							<option>BS-18</option>
+							<option>BS-19</option>
+							<option>BS-20</option>
+							<option>BS-21</option>
+							<option>BS-22</option>
+						</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+		  </div><!-- /.box-body -->
+
+		  <div class="box-footer">
+			<div class="col-md-3 col-md-offset-6 text-right">
+				<input class="btn btn-primary" type="submit" name="save" value="Add Employee" />
+			</div><!-- /.col-md-3 -->
+		  </div><!-- /.box-footer -->
+		  
+		</div><!-- /.box-primary -->
+		
+			
+		</form>
+
+@stop

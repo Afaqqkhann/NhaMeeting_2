@@ -1,0 +1,512 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
+
+use App\User;
+use App\Role;
+use App\Permission;
+
+
+/*
+*  Create HTML macro for active class 
+*/
+Html::macro('activeState', function($url)
+{
+	 return Request::is($url) ? 'active' : '';
+});
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
+
+//Route::get('/', 'Auth\AuthController@getLogin');
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+
+//form login
+Route::get('/', array('before' => 'guest', function()
+{
+    return Redirect::to('/auth/login');
+}));\
+ 
+// check login
+//Route::post('login', 'HomeController@index');
+
+/*Route::get('/test', function() {
+		
+		//$emp = DB::table('TBL_EMP')->select('EMP_ID, EMP_NAME, CNIC')->where('EMP_ID', '=', 3191)->get();
+		$emp = DB::table('TBL_EMP')->select('EMP_ID, EMP_NAME, CNIC')->whereNotNull('CNIC')->where('EMP_STATUS', '=', 1)->orderBy('emp_id')->groupBy('cnic, emp_name, emp_id')->get();
+		$data = array();
+		$check = 0;
+		$user = $cnic = $skipped = '';
+		$role = Role::find(22);
+		
+		foreach($emp as $row) {
+			
+			// check if duplicate cnic
+			$cnic = User::where('username', '=', $row->cnic)->first();
+			
+			if(!$cnic) {
+				$user = User::create([
+					'name' => $row->emp_name,
+					'email' => 'naeemullah.nha@gmail.com',
+					'password' => bcrypt('demo1234'),
+					'emp_id' => $row->emp_id,
+					'username' => $row->cnic
+				]);
+				$user->attachRole($role);
+				$check++;
+			}
+			$skipped++;
+		}
+		
+		echo "$check records done, and $skipped records skipped :)";
+});*/
+Route::get('/testing', function() {
+        $monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->where('EMPNO', '=', 560)->get();
+        dd($monthly_attendance);
+    });
+// 
+Route::get('/home', array('before' => 'auth', function()
+{
+
+    if(Entrust::hasRole('user')) {
+            return Redirect::to('/employee/detail');
+	}
+	else {
+		return Redirect::to('/dashboard');
+	}
+	/*else {
+		Auth::logout();
+		return Redirect::to('/auth/login')
+			->with('error', 'You don\'t have access!');
+	}*/
+ 
+    return App::abort(403);
+}));
+
+/* Advertisement Datatable */
+/*Route::get('/advertisement/advertisement_list', 'AdvertisementController@getDatatable');
+Route::get('/advertisement/getDatatableData', 'AdvertisementController@getDatatableData');*/
+
+/*  Advertisement  */
+/*Route::get('/advertisement/advertisement_list', 'AdvertisementController@advertisement_list');
+Route::get('/advertisement/create_advertisement', 'AdvertisementController@create');
+Route::get('/advertisement/view_advertisement/{id}', 'AdvertisementController@view');
+Route::get('/advertisement/edit_advertisement/{id}', 'AdvertisementController@edit');
+Route::get('/advertisement/view_post/{id}', 'AdvertisementController@view_post');
+Route::get('/advertisement/edit_post/{id}', 'AdvertisementController@edit_post');*/
+
+Route::group(['middleware' => ['auth']], function() {
+
+	/* Employee detail */
+	Route::get('/employee/detail', 'EmployeesController@detail');
+	Route::get('/employee/attendance/{id}', 'EmployeesController@get_attendance');
+	Route::get('/employee/ajax_get_payslip/{c}/{m}/{y}', 'EmployeesController@ajax_get_payslip');
+	Route::get('/user/profile', 'UserController@index');
+	//Route::get('/employee/attendance/{id}', ['middleware' => ['auth'], 'uses' => 'EmployeesController@get_attendance']);
+	Route::get('/employee/attendance/{id}', 'EmployeesController@get_attendance');
+	Route::post('/user/update_password', 'UserController@update_password');
+
+	//Report
+    Route::get('report/employee_info', 'ReportsController@employee_report');
+    Route::get('report/employee_report_data', 'ReportsController@employee_report_data');
+
+    Route::get('report/training_foreign', 'ReportsController@training_foreign');
+    Route::get('report/training_done', 'ReportsController@training_done');    // By SH
+    Route::get('report/employee_rewards', 'ReportsController@employee_rewards');      //  By SH
+    Route::get('report/posting_history', 'ReportsController@posting_history');      //  By SH
+
+    Route::get('report/training_foreign_data', 'ReportsController@training_foreign_data');
+
+    Route::get('report/training_local', 'ReportsController@training_local');
+    Route::get('report/acr', 'ReportsController@acr');
+    Route::get('report/assets', 'ReportsController@assets');
+
+    Route::get('report/employee_profile', 'ReportsController@emp_profile');
+    Route::get('report/employee_profile_data', 'ReportsController@emp_profile_data');
+
+	// Special permission
+	/* Employees */
+	Route::get('/employees/employees_list', 'EmployeesController@employees_list');
+	Route::get('/employees/employees_list_data', 'EmployeesController@employees_list_data');
+	Route::get('/employee/profile/{id}', 'EmployeesController@profile');
+	Route::post('/employee/save_profile', 'EmployeesController@save_profile');
+
+	Route::get('/employees/employee_current', 'EmployeesController@employee_current');
+	Route::get('/employees/employee_current_data', 'EmployeesController@employee_current_data');
+	
+	/* Employee ICP Chart */
+	Route::get('/employee/icp_chart/{id}', 'EmployeesController@employee_icp');
+
+	Route::get('/user/update_profile', 'UserController@update_profile');
+	Route::post('/user/save_profile', 'UserController@save_profile');
+
+	/* EIS Dashboard */
+	Route::get('/dashboard', 'EISDashboardController@index');
+
+	/* Home */
+	Route::post('/ajax_strength', 'HomeController@ajax_get_strength');
+
+	/* Recruitment Dashboard */
+	Route::get('/recruitment_dashboard', 'RecruitmentController@index');
+	Route::get('/recruitment/get_yearwise_data/{year}', 'RecruitmentController@get_yearwise_data');
+	Route::get('/recruitment/get_advertisement_data', 'RecruitmentController@get_advertisement_data');
+
+	Route::get('/employees/acr', 'EmployeesController@acr_list');
+	Route::get('/employees/acr_data', 'EmployeesController@acr_data');
+
+	Route::get('/employees/employee_reward', 'EmployeesController@employee_reward');
+
+	/* Strength */
+	Route::get('/strength/strength_charts', 'StrengthController@get_strength_charts');
+	Route::get('/strength/add_strength', 'StrengthController@add_strength');
+	Route::post('/strength/set_strength', 'StrengthController@set_strength');
+	Route::get('/strength/strength_list', 'StrengthController@strength_list');
+	Route::get('/strength/strength_data', 'StrengthController@strength_data');
+	
+	/* Trainings */
+	Route::get('/trainings', 'TrainingsController@index');
+	Route::get('/trainings/charts', 'TrainingsController@charts');
+	Route::get('/trainings/training_list_data', 'TrainingsController@training_list_data');
+	Route::get('/trainings/get_yearwise_data/{year}', 'TrainingsController@get_yearwise_data');
+	Route::get('/trainings/get_training_place_data/{year}', 'TrainingsController@get_training_place_data');
+
+	/* Training HRD */
+	Route::post('/trainings_hrd/store', 'HRDController@store');
+	Route::resource('/trainings_hrd', 'HRDController');
+
+	/* Books */
+	Route::post('/books/store', 'BooksController@store');
+	Route::resource('/books', 'BooksController');
+
+	/* Book Issued */
+	Route::post('/book_issued/store', 'BookIssueController@store');
+	Route::resource('/book_issued', 'BookIssueController');
+
+	/* Category */
+	Route::post('/category/store', 'CategoryController@store');
+	Route::resource('/category', 'CategoryController');
+
+	/* SubCategory */
+	Route::post('/subcategory/store', 'SubCategoryController@store');
+	Route::resource('/subcategory', 'SubCategoryController');
+
+	/* Organization */
+	Route::post('/organization/store', 'OrganizationController@store');
+	Route::resource('/organization', 'OrganizationController');
+
+	/* ACR & Assets */
+	Route::get('/acr_assets', 'ACRController@index');
+
+	/* Personnel */
+	Route::get('/personnel', 'PersonnelController@index');
+
+	/* Community Message */
+	Route::get('/community_msg/ajax_update', 'CommunityMsgController@ajax_update');
+	Route::resource('/community_msg', 'CommunityMsgController');
+	Route::post('/community_msg/store', 'CommunityMsgController@store');
+	Route::post('/community_msg/upload_image', 'CommunityMsgController@upload_image');
+	Route::get('/community_msg/delete_image/{id}', 'CommunityMsgController@delete_image');
+
+	/* Confidential */
+	Route::resource('/confidential', 'ConfidentialController');
+
+	/* Inquiries */
+	Route::resource('/inquiries', 'InquiriesController');
+
+	/* Posting / Transfer */
+	Route::resource('/posting_transfer', 'PostingTransferController');
+
+	/* Tenure Policy */
+	Route::resource('/tenure_policy', 'TenurePolicyController');
+	
+	/* Circular SMS */
+	Route::get('/circular_sms', function(){
+		return view('circular_sms');
+	});
+	
+});
+
+
+Route::group(['middleware' => ['role:admin']], function() {
+
+	// Hajj draw coding
+	Route::get('/hajj_draw/{id}', function($id) {
+		return view('hajj_draw_c'.$id);
+	});
+	Route::get('/ajax_hajj_draw/{cat}', function($cat) {
+
+		// declarations
+		$result = array();
+		$counter = 0;
+
+		switch($cat) {
+			case 1:
+				// check if category data already exist
+				$check = DB::table('TBL_HAJJ_DRAW')->where('category', '=', 1)->orderBy('SHORT_LIST', 'ASC')->get();
+				if(!empty($check)) {
+					foreach($check as $row) {
+						// populate result variable
+						$result[$counter]['emp_id'] = $row->emp_id;
+						$result[$counter]['emp_name'] = $row->emp_name;
+						$result[$counter]['f_name'] = $row->f_name;
+						$result[$counter]['designation'] = $row->designation;
+						$result[$counter]['place_of_posting'] = $row->current_post . ' - ' . $row->place_of_posting;
+						$result[$counter]['bs'] = $row->bs;
+						$result[$counter]['cnic'] = $row->cnic;
+						$result[$counter]['short_list'] = $row->short_list;
+						$counter++;
+					}
+				}
+				else {
+					for ($i = 1; $i <= 2; $i++) {
+						$data = DB::table('V_HAJJ_CAT_1')->select('HD_ID', 'EMP_ID', 'EMP_NAME', 'F_NAME', 'DESIGNATION', 'BS', 'CNIC', 'DOB', 'SERVICE_TYPE', 'RELIGION', 'WORKING_STATUS', 'CURRENT_POST', 'PLACE_OF_POSTING', 'HD_STATUS', 'SHORT_LIST')->get();
+						$rnd = DB::select('SELECT HAJJ_LIMIT(' . $i . ') hajj_limit FROM dual');
+
+						$collection = collect($data);
+						$data = $collection->random($rnd[0]->hajj_limit);
+
+						if (count($data) == 1) $data = array(0 => $data);
+
+						// insertion
+						foreach ($data as $row) {
+							DB::table('TBL_HAJJ_DRAW')->insert(
+								array(
+									'HD_ID' => $row->hd_id,
+									'EMP_ID' => $row->emp_id,
+									'EMP_NAME' => $row->emp_name,
+									'F_NAME' => $row->f_name,
+									'DESIGNATION' => $row->designation,
+									'BS' => $row->bs,
+									'CNIC' => $row->cnic,
+									'DOB' => $row->dob,
+									'SERVICE_TYPE' => $row->service_type,
+									'RELIGION' => $row->religion,
+									'WORKING_STATUS' => $row->working_status,
+									'PLACE_OF_POSTING' => $row->place_of_posting,
+									'CURRENT_POST' => $row->current_post,
+									'HD_STATUS' => $row->hd_status,
+									'SHORT_LIST' => ($i == 1) ? 1 : 2,
+									'CATEGORY' => 1,
+								)
+							);
+							// update emp_hajj
+							DB::table('TBL_EMP_HAJJ')->where('EMP_ID', '=', $row->emp_id)->update(['SHORT_LIST' => 1]);
+
+							// populate result variable
+							$result[$counter]['emp_id'] = $row->emp_id;
+							$result[$counter]['emp_name'] = $row->emp_name;
+							$result[$counter]['f_name'] = $row->f_name;
+							$result[$counter]['designation'] = $row->designation;
+							$result[$counter]['place_of_posting'] = $row->current_post . ' - ' . $row->place_of_posting;
+							$result[$counter]['bs'] = $row->bs;
+							$result[$counter]['cnic'] = $row->cnic;
+							$result[$counter]['short_list'] = ($i == 1) ? 1 : 2;
+							$counter++;
+						} // for loop
+					}
+				} // else check
+				break;
+			case 2:
+				// check if category data already exist
+				$check = DB::table('TBL_HAJJ_DRAW')->where('category', '=', 2)->orderBy('SHORT_LIST', 'ASC')->get();
+				if(!empty($check)) {
+					foreach($check as $row) {
+						// populate result variable
+						$result[$counter]['emp_id'] = $row->emp_id;
+						$result[$counter]['emp_name'] = $row->emp_name;
+						$result[$counter]['f_name'] = $row->f_name;
+						$result[$counter]['designation'] = $row->designation;
+						$result[$counter]['place_of_posting'] = $row->current_post . ' - ' . $row->place_of_posting;
+						$result[$counter]['bs'] = $row->bs;
+						$result[$counter]['cnic'] = $row->cnic;
+						$result[$counter]['short_list'] = $row->short_list;
+						$counter++;
+					}
+				}
+				else {
+					for ($i = 3; $i <= 4; $i++) {
+						$data = DB::table('V_HAJJ_CAT_2')->select('HD_ID', 'EMP_ID', 'EMP_NAME', 'F_NAME', 'DESIGNATION', 'BS', 'CNIC', 'DOB', 'SERVICE_TYPE', 'RELIGION', 'WORKING_STATUS', 'CURRENT_POST', 'PLACE_OF_POSTING', 'HD_STATUS', 'SHORT_LIST')->get();
+						$rnd = DB::select('SELECT HAJJ_LIMIT(' . $i . ') hajj_limit FROM dual');
+
+						$collection = collect($data);
+						$data = $collection->random($rnd[0]->hajj_limit);
+
+						if (count($data) == 1) $data = array(0 => $data);
+
+						// insertion
+						foreach ($data as $row) {
+							DB::table('TBL_HAJJ_DRAW')->insert(
+								array(
+									'HD_ID' => $row->hd_id,
+									'EMP_ID' => $row->emp_id,
+									'EMP_NAME' => $row->emp_name,
+									'F_NAME' => $row->f_name,
+									'DESIGNATION' => $row->designation,
+									'BS' => $row->bs,
+									'CNIC' => $row->cnic,
+									'DOB' => $row->dob,
+									'SERVICE_TYPE' => $row->service_type,
+									'RELIGION' => $row->religion,
+									'WORKING_STATUS' => $row->working_status,
+									'PLACE_OF_POSTING' => $row->place_of_posting,
+									'CURRENT_POST' => $row->current_post,
+									'HD_STATUS' => $row->hd_status,
+									'SHORT_LIST' => ($i == 3) ? 1 : 2,
+									'CATEGORY' => 2,
+								)
+							);
+							// update emp_hajj
+							DB::table('TBL_EMP_HAJJ')->where('EMP_ID', '=', $row->emp_id)->update(['SHORT_LIST' => 1]);
+
+							// populate result variable
+							$result[$counter]['emp_id'] = $row->emp_id;
+							$result[$counter]['emp_name'] = $row->emp_name;
+							$result[$counter]['f_name'] = $row->f_name;
+							$result[$counter]['designation'] = $row->designation;
+							$result[$counter]['place_of_posting'] = $row->current_post . ' - ' . $row->place_of_posting;
+							$result[$counter]['bs'] = $row->bs;
+							$result[$counter]['cnic'] = $row->cnic;
+							$result[$counter]['short_list'] = ($i == 3) ? 1 : 2;
+							$counter++;
+						} // for loop
+					}
+				}
+				break;
+			case 3:
+				// check if category data already exist
+				$check = DB::table('TBL_HAJJ_DRAW')->where('category', '=', 3)->orderBy('SHORT_LIST', 'ASC')->get();
+				if(!empty($check)) {
+					foreach($check as $row) {
+						// populate result variable
+						$result[$counter]['emp_id'] = $row->emp_id;
+						$result[$counter]['emp_name'] = $row->emp_name;
+						$result[$counter]['f_name'] = $row->f_name;
+						$result[$counter]['designation'] = $row->designation;
+						$result[$counter]['place_of_posting'] = $row->current_post . ' - ' . $row->place_of_posting;
+						$result[$counter]['bs'] = $row->bs;
+						$result[$counter]['cnic'] = $row->cnic;
+						$result[$counter]['short_list'] = $row->short_list;
+						$counter++;
+					}
+				}
+				else {
+					for ($i = 5; $i <= 6; $i++) {
+						$data = DB::table('HAJJ_CAT_3')->select('HD_ID', 'EMP_ID', 'EMP_NAME', 'F_NAME', 'DESIGNATION', 'BS', 'CNIC', 'DOB', 'SERVICE_TYPE', 'RELIGION', 'WORKING_STATUS', 'CURRENT_POST', 'PLACE_OF_POSTING', 'HD_STATUS', 'SHORT_LIST')->get();
+						$rnd = DB::select('SELECT HAJJ_LIMIT(' . $i . ') hajj_limit FROM dual');
+
+						$collection = collect($data);
+						$data = $collection->random($rnd[0]->hajj_limit);
+
+						if (count($data) == 1) $data = array(0 => $data);
+
+						// insertion
+						foreach ($data as $row) {
+							DB::table('TBL_HAJJ_DRAW')->insert(
+								array(
+									'HD_ID' => $row->hd_id,
+									'EMP_ID' => $row->emp_id,
+									'EMP_NAME' => $row->emp_name,
+									'F_NAME' => $row->f_name,
+									'DESIGNATION' => $row->designation,
+									'BS' => $row->bs,
+									'CNIC' => $row->cnic,
+									'DOB' => $row->dob,
+									'SERVICE_TYPE' => $row->service_type,
+									'RELIGION' => $row->religion,
+									'WORKING_STATUS' => $row->working_status,
+									'PLACE_OF_POSTING' => $row->place_of_posting,
+									'CURRENT_POST' => $row->current_post,
+									'HD_STATUS' => $row->hd_status,
+									'SHORT_LIST' => ($i == 5) ? 1 : 2,
+									'CATEGORY' => 3,
+								)
+							);
+							// update emp_hajj
+							DB::table('TBL_EMP_HAJJ')->where('EMP_ID', '=', $row->emp_id)->update(['SHORT_LIST' => 1]);
+
+							// populate result variable
+							$result[$counter]['emp_id'] = $row->emp_id;
+							$result[$counter]['emp_name'] = $row->emp_name;
+							$result[$counter]['f_name'] = $row->f_name;
+							$result[$counter]['designation'] = $row->designation;
+							$result[$counter]['place_of_posting'] = $row->current_post . ' - ' . $row->place_of_posting;
+							$result[$counter]['bs'] = $row->bs;
+							$result[$counter]['cnic'] = $row->cnic;
+							$result[$counter]['short_list'] = ($i == 5) ? 1 : 2;
+							$counter++;
+						} // for loop
+
+					}
+				}
+				break;
+			default:
+				break;
+		}
+
+		return response()->json(array('success' => true, 'data' => $result));
+	});
+
+	//Route::get('/employee/icp_chart/{id}', 'EmployeesController@employee_detail');
+	//Route::get('/employee/attendance/{id}', 'EmployeesController@get_attendance');
+	//Route::get('/employees/add_employee', 'EmployeesController@add_employee');
+	//Route::post('/employees/set_employee', 'EmployeesController@set_employee');
+
+	
+	/* Permission */
+    Route::resource('permission', 'PermissionController');
+	
+	/* Role */
+    Route::resource('role', 'RoleController');
+	
+	/* User Management */
+	//Route::get('user_management/get_data', 'UserManagementController@get_data');
+	//Route::get('user_management/edit/{id}', 'UserManagementController@edit');
+    //Route::resource('user_management', 'UserManagementController');
+	
+	Route::get('user/get_data', 'UserController@get_data');
+	Route::resource('/user', 'UserController');
+    Route::resource('/role', 'RoleController');
+    Route::resource('/permission', 'PermissionController');
+
+	Route::get('/biomatric', function() {
+		$conn = DB::connection('sqlsrv');
+		
+		$data = $conn->table('VIEWMONTHLYDATA')->where('EmpNo', '=', '2888')->take(100)->get();
+		dd($data);
+	});
+	
+	Route::get('/finance', function() {
+		$conn = DB::connection('sqlsrv');
+		
+		$data = $conn->table('sstEmployeeBreakup_View')->take(10)->get();
+		dd($data);
+	});
+	
+	Route::get('/fmis', function() {
+		$conn = DB::connection('sqlsrv_fin');
+		
+		// Sp_PaySlip ("17301-8391053-1", 1, 2016)
+		// $data = $conn->select('EXEC dbo.Sp_EmpPayments ?', array('17301-8391053-1'));
+		$data = $conn->select('EXEC dbo.Sp_PaySlip ?, ?, ? ', array('17301-8391053-1', 1, 2016));
+		
+		dd($data);
+	});
+	
+	
+	
+}); // group end
+

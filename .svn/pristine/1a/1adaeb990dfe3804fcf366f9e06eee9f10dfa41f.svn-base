@@ -1,0 +1,133 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use DB;
+use Auth;
+use App\User;
+use App\Permission;
+use Redirect;
+class EISDashboardController extends Controller
+{
+	public function __construct() {
+		
+		$this->middleware('auth');
+
+        if(!Auth::user()->can('eis_dashboard')) {
+            $permissions = Permission::all();
+            foreach($permissions as $permission) {
+                if(Auth::user()->can($permission->name)) {
+                    if($permission->link != '#')
+                        return Redirect::to($permission->link)->send();
+                }
+            }
+            abort(403);
+        }
+	}
+	
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        //		
+		$data = array(
+			'page_title'	=>	'Executive Information System Dashboard',
+			
+			'appoint_current_year' => DB::select('SELECT APPOINT_CURRENT_YEAR() appoint_current_year FROM dual'),
+			'total_post' 	=> 	DB::select('SELECT TOTAL_POST() total_post FROM dual'),
+			'total_occupied'=> 	DB::select('SELECT TOTAL_OCCUPIED() total_occupied FROM dual'),
+			'total_working'	=> 	DB::select('SELECT TOTAL_WORKING() total_working FROM dual'),
+			'total_postings'=> 	DB::select('SELECT TOTAL_POSTINGS() total_postings FROM dual'),
+			'total_postings_3'=>DB::select('SELECT TOTAL_POSTINGS_3() total_postings_3 FROM dual'),
+			'total_postings_5'=>DB::select('SELECT TOTAL_POSTINGS_5() total_postings_5 FROM dual'),
+			'total_acr_remaining'=> DB::select('SELECT TOTAL_ACR_REMAINING() total_acr_remaining FROM dual'),
+			'total_assets_remaining'=> DB::select('SELECT TOTAL_ASSETS_REMAINING() total_assets_remaining FROM dual'),
+			'training_local_current'=> DB::select('SELECT TRAINING_LOCAL_CURRENT() training_local_current FROM dual'),
+			'training_foreign_current'=> DB::select('SELECT TRAINING_FOREIGN_CURRENT() training_foreign_current FROM dual'),
+			
+			'total_inquiries'=> DB::select('SELECT TOTAL_INQUIRIES() total_inquiries FROM dual'),
+			'total_penalties'=> DB::select('SELECT TOTAL_PENALTIES() total_penalties FROM dual'),
+			
+			'reg_vacant'	=> DB::select('SELECT REG_VACANT() reg_vacant FROM dual'),
+			'reg_work'	=> DB::select('SELECT REG_WORK() reg_work FROM dual'),
+			'pc1_vacant'=> DB::select('SELECT PC1_VACANT() pc1_vacant FROM dual'),
+			'pc1_work'=> DB::select('SELECT PC1_WORK() pc1_work FROM dual'),
+		);
+		
+		return view('eis_dashboard.index')->with($data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

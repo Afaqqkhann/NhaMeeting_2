@@ -1,0 +1,56 @@
+@extends('base')
+
+@section('content')
+
+	<h2>Employee Current</h2>
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employees</h3>
+			
+			<div class="box-tools">
+
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped" id="employee_current_table">
+				<thead>
+                      <tr>
+                          <th>Emp Name</th>
+                          <th>F/H Name</th>
+						  <th>Date of Birth</th>
+                          <th>Gender</th>
+                          <th>CNIC</th>
+                          <th>Religion</th>
+                          <th>Home District</th>
+                          <th>FP ID</th>
+                          <th>Ref. File No.</th>
+                          <th>BS</th>
+                          <th>Joining Date</th>
+                          <th>Relieving Date</th>
+                          <th>Strength Name</th>
+                          <th>Remarks</th>
+                          <th>Post Name</th>
+                          <th>Zone</th>
+                          <th>Region</th>
+                          <th>Place</th>
+                          <th>Place Type</th>
+                          <th>Wing</th>
+                          <th>Section</th>
+                          <th>Wing Head</th>
+                      </tr>
+                  </thead>
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+@section('js')
+	$('#employee_current_table').DataTable({
+		processing: true,
+		serverSide: true,
+		"scrollX": true,
+		ajax: '{{ url("employees/employee_current_data") }}',
+	});
+@endsection
+@stop

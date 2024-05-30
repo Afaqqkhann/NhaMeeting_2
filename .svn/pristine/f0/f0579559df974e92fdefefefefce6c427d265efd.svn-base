@@ -1,0 +1,216 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Order;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use DB;
+use Session;
+use Validator;
+use Input;
+
+class OrderController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        ini_set('max_execution_time', 5000);
+        ini_set('memory_limit', '5000M');
+        $page_title = 'Order';
+        $data = DB::table('V_ORDER')->orderBy('order_id', 'ASC')->get();
+        //$data = Order::all();
+
+        return view('orders.index', compact('page_title', 'data'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $page_title = 'Add Order';
+        //// Get Sections
+        $sections = DB::table('TBL_SECTION')->orderBy('section_id', 'ASC')->get();
+
+        $section_type = array(null => 'Select Section');
+        foreach($sections as $section){
+            $section_type[$section->section_id] = $section->section_name;
+        }
+        //// GET App Authority
+        $authorities = DB::table('TBL_APP_AUTHORITY')->orderBy('aa_id', 'ASC')->get();
+
+        $app_auth = array(null => 'Select Authority');
+        foreach($authorities as $authorty){
+            $app_auth[$authorty->aa_id] = $authorty->aa_name; //. ' ' . $package->contract_code;
+        }
+
+        $orderTypes = ['' => 'Select Order Type', '1' => 'Order', '2' => 'Circular', '3' => 'Letter', '4' => 'Noting'];
+
+        return view('orders.create', compact('page_title','orderTypes','section_type','app_auth'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $ord = Order::orderBy('order_id', 'desc')->first();
+
+        $order = new Order();
+        $order->order_id = ($ord) ? $ord->order_id + 1 : 1;
+        $order->order_section_id = $request->input('order_section_id');
+        $order->order_subject = $request->input('order_subject');
+        $order->order_no = $request->input('order_no');
+        $order->order_date = ($request->input('order_date')) ? date('y-M-d', strtotime($request->input('order_date'))) : null;
+        $order->order_type = $request->input('order_type');
+        $order->aa_id = $request->input('aa_id');
+        $order->save();
+        //after order save
+        if(Input::hasFile('e_doc')) {
+            $path = 'public/NHA-IS/ORDER';
+            $table = 'TBL_ORDER';
+            $primary_field = 'ORDER_ID';
+            $file = Input::file('e_doc');
+            $edoc_field = 'E_DOC ';
+
+            $uploader = new UploadController();
+            $uploader->upload_edoc($file, 'ORDER_'.$order->order_id, $path, $table, $primary_field, $order->order_id, $edoc_field);
+        }
+        Session::flash('success', 'Order created successfully.');
+        return redirect('order');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $page_title = 'Order';
+        $data = Order::find($id);
+
+        $section = DB::table('TBL_SECTION')->where('section_id', '=',$data->order_section_id)->first();
+        $app_auth = DB::table('TBL_APP_AUTHORITY')->where('aa_id', '=',$data->aa_id)->first();
+       // dd($section);
+
+        return view('orders.show', compact('page_title', 'data','section','app_auth'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $page_title = 'Order';
+        $data = Order::find($id);
+
+        //// Get Sections
+        $sections = DB::table('TBL_SECTION')->orderBy('section_id', 'ASC')->get();
+
+        $section_type = array(null => 'Select Section');
+        foreach($sections as $section){
+            $section_type[$section->section_id] = $section->section_name; //. ' ' . $package->contract_code;
+        }
+        //// GET App Authority
+        $authorities = DB::table('TBL_APP_AUTHORITY')->orderBy('aa_id', 'ASC')->get();
+
+        $app_auth = array(null => 'Select Authority');
+        foreach($authorities as $authorty){
+            $app_auth[$authorty->aa_id] = $authorty->aa_name; //. ' ' . $package->contract_code;
+        }
+
+        $orderTypes = ['' => 'Select Order Type', '1' => 'Order', '2' => 'Circular', '3' => 'Letter', '4' => 'Noting'];
+
+        return view('orders.edit', compact('page_title','data','orderTypes','section_type','app_auth'));
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $messages = array(
+            'required' => 'The :attribute field is required.',
+        );
+
+        $validator = Validator::make($request->all(), [
+
+            'order_no' => 'required',
+            'order_subject' => 'required',
+            'order_date' => 'required',
+
+        ], $messages);
+
+        if($validator->fails())
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+
+        $order = Order::find($id);
+        $order->order_section_id = $request->input('order_section_id');
+        $order->order_subject = $request->input('order_subject');
+        $order->order_no = $request->input('order_no');
+        $order->order_date = ($request->input('order_date')) ? date('y-M-d', strtotime($request->input('order_date'))) : null;
+        $order->order_type = $request->input('order_type');
+        $order->aa_id = $request->input('aa_id');
+        //// uploaded file save
+        /*if ($request->hasFile('e_doc')) {
+            $file = $request->file('e_doc');
+            $fileName = sha1(time()) . '.' . $file->getClientOriginalExtension();;
+            $request->file('e_doc')->move(
+                base_path() . '/storage/order/', $fileName
+            );
+            $order->e_doc = $fileName;
+        }*/
+
+        $order->save();
+        //after order save
+        if(Input::hasFile('e_doc')) {
+            $path = 'public/NHA-IS/ORDER';
+            $table = 'TBL_ORDER';
+            $primary_field = 'ORDER_ID';
+            $file = Input::file('e_doc');
+            $edoc_field = 'E_DOC ';
+
+            $uploader = new UploadController();
+            $uploader->upload_edoc($file, 'ORDER_'.$order->order_id, $path, $table, $primary_field, $order->order_id, $edoc_field);
+        }
+        Session::flash('success', 'Order updated successfully.');
+        return redirect('order');
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Order::where('order_id', '=', $id)->delete();
+        Session::flash('success', 'Order has been deleted successfully.');
+
+        return redirect('order');
+    }
+}

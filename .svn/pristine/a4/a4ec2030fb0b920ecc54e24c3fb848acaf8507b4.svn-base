@@ -1,0 +1,344 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Executive Information System Dashboard</h1>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+
+        <!-- Main content -->
+        <section class="content">
+		  
+		  <!-- Small boxes (Stat box) -->
+		  <div class="row">
+            
+            <div class="col-lg-3 col-xs-12 col-sm-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+				  <h3 style="font-size: 32px;"><?php echo e($total_post[0]->total_post); ?> / <?php echo e($total_occupied[0]->total_occupied); ?> / <a href="void();" onclick="load_chart();" data-toggle="modal" data-target="#myModal" style="color:white; position:relative; z-index:10;"><?php echo e($total_working[0]->total_working); ?></a></h3>
+                  <p>Total Post &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp; Occupied &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="void(0);" onclick="load_chart();" data-toggle="modal" data-target="#myModal" style="color:white; position:relative; z-index:10;">Working</a></p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-arrow-graph-up-right"></i>
+                </div>
+                <a href="<?php echo e(URL::to('/strength/strength_charts')); ?>" class="small-box-footer">Strength <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+			
+			<div class="col-lg-3 col-xs-12 col-sm-6">
+			<!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+				  <h3><?php echo e($appoint_current_year[0]->appoint_current_year); ?></h3>
+				  <p>New Appointment</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-ios-people"></i>
+                </div>
+                <a href="<?php echo e(URL::to('/recruitment_dashboard')); ?>" class="small-box-footer">Recruitement <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+			
+            <div class="col-lg-3 col-xs-12 col-sm-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3><?php echo e($total_postings[0]->total_postings); ?> / <?php echo e($total_postings_3[0]->total_postings_3); ?> / <?php echo e($total_postings_5[0]->total_postings_5); ?></h3>
+				  <p>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; >=3</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-paper-airplane"></i>
+                </div>
+                <a href="<?php echo e(URL::to('/personnel')); ?>" class="small-box-footer">Posting & Transfer <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-12 col-sm-6">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3><?php echo e($total_acr_remaining[0]->total_acr_remaining); ?> / <?php echo e($total_assets_remaining[0]->total_assets_remaining); ?></h3>
+				  <p>Remainings</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-ios-lightbulb"></i>
+                </div>
+                <a href="<?php echo e(URL::to('/acr_assets')); ?>" class="small-box-footer">ACR & Assets <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+          </div><!-- /.row -->
+		  
+		  <!-- Small boxes (Stat box) -->
+		  <div class="row">
+            <div class="col-lg-3 col-xs-12 col-sm-6">
+			  <!-- small box -->
+			  <div class="small-box bg-blue">
+					<div class="inner">
+					  <h3><?php echo e($training_local_current[0]->training_local_current); ?> / <?php echo e($training_foreign_current[0]->training_foreign_current); ?></h3>
+					  <p>In Country&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;Foreign</p>
+					</div>
+					<div class="icon">
+					  <i class="ion ion-help-buoy"></i>
+					</div>
+					<a href="<?php echo e(URL::to('/trainings')); ?>" class="small-box-footer">Training <i class="fa fa-arrow-circle-right"></i></a>
+				  </div>
+				</div><!-- ./col -->
+				<div class="col-lg-3 col-xs-12 col-sm-6">
+				  <!-- small box -->
+				  <div class="small-box bg-purple">
+					<div class="inner">
+					  <h3>344,688</h3>
+					  <p>&nbsp;</p>
+					</div>
+					<div class="icon">
+					  <i class="ion ion-android-car"></i>
+					</div>
+					<a href="http://125.209.65.67/vehiclemanagementsystem" target="_blank" class="small-box-footer">Transport <i class="fa fa-arrow-circle-right"></i></a>
+				  </div>
+				</div><!-- ./col -->
+				<div class="col-lg-3 col-xs-12 col-sm-6">
+				  <!-- small box -->
+				  <div class="small-box bg-maroon">
+					<div class="inner">
+					  <h3>72,836,921</h3>
+					  <p>&nbsp;</p>
+					</div>
+					<div class="icon">
+					  <i class="ion ion-medkit"></i>
+					</div>
+					<a href="#" class="small-box-footer">Medical <i class="fa fa-arrow-circle-right"></i></a>
+				  </div>
+				</div><!-- ./col -->
+				<div class="col-lg-3 col-xs-12 col-sm-6">
+				  <!-- small box -->
+				  <div class="small-box bg-gray" style="background-color:goldenrod !important; color:white;">
+					<div class="inner">
+					  <h3><?php echo e($total_inquiries[0]->total_inquiries); ?> / <?php echo e($total_penalties[0]->total_penalties); ?></h3>
+					  <p>Inquiries&nbsp;/&nbsp;&nbsp;Penalties</p>
+					</div>
+					<div class="icon">
+					  <i class="ion ion-android-lock"></i>
+					</div>
+					<a href="<?php echo e(URL::to('/inquiries')); ?>" class="small-box-footer">Inquiries <i class="fa fa-arrow-circle-right"></i></a>
+				  </div>
+				</div><!-- ./col -->
+			  </div><!-- /.row -->
+		  
+		  
+		  	<div class="box box-info">
+				<div class="box-header with-border">
+					<h3 class="box-title">Strength Charts</h3>
+					
+					<div class="box-tools">
+						<!--<a href="<?php echo e(URL::to('/employees/add_employee')); ?>" class="btn btn-primary"><i class="fa fa-star"></i>  Add Employee</a>-->
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+
+				<div class="box-body">
+					<div class="col-md-6">
+						<div id="strength_direct"></div>
+					</div><!-- /.col-md-4 -->
+					<div class="col-md-6">
+						<div id="strength_contract"></div>
+					</div><!-- /.col-md-4 -->
+				</div><!-- /.box-body -->
+				
+				<div class="box-footer">
+					<div class="col-md-6 text-center">
+						<h4>Total Regular : <strong><?php echo e($reg_work[0]->reg_work+$reg_vacant[0]->reg_vacant); ?></strong></h4>
+					</div>
+					<div class="col-md-6 text-center">
+						<h4>Total PC-1 : <strong><?php echo e($pc1_work[0]->pc1_work+$pc1_vacant[0]->pc1_vacant); ?></strong></h4>
+					</div>
+				</div><!-- /.box-footer -->
+
+			</div><!-- /.box -->
+			
+        </section><!-- /.content -->
+
+		
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Working Strength</h4>
+			  </div>
+			  <div class="modal-body">
+				<div id="container" style="min-width: 570px; height: 400px; margin: 0 auto"></div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			  </div>
+			</div>
+
+		  </div>
+		</div>
+		
+		<style>
+			.small-box-footer { text-align: right !important; padding-right:8px !important; font-weight: bold !important;}
+			.inner > p { font-size: 15px; }
+		</style>
+
+	    <script src="<?php echo e(URL::to('/public/js/highcharts/highcharts.js')); ?>"></script>
+        <script src="<?php echo e(URL::to('/public/js/highcharts/exporting.js')); ?>"></script>
+		
+		<?php $__env->startSection('js'); ?>
+		
+			function load_chart(){
+				var chart = new Highcharts.Chart({
+					chart: {
+						type: 'column',
+						renderTo: 'container'
+					},
+					title: {
+						text: 'Working Strength'
+					},
+					subtitle: {
+						text: ''
+					},
+					xAxis: {
+						type: 'category',
+					},
+					yAxis: {
+						min: 0,
+						title: {
+							text: 'Total'
+						}
+					},
+					legend: {
+						enabled: false
+					},
+					tooltip: {
+						pointFormat: 'Total: <b>{point.y}</b>'
+					},
+					series: [{
+						name: 'Working',
+						data: [
+							['Regular', 1129],
+							['Contract (Regularized)', 1000],
+							['Daily Wages (Regularized)', 886],
+							['Ex-Sacked', 381],
+							['Ex-NTRC', 19],
+							['Deputation', 52],
+							['Contract', 11]
+						],
+						dataLabels: {
+							enabled: true,
+							color: '#FFFFFF',
+							align: 'center',
+							format: '{point.y}',
+							style: {
+								fontSize: '13px',
+								fontFamily: 'Verdana, sans-serif'
+							}
+						}
+					}]
+				});
+			}
+		
+			 // Radialize the colors
+			Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+				return {
+					radialGradient: {
+						cx: 0.5,
+						cy: 0.3,
+						r: 0.7
+					},
+					stops: [
+						[0, color],
+						[1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+					]
+				};
+			});
+
+			// Build the chart
+			$('#strength_direct').highcharts({
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+					text: 'Regular Strength'
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b><?php echo e($reg_work[0]->reg_work); ?></b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.y}',
+							style: {
+								color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							},
+							connectorColor: 'silver'
+						}
+					}
+				},
+				series: [{
+					name: "Total",
+					data: [
+						{name: "Regular", y: <?php echo e($reg_work[0]->reg_work); ?>},
+						{
+							name: "Vacant",
+							y: <?php echo e($reg_vacant[0]->reg_vacant); ?>,
+							//sliced: true,
+							//selected: true
+						}
+					]
+				}]
+			});
+			
+			// Build the chart
+			$('#strength_contract').highcharts({
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie'
+				},
+				title: {
+					text: 'PC-1 Strength'
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b><?php echo e($pc1_work[0]->pc1_work); ?></b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							format: '<b>{point.name}</b>: {point.y}',
+							style: {
+								color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							},
+							connectorColor: 'silver'
+						}
+					}
+				},
+				series: [{
+					name: "Total",
+					data: [
+						{name: "PC-1", y: <?php echo e($pc1_work[0]->pc1_work); ?>},
+						{
+							name: "Vacant",
+							y: <?php echo e($pc1_vacant[0]->pc1_vacant); ?>,
+							//sliced: true,
+							//selected: true
+						}
+					]
+				}]
+			});
+
+		<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

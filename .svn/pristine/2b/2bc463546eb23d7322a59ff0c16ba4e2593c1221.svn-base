@@ -1,0 +1,227 @@
+@extends("base")
+
+@section('sidebar')
+    @parent
+
+@endsection
+
+@section('content')
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">ACR Report</h3>
+
+            <div class="box-tools">
+
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+            <table class="table table-bordered" id="employee_table" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Emp ID</th>
+                    <th>Emp Name</th>
+                    <th>F/H/Name</th>
+                    <th>DOB</th>
+                    <th>GENDER</th>
+                    <th>CNIC</th>
+                    <th>DOMICILE</th>
+                    <th>RELIGION</th>
+                    <th>HOME DISTRICT</th>
+                    <th>JOB STATUS</th>
+                    <th>CURRENT POST</th>
+                    <th>CURRENT BS</th>
+                    <th>ACR ID</th>
+                    <th>DATE FROM</th>
+                    <th>DATE TO</th>
+                    <th>RO NAME</th>
+                    <th>CO NAME</th>
+                    <th>ACR EDOC</th>
+                    <th>YEAR ID</th>
+                    <th>ACR STATUS</th>
+                    <th>YEAR TITLE</th>
+                </tr>
+                </thead>
+
+                <thead class="multi_search">
+                <tr>
+                    <th>Emp ID</th>
+                    <th>Emp Name</th>
+                    <th>F/H/Name</th>
+                    <th>DOB</th>
+                    <th>GENDER</th>
+                    <th>CNIC</th>
+                    <th>DOMICILE</th>
+                    <th>RELIGION</th>
+                    <th>HOME DISTRICT</th>
+                    <th>JOB STATUS</th>
+                    <th>CURRENT POST</th>
+                    <th>CURRENT BS</th>
+                    <th>ACR ID</th>
+                    <th>DATE FROM</th>
+                    <th>DATE TO</th>
+                    <th>RO NAME</th>
+                    <th>CO NAME</th>
+                    <th>ACR EDOC</th>
+                    <th>YEAR ID</th>
+                    <th>ACR STATUS</th>
+                    <th>YEAR TITLE</th>
+                </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>Emp ID</th>
+                        <th>Emp Name</th>
+                        <th>F/H/Name</th>
+                        <th>DOB</th>
+                        <th>GENDER</th>
+                        <th>CNIC</th>
+                        <th>DOMICILE</th>
+                        <th>RELIGION</th>
+                        <th>HOME DISTRICT</th>
+                        <th>JOB STATUS</th>
+                        <th>CURRENT POST</th>
+                        <th>CURRENT BS</th>
+                        <th>ACR ID</th>
+                        <th>DATE FROM</th>
+                        <th>DATE TO</th>
+                        <th>RO NAME</th>
+                        <th>CO NAME</th>
+                        <th>ACR EDOC</th>
+                        <th>YEAR ID</th>
+                        <th>ACR STATUS</th>
+                        <th>YEAR TITLE</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                @foreach($data as $key => $row)
+                    <tr>
+                        <td>{{$row->emp_id}}</td>
+                        <td>{{$row->emp_name}}</td>
+                        <td>{{$row->f_h_name}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->dob)}}</td>
+                        <td>{{$row->gender}}</td>
+                        <td>{{$row->cnic}}</td>
+                        <td>{{$row->domicile}}</td>
+                        <td>{{$row->religion}}</td>
+                        <td>{{$row->home_district}}</td>
+                        <td>{{$row->job_status}}</td>
+                        <td>{{$row->current_post}}</td>
+                        <td>{{$row->current_bs}}</td>
+                        <td>{{$row->acr_id}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->date_from)}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->date_to)}}</td>
+                        <td>{{$row->ro_name}}</td>
+                        <td>{{$row->co_name}}</td>
+                        <td>{{$row->acr_edoc}}</td>
+                        <td>{{$row->year_id}}</td>
+                        <td>@if($row->acr_status == 0) Not Submitted @else Submitted @endif</td>
+                        <td>{{$row->year_title}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+
+            </table>
+        </div><!-- /.box-body -->
+
+    </div><!-- /.box -->
+
+    {!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
+
+
+
+    <style>
+        div.dataTables_wrapper {
+            width: 100% !important;
+            margin: 0 auto;
+        }
+        tfoot {
+            display: table-header-group;
+        }
+    </style>
+
+@section('js')
+
+        $("#employee_table thead th").each( function () {
+            var title = $(this).text();
+
+            if(false)
+                $(this).html( '<div style="width:60px">'+title+'</div>' );
+            else
+                $(this).html( '<div style="width:155px">'+title+'</div>' );
+        } );
+        // Setup - add a text input to each footer cell
+        $('#employee_table thead.multi_search th').each( function () {
+            var title = $(this).text();
+
+            if(title == 'Picture') return;
+            $(this).html( '<input type="text" placeholder="Search '+title+'" style="width:155px !important;" />' );
+        } );
+
+    var table = $("#employee_table").DataTable({
+        scrollX: true,
+		"order": [[ 9, "desc" ]],
+        //scrollXInner: '100%',
+        scrollCollapse: true,
+        lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        // to export data
+        dom: 'lrtipB',
+        buttons: [
+
+        'copy', 'csv', 'excel', 'pdf', 'print'
+
+        ],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                if(column.index() == 4 || column.index() == 6 || column.index() == 7 || column.index() == 9 || column.index() == 10 || column.index() == 11 || column.index == 20)
+                {
+                    var select = $('<select style="width:155px !important"><option value=""></option></select>')
+                        .appendTo($(column.header()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            } );
+        },
+    });
+
+        // Apply the search
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', $('.multi_search th')[colIdx] ).on( 'keydown', function (ev) {
+
+                if (ev.keyCode == 13)
+                { //only on enter keypress (code 13)
+                    table
+                        .column(colIdx)
+                        .search(this.value)
+                        .draw();
+                }
+            } );
+        } );
+
+@endsection
+
+{!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js") !!}
+{!! Html::script("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js") !!}
+
+@stop

@@ -1,0 +1,402 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Strength Charts</h3>
+			
+			<div class="box-tools">
+				<!--<a href="{{URL::to('/employees/add_employee')}}" class="btn btn-primary"><i class="fa fa-star"></i>  Add Employee</a>-->
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<div class="row">
+			<div class="col-md-6">
+				<div id="strength_direct" style="width:450px;"></div>
+			</div><!-- /.col-md-4 -->
+			<div class="col-md-6">
+				<div id="strength_contract" style="width:400px;"></div>
+			</div><!-- /.col-md-4 -->
+			</div>
+		</div><!-- /.box-body -->
+		
+		<div class="box-footer" style="background-color:#ddd;">
+			<div class="col-md-6 text-center">
+				<h4>Total Regular : <strong>{{$reg_work[0]->reg_work+$reg_vacant[0]->reg_vacant}}</strong></h4>
+			</div>
+			<div class="col-md-6 text-center">
+				<h4>Total PC-1 : <strong>{{$pc1_work[0]->pc1_work+$pc1_vacant[0]->pc1_vacant}}</strong></h4>
+			</div>
+		</div><!-- /.box-footer -->
+		
+		<div class="box-body">
+			<div class="row">
+			<div class="col-md-6">
+				<div id="supernumerary_chart" style="width:450px;"></div>
+			</div><!-- /.col-md-4 -->
+			<div class="col-md-6">
+				<div id="trauma_centers_chart" style="width:500px;"></div>
+			</div><!-- /.col-md-4 -->
+			</div>
+		</div><!-- /.box-body -->
+
+		<div class="box-footer" style="background-color:#ddd;">
+			<div class="col-md-6 text-center">
+				<h4>Total Supernumerary : <strong>{{$total_supernumerary[0]->total_supernumerary}}</strong></h4>
+			</div>
+			<div class="col-md-6 text-center">
+				<h4>Total Trauma : <strong>{{$trauma_work[0]->trauma_work+$trauma_vacant[0]->trauma_vacant}}</strong></h4>
+			</div>
+		</div><!-- /.box-footer -->
+		
+	</div><!-- /.box -->
+
+	
+	
+		<!-- Charts row -->
+		 <div class="row">
+			<div class="col-lg-12">
+			  
+			  <div class="box box-success">
+				<div class="box-header">
+				  <i class="fa fa-bar-chart-o"></i>
+				  <h3 class="box-title">Strength Chart</h3>
+				  <div class="box-tools pull-right">
+					<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				  </div>
+				</div><!-- /.box-header -->
+				<div class="box-body no-padding">
+				  <div class="row col-xs-12">
+					  <div class="chart" id="strength-chart" style="margin:0 auto; height: 430px;"></div>
+				  </div><!-- /.row -->
+				 </div><!-- /.box-body -->
+				<!-- Loading -->
+				<div class="overlay" id="strength_chart_loading">
+				  <i class="fa fa-refresh fa-spin"></i>
+				</div>
+				<!-- end loading -->
+			   </div><!-- /.box -->
+			   
+			</div><!-- /.col-lg-12 -->
+
+		 </div><!-- /.row -->
+
+	
+	    <script src="{{URL::to('/public/js/highcharts/highcharts.js')}}"></script>
+        <script src="{{URL::to('/public/js/highcharts/exporting.js')}}"></script>
+	
+@section('js')
+	
+	$(function(){
+		// global variables for strength chart
+          var designation, direct_o, direct_v, promot_o, promot_v;
+          var strength_chart, advertisement_chart;
+		  
+		  $("#strength_chart_loading").show();
+
+            $.ajax({
+              url: '{{URL::to("/ajax_strength")}}',
+              type: 'POST',
+              data: {_token: CSRF_TOKEN},
+              dataType: 'JSON',
+              success: function (response) {
+                if(response.success == true) {
+                  designation = response.data.designation;
+                  direct_o = response.data.direct_o;
+                  direct_v = response.data.direct_v;
+                  promot_o = response.data.promot_o;
+                  promot_v = response.data.promot_v;
+
+                  // new update data values of strength_chart
+                  strength_chart.series[0].setData(direct_o);
+                  strength_chart.series[1].setData(direct_v);
+                  strength_chart.series[2].setData(promot_o);
+                  strength_chart.series[3].setData(promot_v);
+
+                  // set default zoom (10 items) : COMMENT IT TO SEE THE FULL CHART
+                  strength_chart.xAxis[0].setExtremes(0,9);
+                  // update categories values
+                  strength_chart.xAxis[0].setCategories(designation);
+
+                  $("#strength_chart_loading").hide();
+                }
+              else
+                alert('Strength chart initialization error!!');
+              //console.log(response);
+              }
+            });
+			
+		strength_chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'strength-chart',
+                    type: 'column',
+                    panning: true,
+                    panKey: 'shift'
+                },
+                title: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: designation,
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Total Strength'
+                    },
+                    stackLabels: {
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                        }
+                    }
+                },
+                /*legend: {
+                    align: 'right',
+                    x: -30,
+                    verticalAlign: 'top',
+                    y: 25,
+                    floating: true,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                    borderColor: '#CCC',
+                    borderWidth: 1,
+                    shadow: false
+                },*/
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.x + '</b><br/>' +
+                            this.series.name + ': ' + this.y + '<br/>' +
+                            'Total: ' + this.point.stackTotal;
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        dataLabels: {
+                            enabled: true,
+                            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                            style: {
+                                textShadow: '0 0 3px black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Direct Occupied',
+                    data: direct_o
+                }, {
+                    name: 'Direct Vacant',
+                    data: direct_v
+                }, {
+                    name: 'Promotion Occupied',
+                    data: promot_o
+                }, {
+                    name: 'Promotion Vacant',
+                    data: promot_v
+                }]
+            });
+	});
+	
+	 // Radialize the colors
+    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+        return {
+            radialGradient: {
+                cx: 0.5,
+                cy: 0.3,
+                r: 0.7
+            },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+
+    // Build the chart
+    $('#strength_direct').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Regular Strength'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: "Total",
+            data: [
+                {name: "Regular", y: {{$reg_work[0]->reg_work}}},
+                {
+                    name: "Vacant",
+                    y: {{$reg_vacant[0]->reg_vacant}},
+                    //sliced: true,
+                    //selected: true
+                }
+			]
+        }]
+    });
+	
+	// Build the chart
+    $('#strength_contract').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'PC-1 Strength'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{{$pc1_work[0]->pc1_work}}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: "Total",
+            data: [
+                {name: "PC-1", y: {{$pc1_work[0]->pc1_work}}},
+                {
+                    name: "Vacant",
+                    y: {{$pc1_vacant[0]->pc1_vacant}},
+                    //sliced: true,
+                    //selected: true
+                }
+			]
+        }]
+    });
+	
+	// Build the chart
+    $('#supernumerary_chart').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Supernumerary Strength'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{{$total_supernumerary[0]->total_supernumerary}}</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: "Total",
+            data: [
+                {name: "Supernumerary", y: {{$total_supernumerary[0]->total_supernumerary}}},
+                {
+                    name: "Vacant",
+                    y: 0,
+                    //sliced: true,
+                    //selected: true
+                }
+			]
+        }]
+    });
+	
+	// Build the chart
+    $('#trauma_centers_chart').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Trauma Strength'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>176</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: "Total",
+            data: [
+                {name: "Trauma Centers", y: {{$trauma_work[0]->trauma_work}}},
+                {
+                    name: "Vacant",
+                    y: {{$trauma_vacant[0]->trauma_vacant}},
+                    //sliced: true,
+                    //selected: true
+                }
+			]
+        }]
+    });
+	
+	
+@endsection
+
+@stop

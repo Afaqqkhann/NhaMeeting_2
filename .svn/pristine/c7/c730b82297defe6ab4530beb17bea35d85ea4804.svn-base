@@ -1,0 +1,144 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Strength Charts</h3>
+			
+			<div class="box-tools">
+				<!--<a href="<?php echo e(URL::to('/employees/add_employee')); ?>" class="btn btn-primary"><i class="fa fa-star"></i>  Add Employee</a>-->
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<div class="col-md-6">
+				<div id="strength_direct"></div>
+			</div><!-- /.col-md-4 -->
+			<div class="col-md-6">
+				<div id="strength_contract"></div>
+			</div><!-- /.col-md-4 -->
+		</div><!-- /.box-body -->
+		
+		<div class="box-footer">
+			<div class="col-md-6 text-center">
+				<h4>Total Regular : <strong><?php echo e($direct+$direct_vacant); ?></strong></h4>
+			</div>
+			<div class="col-md-6 text-center">
+				<h4>Total Contract : <strong><?php echo e($contract+$contract_vacant); ?></strong></h4>
+			</div>
+		</div><!-- /.box-footer -->
+
+	</div><!-- /.box -->
+
+	    <script src="<?php echo e(URL::to('/public/js/highcharts/highcharts.js')); ?>"></script>
+        <script src="<?php echo e(URL::to('/public/js/highcharts/exporting.js')); ?>"></script>
+	
+<?php $__env->startSection('js'); ?>
+	
+	 // Radialize the colors
+    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+        return {
+            radialGradient: {
+                cx: 0.5,
+                cy: 0.3,
+                r: 0.7
+            },
+            stops: [
+                [0, color],
+                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+            ]
+        };
+    });
+
+    // Build the chart
+    $('#strength_direct').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Regular Strength'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b><?php echo e($direct); ?></b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: "Total",
+            data: [
+                {name: "Regular", y: <?php echo e($direct); ?>},
+                {
+                    name: "Vacant",
+                    y: <?php echo e($direct_vacant); ?>,
+                    //sliced: true,
+                    //selected: true
+                }
+			]
+        }]
+    });
+	
+	// Build the chart
+    $('#strength_contract').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Contract Strength'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b><?php echo e($contract); ?></b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y}',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: "Total",
+            data: [
+                {name: "Contract", y: <?php echo e($contract); ?>},
+                {
+                    name: "Vacant",
+                    y: <?php echo e($contract_vacant); ?>,
+                    //sliced: true,
+                    //selected: true
+                }
+			]
+        }]
+    });
+	
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

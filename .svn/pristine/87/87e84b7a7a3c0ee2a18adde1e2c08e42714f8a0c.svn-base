@@ -1,0 +1,39 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employees</h3>
+			
+			<div class="box-tools">
+				<a href="<?php echo e(URL::to('/employees/add_employee')); ?>" class="btn btn-primary"><i class="fa fa-star"></i>  Add Employee</a>
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped" id="employee_table">
+				<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Father Name</th>
+					<th>DOB</th>
+					<th>Gender</th>
+					<th>CNIC</th>
+					<th>Domicile</th>
+					<th>Place of Posting</th>
+				</tr>
+				</thead>
+
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

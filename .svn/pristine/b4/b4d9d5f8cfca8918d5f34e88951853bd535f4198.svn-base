@@ -1,0 +1,97 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Inquires</h1>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+
+        <!-- Main content -->
+        <section class="content">
+		  
+		 <!-- Charts row -->
+		 <div class="row">
+			<div class="col-lg-12">
+			  
+			  <div class="box box-success">
+                <div class="box-header">
+                  <i class="fa fa-bar-chart-o"></i>
+                  <h3 class="box-title">Inquires Chart</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+				  <div class="row col-xs-12">
+					  <div class="chart" id="inquires_chart" style="min-width:310px; margin:0 auto; height: 400px;"></div>
+				  </div><!-- /.row -->
+			     </div><!-- /.box-body -->
+                
+			   </div><!-- /.box -->
+			   
+			</div><!-- /.col-lg-12 -->
+
+		 </div><!-- /.row -->
+
+        </section><!-- /.content -->
+
+
+        <script src="public/js/highcharts/highcharts.js"></script>
+        <script src="public/js/highcharts/exporting.js"></script>
+
+
+        <!-- script -->
+        <script>
+          $(function () {
+			$('#inquires_chart').highcharts({
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: ''
+				},
+				xAxis: {
+					categories: ['Minor', 'Major']
+				},
+				yAxis: {
+					min: 0,
+					title: {
+						text: 'Total'
+					},
+					stackLabels: {
+						enabled: true,
+						style: {
+							fontWeight: 'bold',
+							color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+						}
+					}
+				},
+				tooltip: {
+					headerFormat: '<b>{point.x}</b><br/>',
+					pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+				},
+				plotOptions: {
+					column: {
+						stacking: 'normal',
+						dataLabels: {
+							enabled: true,
+							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+							style: {
+								textShadow: '0 0 3px black'
+							}
+						}
+					}
+				},
+				series: [{
+					name: 'Decision Awaiting',
+					data: [2, 6, 4]
+				}, {
+					name: 'Under Process',
+					data: [8, 2, 3]
+				}]
+			});
+		});
+        </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

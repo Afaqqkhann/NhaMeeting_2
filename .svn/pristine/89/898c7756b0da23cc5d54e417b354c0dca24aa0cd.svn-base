@@ -1,0 +1,93 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Community Message</h1>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+
+<div class="box  box-primary">
+    <div class="box-body">
+      <table class="table table-bordered table-stripped table-responsive">
+          <tr>
+              <th>Message Type</th><td><?php echo e($data->title); ?></td>
+          </tr>
+          <tr>
+              <th>Relation</th><td><?php echo e($data->r_title); ?></td>
+          </tr>
+          <tr>
+              <th>Message</th><td><?php echo e($data->message); ?></td>
+          </tr>
+          <tr>
+              <th>Coordinates</th><td><?php echo e($data->coordinates); ?><?php $coordinates = explode(',', $data->coordinates) ?></td>
+          </tr>
+
+          <tr>
+              <th>Location:</th>
+              <td>
+                  <div id="map-canvas" style="height:300px !important;"></div>
+              </td>
+          </tr>
+
+          <tr>
+              <th>Image Gallery</th>
+              <td>
+                  <?php $pictures = DB::table('TBL_COMMUNITY_PICTURE')->where('COMMUNITY_ID', '=', $data->community_id)->get();?>
+                  <?php foreach($pictures as $picture): ?>
+                      <a class="fancybox" rel="gallery1" href="<?php echo e(url($picture->community_edoc)); ?>">
+                          <img src="<?php echo e(url($picture->community_edoc)); ?>" />
+                      </a>
+                  <?php endforeach; ?>
+
+              </td>
+          </tr>
+
+      </table>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+<a href="<?php echo e(URL::to('community_msg')); ?>" class="btn btn-primary" >Back</a>
+
+<style>
+    .fancybox > img { width: 200px !important; }
+</style>
+
+<link rel="stylesheet" href="<?php echo e(url('public/plugins/fancybox/jquery.fancybox.css')); ?>">
+<script src="<?php echo e(url('public/plugins/fancybox/jquery.fancybox.js')); ?>" type="text/javascript"></script>
+
+<script>
+    $(document).ready(function() {
+        $(".fancybox").fancybox({
+            openEffect	: 'none',
+            closeEffect	: 'none'
+        });
+    });
+
+</script>
+
+<script>
+
+    function initMain() {
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {
+                lat: <?php if($coordinates[0] != '' || $coordinates[0] != null): ?> <?php echo e($coordinates[0]); ?> <?php else: ?> 33.71333479999999 <?php endif; ?>,
+                lng: <?php if($coordinates[1] != '' || $coordinates[1] != null): ?> <?php echo e($coordinates[1]); ?> <?php else: ?> 73.06192609999994 <?php endif; ?>
+            },
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        var marker = new google.maps.Marker({
+            position: {
+                lat: <?php if($coordinates[0] != '' || $coordinates[0] != null): ?> <?php echo e($coordinates[0]); ?> <?php else: ?> 33.71333479999999 <?php endif; ?>,
+                lng: <?php if($coordinates[1] != '' || $coordinates[1] != null): ?> <?php echo e($coordinates[1]); ?> <?php else: ?> 73.06192609999994 <?php endif; ?>
+            },
+            draggable: false,
+            map: map
+        });
+
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAw3lSrcwKAhj3uaJcjES87gG0bv1jtVu8&libraries=places&callback=initMain" async defer></script>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

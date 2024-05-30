@@ -1,0 +1,115 @@
+@extends('base')
+
+@section('content')
+
+	<h2>Employee Current</h2>
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employees</h3>
+			
+			<div class="box-tools">
+
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped" id="employee_current_table">
+				<thead>
+                      <tr>
+                          <th>Emp Name</th>
+                          <th>F/H Name</th>
+						  <th>Date of Birth</th>
+                          <th>Gender</th>
+                          <th>CNIC</th>
+                          <th>Religion</th>
+                          <th>Home District</th>
+                          <th>FP ID</th>
+                          <th>Ref. File No.</th>
+                          <th>BS</th>
+                          <th>Joining Date</th>
+                          <th>Relieving Date</th>
+                          <th>Strength Name</th>
+                          <th>Remarks</th>
+                          <th>Post Name</th>
+                          <th>Zone</th>
+                          <th>Region</th>
+                          <th>Place</th>
+                          <th>Place Type</th>
+                          <th>Wing</th>
+                          <th>Section</th>
+                          <th>Wing Head</th>
+                      </tr>
+                  </thead>
+                <tfoot>
+                      <tr>
+                          <th>Emp Name</th>
+                          <th>F/H Name</th>
+						  <th>Date of Birth</th>
+                          <th>Gender</th>
+                          <th>CNIC</th>
+                          <th>Religion</th>
+                          <th>Home District</th>
+                          <th>FP ID</th>
+                          <th>Ref. File No.</th>
+                          <th>BS</th>
+                          <th>Joining Date</th>
+                          <th>Relieving Date</th>
+                          <th>Strength Name</th>
+                          <th>Remarks</th>
+                          <th>Post Name</th>
+                          <th>Zone</th>
+                          <th>Region</th>
+                          <th>Place</th>
+                          <th>Place Type</th>
+                          <th>Wing</th>
+                          <th>Section</th>
+                          <th>Wing Head</th>
+                      </tr>
+                  </tfoot>
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+    <style>
+        .dataTables_scroll
+        {
+            overflow:auto;
+        }
+    </style>
+
+@section('js')
+
+    $(document).ready(function() {
+    $('.dataTable').wrap('<div class="dataTables_scroll" />');
+    // Setup - add a text input to each footer cell
+    $('#employee_current_table tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+
+    var table = $('#employee_current_table').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            ajax: '{{ url("employees/employee_current_data") }}',
+        });
+
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+            $( 'input', this.footer() ).on( 'keyup', function (e) {
+                if ( that.search() !== this.value && e.keyCode == 13) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+    } );
+
+@endsection
+
+@stop

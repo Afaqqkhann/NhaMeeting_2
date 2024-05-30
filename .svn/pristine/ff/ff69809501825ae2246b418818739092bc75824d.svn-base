@@ -1,0 +1,293 @@
+@extends("base")
+
+@section('sidebar')
+    @parent
+
+@endsection
+
+@section('content')
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Training Done</h3>
+
+            <div class="box-tools">
+
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+            <table class="table" id="employee_table" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>TRAINING TYPE</th>
+                    <th>EXPENDITURE</th>
+                    <th>EARNED THROUGH</th>
+                    <th>EAD DEADLINE</th>
+                    <th>ORGANIZATION</th>
+                    <th>COMMENTS</th>
+                    <th>PLACE</th>
+                    <th>INSTITUTE</th>
+                    <th>START DATE</th>
+                    <th>END DATE</th>
+                    <th>TOTAL DAYS</th>
+                    <th>REFERENCE NO</th>
+                    <th>SLOTS</th>
+                    <th>TC STATUS</th>
+                    <th>COURSE</th>
+                    <th>BS</th>
+                    <th>SERVICE LENGTH</th>
+                    <th>AGE</th>
+                    <th>CADRE NAME</th>
+                    <th>SPONSER</th>
+                    <th>VENUE</th>
+                    <th>TRAINING TIME</th>
+                    <th>EMP NAME</th>
+                    <th>F H NAME</th>
+                    <th>DOB</th>
+                    <th>GENDER</th>
+                    <th>MOBILE NO</th>
+                    <th>OFF PHONE NO</th>
+                    <th>CNIC</th>
+                    <th>ZONE TITLE</th>
+                    <th>PLACE TITLE</th>
+                    <th>JOINING DATE</th>
+                    <th>RELIEVING DATE</th>
+                    <th>TN STATUS</th>
+                    <th>COURSE ID</th>
+                    <th>EMP ID</th>
+                    <th>PLACE ID</th>
+                </tr>
+                </thead>
+
+                <thead class="multi_search">
+                <tr>
+                    <th>TRAINING TYPE</th>
+                    <th>EXPENDITURE</th>
+                    <th>EARNED THROUGH</th>
+                    <th>EAD DEADLINE</th>
+                    <th>ORGANIZATION</th>
+                    <th>COMMENTS</th>
+                    <th>PLACE</th>
+                    <th>INSTITUTE</th>
+                    <th>START DATE</th>
+                    <th>END DATE</th>
+                    <th>TOTAL DAYS</th>
+                    <th>REFERENCE NO</th>
+                    <th>SLOTS</th>
+                    <th>TC STATUS</th>
+                    <th>COURSE</th>
+                    <th>BS</th>
+                    <th>SERVICE LENGTH</th>
+                    <th>AGE</th>
+                    <th>CADRE NAME</th>
+                    <th>SPONSER</th>
+                    <th>VENUE</th>
+                    <th>TRAINING TIME</th>
+                    <th>EMP NAME</th>
+                    <th>F H NAME</th>
+                    <th>DOB</th>
+                    <th>GENDER</th>
+                    <th>MOBILE NO</th>
+                    <th>OFF PHONE NO</th>
+                    <th>CNIC</th>
+                    <th>ZONE TITLE</th>
+                    <th>PLACE TITLE</th>
+                    <th>JOINING DATE</th>
+                    <th>RELIEVING DATE</th>
+                    <th>TN STATUS</th>
+                    <th>COURSE ID</th>
+                    <th>EMP ID</th>
+                    <th>PLACE ID</th>
+                </tr>
+                </thead>
+                <thead>
+                <tr>
+                    <th>TRAINING TYPE</th>
+                    <th>EXPENDITURE</th>
+                    <th>EARNED THROUGH</th>
+                    <th>EAD DEADLINE</th>
+                    <th>ORGANIZATION</th>
+                    <th>COMMENTS</th>
+                    <th>PLACE</th>
+                    <th>INSTITUTE</th>
+                    <th>START DATE</th>
+                    <th>END DATE</th>
+                    <th>TOTAL DAYS</th>
+                    <th>REFERENCE NO</th>
+                    <th>SLOTS</th>
+                    <th>TC STATUS</th>
+                    <th>COURSE</th>
+                    <th>BS</th>
+                    <th>SERVICE LENGTH</th>
+                    <th>AGE</th>
+                    <th>CADRE NAME</th>
+                    <th>SPONSER</th>
+                    <th>VENUE</th>
+                    <th>TRAINING TIME</th>
+                    <th>EMP NAME</th>
+                    <th>F H NAME</th>
+                    <th>DOB</th>
+                    <th>GENDER</th>
+                    <th>MOBILE NO</th>
+                    <th>OFF PHONE NO</th>
+                    <th>CNIC</th>
+                    <th>ZONE TITLE</th>
+                    <th>PLACE TITLE</th>
+                    <th>JOINING DATE</th>
+                    <th>RELIEVING DATE</th>
+                    <th>TN STATUS</th>
+                    <th>COURSE ID</th>
+                    <th>EMP ID</th>
+                    <th>PLACE ID</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach($data as $key => $row)
+                    <tr>
+                        <td>{{$row->training_type}}</td>
+                        <td>{{$row->expenditure}}</td>
+                        <td>{{$row->earned_through}}</td>
+                        <td>{{$row->ead_deadline}}</td>
+                        <td>{{$row->organization}}</td>
+                        <td>{{$row->comments}}</td>
+                        <td>{{$row->place}}</td>
+                        <td>{{$row->institute}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->start_date)}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->end_date)}}</td>
+                        <td>{{$row->total_days}}</td>
+                        <td>{{$row->reference_no}}</td>
+                        <td>{{$row->slots}}</td>
+                        <td>{{$row->tc_status}}</td>
+                        <td>{{$row->course}}</td>
+                        <td>{{$row->bs}}</td>
+                        <td>{{$row->service_length}}</td>
+                        <td>{{$row->age}}</td>
+                        <td>{{$row->cadre_name}}</td>
+                        <td>{{$row->sponser}}</td>
+                        <td>{{$row->venue}}</td>
+                        <td>{{$row->training_time}}</td>
+                        <td>{{$row->emp_name}}</td>
+                        <td>{{$row->f_h_name}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->dob)}}</td>
+                        <td>{{$row->gender}}</td>
+                        <td>{{$row->mobile_no}}</td>
+                        <td>{{$row->off_phone_no}}</td>
+                        <td>{{$row->cnic}}</td>
+                        <td>{{$row->zone_title}}</td>
+                        <td>{{$row->place_title}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->joining_date)}}</td>
+                        <td>{{\Naeem\Helpers\Helper::get_date_format($row->relieving_date)}}</td>
+                        <td>{{$row->tn_status}}</td>
+                        <td>{{$row->course_id}}</td>
+                        <td>{{$row->emp_id}}</td>
+                        <td>{{$row->place_id}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+
+            </table>
+        </div><!-- /.box-body -->
+
+    </div><!-- /.box -->
+
+    {!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
+
+
+    <style>
+        div.dataTables_wrapper {
+            width: 100% !important;
+            margin: 0 auto;
+        }
+        tfoot {
+            display: table-header-group;
+        }
+    </style>
+
+@section('js')
+
+    $("#employee_table thead th").each( function () {
+    var title = $(this).text();
+
+    if(false)
+    $(this).html( '<div style="width:60px">'+title+'</div>' );
+    else
+    $(this).html( '<div style="width:155px">'+title+'</div>' );
+    } );
+    // Setup - add a text input to each footer cell
+    $('#employee_table thead.multi_search th').each( function () {
+    var title = $(this).text();
+
+    if(title == 'Picture') return;
+    $(this).html( '<input type="text" placeholder="Search '+title+'" style="width:155px !important;" />' );
+    } );
+
+    var table = $("#employee_table").DataTable({
+    scrollX: true,
+    //scrollXInner: '100%',
+    scrollCollapse: true,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    // to export data
+    dom: 'lrtipB',
+    buttons: [
+
+    'copy', 'csv', 'excel', 'pdf', 'print'
+
+    ],
+    initComplete: function () {
+    this.api().columns().every( function () {
+    var column = this;
+    if(column.index() == 4 || column.index() == 6 || column.index() == 7
+    || column.index() == 14 || column.index() == 15 || column.index() == 18 || column.index() == 25
+    || column.index() == 29 || column.index() == 30)
+    {
+    var select = $('<select style="width:155px !important"><option value=""></option></select>')
+    .appendTo($(column.header()).empty())
+    .on('change', function () {
+    var val = $.fn.dataTable.util.escapeRegex(
+    $(this).val()
+    );
+
+    column
+    .search(val ? '^' + val + '' : '', true, false)
+    .draw();
+    });
+
+    column.data().unique().sort().each(function (d, j) {
+    select.append('<option value="' + d + '">' + d + '</option>')
+    });
+    }
+    } );
+    }
+
+    });
+
+    // Apply the search
+    table.columns().eq( 0 ).each( function ( colIdx ) {
+    $( 'input', $('.multi_search th')[colIdx] ).on( 'keydown', function (ev) {
+
+    if (ev.keyCode == 13)
+    { //only on enter keypress (code 13)
+    table
+    .column(colIdx)
+    .search(this.value)
+    .draw();
+    }
+    } );
+    } );
+
+@endsection
+
+
+{!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js") !!}
+{!! Html::script("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") !!}
+{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js") !!}
+{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js") !!}
+
+@stop

@@ -1,0 +1,239 @@
+@extends("base")
+
+@section('sidebar')
+	@parent
+
+@endsection
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employees</h3>
+
+			<div class="box-tools">
+
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table" id="employee_table" cellspacing="0">
+				<thead>
+				<tr>
+					<th>Profile Picture</th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Father Name</th>
+					<th>DOB</th>
+					<th>CNIC</th>
+					<th>Domicile</th>
+					<th>BS</th>
+					<th>Post Name</th>
+					<th>Ref File No.</th>
+					<th>Date of Appointment</th>
+					<th>Type of Appointment</th>
+				</tr>
+				</thead>
+
+				<thead class="multi_search">
+				<tr>
+					<th>Profile Picture</th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Father Name</th>
+					<th>DOB</th>
+					<th>CNIC</th>
+					<th>Domicile</th>
+					<th>BS</th>
+					<th>Post Name</th>
+					<th>Ref File No.</th>
+					<th>Date of Appointment</th>
+					<th>Type of Appointment</th>
+				</tr>
+				</thead>
+
+				<tfoot>
+				<tr>
+					<th>Profile Picture</th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Father Name</th>
+					<th>DOB</th>
+					<th>CNIC</th>
+					<th>Domicile</th>
+					<th>BS</th>
+					<th>Post Name</th>
+					<th>Ref File No.</th>
+					<th>Date of Appointment</th>
+					<th>Type of Appointment</th>
+				</tr>
+				</tfoot>
+
+				@foreach($data as $key => $row)
+					<tr>
+						<td>
+							@if(file_exists('storage/emp_pic/'.$row->fp_id.'.jpg'))
+								<img src="{{url('/storage/emp_pic').'/'.$row->fp_id}}.jpg" style="width:60px;" class="img-responsive">
+							@else
+								<img src="{{url('/storage/emp_pic')}}/default.png" style="width:60px;" class="img-responsive">
+							@endif
+						</td>
+						<td>{{$row->emp_id}}</td>
+						<td>{{$row->emp_name}}</td>
+						<td>{{$row->f_h_name}}</td>
+						<td>{{$row->dob}}</td>
+						<td>{{$row->cnic}}</td>
+						<td>{{$row->domicile}}</td>
+						<td>{{$row->bs}}</td>
+						<td>{{$row->post_name}}</td>
+						<td>{{$row->ref_file_no}}</td>
+						<td>{{$row->date_of_appointment}}</td>
+						<td>{{$row->type_of_appointment}}</td>
+					</tr>
+				@endforeach
+
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+	{!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
+
+	{!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
+	{!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
+	{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js") !!}
+	{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js") !!}
+	{!! Html::script("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") !!}
+	{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") !!}
+	{!! Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") !!}
+	{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js") !!}
+	{!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js") !!}
+
+	<style>
+		div.dataTables_wrapper {
+			width: 100% !important;
+			margin: 0 auto;
+		}
+	</style>
+
+<script>
+
+	$('#employee_table thead th').each( function () {
+		var title = $(this).text();
+
+		if(title == 'ID')
+			$(this).html( '<div style="width:60px">'+title+'</div>' );
+		else
+			$(this).html( '<div style="width:155px">'+title+'</div>' );
+	} );
+
+	// Setup - add a text input to each header cell
+	$('#employee_table thead.multi_search th').each( function () {
+		var title = $(this).text();
+		var css;
+
+		if(title == 'ID') css = 'style="width:60px;"';
+		if(title == 'Action') return;
+		if(title == 'Profile Picture') return;
+		$(this).html( '<input type="text" placeholder="Search '+title+'" '+css+'/>' );
+	} );
+
+	var table = $('#employee_table').DataTable({
+		scrollX: true,
+		scrollXInner: '100%',
+		scrollCollapse: true,
+		lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		// to export data
+		dom: 'lrtipB',
+		buttons: [
+
+		'copy', 'csv', 'excel', 'pdf', 'print'
+
+		],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                if(column.index() == 6 || column.index() == 7 || column.index() == 8)
+                {
+                    var select = $('<select><option style="width:100px !important" value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            } );
+        },
+		columns: [
+		null,
+		null,
+		null,
+		null,
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		},
+		null,
+		null,
+		null,
+		null,
+		null,
+		{
+		type: 'date',
+		render: function(data) {
+		if(data) {
+		var tmp = data.split(' ');
+		var date = new Date(tmp[0]);
+		var year = date.getFullYear().toString();
+		var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+		var day  = date.getDate().toString();
+		return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+		}
+		else
+		return data;
+		}
+		}
+		]
+	});
+
+	/* Apply the search for individual columns*/
+	table.columns().every( function () {
+
+	var that = this;
+
+	$( 'input', this.footer() ).on( 'keydown', function (ev) {
+
+	if (ev.keyCode == 13) { //only on enter keypress (code 13)
+
+	that
+	.column( $(this).parent().index()+':visible')
+	.search( this.value )
+	.draw();
+	}
+	});
+	});
+
+</script>
+
+
+@stop

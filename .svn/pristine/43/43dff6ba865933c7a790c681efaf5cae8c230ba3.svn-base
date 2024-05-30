@@ -1,0 +1,162 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use DB;
+use Datatables;
+use URL;
+use Auth;
+class TrainingsController extends Controller
+{
+	
+	public function __construct() {
+		
+		$this->middleware('auth');
+        if(!Auth::user()->can('trainings'))
+            abort(403);
+	}
+	
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        //
+        return view('trainings.index');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function training_list_data() {
+
+        $trainings = DB::table('V_TRAININGS')->select(['TN_ID', 'COURSE_NAME', 'EXPENDITURE', 'START_DATE', 'END_DATE', 'TOTAL_DAYS', 'YEARS', 'REFERENCE_NO']);
+
+        return Datatables::of($trainings)
+            ->addColumn('action', function ($trainings) {
+                //return '<a href="'.URL::to('/trainings/training_chart').'/'.$trainings->tn_id.'" class="btn btn-xs btn-primary"><i class="fa fa-file-text-o"></i>  Training Chart</a>';
+                return '<a href="'.URL::to('/trainings/charts').'" class="btn btn-xs btn-primary"><i class="fa fa-file-text-o"></i>  Training Chart</a>';
+            })
+            //->editColumn('id', '{{$emp_id}}')
+            ->make();
+    }
+
+    public function charts() {
+        $page_title = 'Trainings';
+
+        $years = DB::table('V_TRAINING_COURSE')->select('years')->distinct('years')->orderby('years', 'desc')->get();
+        $place_years = DB::table('V_TRAINING_PLACE')->select('years')->distinct('years')->orderby('years', 'desc')->get();
+
+        // values from functions
+        $training_tt_local = DB::select("SELECT TRAINING_TT_LOCAL('2015', 'DEC') training_tt_local FROM dual");
+        $training_tt_foreign = DB::select("SELECT TRAINING_TT_FOREIGN('2015', 'DEC') training_tt_foreign FROM dual");
+        $training_local_current = DB::select('SELECT TRAINING_LOCAL_CURRENT() training_local_current FROM dual');
+        $training_foreign_current = DB::select('SELECT TRAINING_FOREIGN_CURRENT() training_foreign_current FROM dual');
+
+        return view('trainings.training_charts', compact('page_title', 'years', 'place_years', 'training_tt_local', 'training_tt_foreign', 'training_local_current', 'training_foreign_current'));
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    /**
+     * @param $year
+     * @return string
+     */
+    public function get_yearwise_data($year) {
+        $years = DB::table('V_TRAINING_COURSE')->where('years', '=', $year)->get();
+
+        $data = $result = array();
+        $course_name = array('name' => 'Participants');
+
+        foreach($years as $row) {
+            $course_name['data'][] = $row->course_name;
+            $data['data'][] = $row->no_of_person;
+        }
+
+        array_push($result, $course_name['data']);
+        array_push($result, array('data' => $data['data'], 'name' => 'Participants'));
+
+        return json_encode($result, JSON_NUMERIC_CHECK);
+    }
+
+    public function get_training_place_data($year) {
+        $data = DB::table('V_TRAINING_PLACE')->where('years', '=', $year)->get();
+
+        foreach($data as $row) {
+            $data['local'][] = intval($row->local_trainings);
+            $data['foreign'][] = intval($row->foreign_trainings);
+            $data['categories'][] = $row->months;
+        }
+
+        return json_encode($data);
+    }
+}

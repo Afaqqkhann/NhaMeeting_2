@@ -1,0 +1,36 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Strength List</h3>
+			
+			<div class="box-tools">
+				<a href="{{URL::to('/strength/add_strength')}}" class="btn btn-primary"><i class="fa fa-star"></i>  Add Strength</a>
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped" id="strength_table">
+				<thead>
+				<tr>
+					<th>#</th>
+					<th>Strength Name</th>
+					<th>App Direct</th>
+					<th>Work Direct</th>
+				</tr>
+				</thead>
+
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+
+@stop

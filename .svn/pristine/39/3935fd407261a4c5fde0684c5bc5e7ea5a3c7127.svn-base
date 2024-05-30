@@ -1,0 +1,370 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use Auth;
+use DB;
+use URL;
+use Datatables;
+use Redirect;
+use Validator;
+use Session;
+use Illuminate\Support\Facades\File;
+
+use App\Models\Employees\Employees;
+use App\Models\ACR;
+use App\User;
+use App\Http\Controllers\Controller;
+
+
+class EmployeesController extends Controller
+{
+	public function __construct() {
+		
+		$this->middleware('auth');
+	}
+	
+	public function add_employee() {
+		$page_title = 'Add Employee';
+		return view('employees.add_employee', compact('page_title'));
+	}
+
+	public function set_employee() {
+		$input = Request::except('_token');
+
+		// custom validation messages
+		$messages = array(
+			'required' => 'The :attribute field is required.',
+		);
+
+		$validator = Validator::make(Request::all(), [
+			'emp_name' => 'required|max:20',
+			'dob' => 'required|date',
+		], $messages);
+
+		if($validator->fails())
+			return redirect()->back()->withInput()->withErrors($validator->errors());
+		else {
+			$row = DB::table('TBL_EMP')->orderBy('emp_id', 'DESC')->first();
+
+			$data = array(
+				'EMP_ID' =>	 $row->emp_id+1,
+				'EMP_NAME' => $input['emp_name'],
+				'F_H_NAME' => $input['f_h_name'],
+				'DOB' => date('Y-m-d', strtotime($input['dob'])),
+				'GENDER' => $input['gender'],
+				'CNIC' => $input['cnic'],
+				'DOMICILE' => $input['domicile'],
+				'PLACE_OF_POSTING' => $input['place_of_posting'],
+				'MARITAL_STATUS' => $input['marital_status'],
+				'RELIGION' => $input['religion'],
+				'HOME_DISTRICT' => $input['home_district'],
+				'VI_MARK' => $input['vi_mark'],
+				'LANGUAGES' => $input['languages'],
+				'HIGHEST_QUALIFICATION' => $input['highest_qualification'],
+				'DUAL_NATIONALITY' => $input['dual_nationality'],
+				'REF_FILE_NO' => $input['ref_file_no'],
+				'DESIGNATION' => $input['designation'],
+				'BS' => $input['bs'],
+				'SG' => $input['sg'],
+				'SERVICE_TYPE' => $input['service_type'],
+				'CADRE' => $input['cadre'],
+				'SENIORITY_POSITION' => $input['seniority_position'],
+				'SECTION' => $input['section'],
+				'WING' => $input['wing'],
+				'REGION' => $input['region'],
+				'CURRENT_STATUS' => $input['current_status'],
+				'SALARY_ACCOUNT' => $input['salary_account'],
+				'APP_AGAINST_PROJECT' => $input['app_against_project'],
+				'OFF_PHONE_NO' => $input['off_phone_no'],
+				'OFF_EXT_NO' => $input['off_ext_no'],
+				'RES_PHONE_NO' => $input['res_phone_no'],
+				'MOBILE_NO' => $input['mobile_no'],
+				'EMRGCY_CONTACT_NAME' => $input['emrgcy_contact_name'],
+				'EMRGCY_CONTACT_PHONENO' => $input['emrgcy_contact_phoneno'],
+				'EMRGCY_CONTACT_ADDRESS' => $input['emrgcy_contact_address'],
+				'DATE_OF_JOINING' => ($input['date_of_joining'] == '') ? '' : date('Y-m-d', strtotime($input['date_of_joining'])),
+				'RECRUITMENT_QUOTA' => $input['recruitment_quota'],
+				'QUOTA_ADV_DATE' => ($input['quota_adv_date'] == '') ? '' : date('Y-m-d', strtotime($input['quota_adv_date'])),
+				'DATE_OF_EXPIRY' => ($input['date_of_expiry'] == '') ? '' : date('Y-m-d', strtotime($input['date_of_expiry'])),
+				'DATE_OF_25YR_SERVICE' => ($input['date_of_25yr_service'] == '') ? '' : date('Y-m-d', strtotime($input['date_of_25yr_service'])),
+				'DATE_OF_SUPERANNUATION' => ($input['date_of_superannuation'] == '') ? '' : date('Y-m-d', strtotime($input['date_of_superannuation'])),
+				'PROBATION' => $input['probation'],
+				'MAILING_ADDRESS' => $input['mailing_address'],
+				'PERMENENT_ADDRESS' => $input['permenent_address'],
+				'WORKING_AS_DESIG' => $input['working_as_desig'],
+				'WORKING_AS_BS' => $input['working_as_bs'],
+				'FAX_NO' => $input['fax_no'],
+				'BLOOD_GROUP' => $input['blood_group'],
+				'TTL_LEAVE_BAL' => $input['ttl_leave_bal'],
+				'MOVE_OVER' => $input['move_over'],
+				'VERIFIED_ON' => $input['verified_on'],
+				'PERS_NO' => $input['pers_no'],
+				'REGULARIZATION_FROM' => $input['regularization_from'],
+				'REGULARIZATION_DATE' => ($input['regularization_date'] == '') ? '' : date('Y-m-d', strtotime($input['regularization_date'])),
+				'REGULARIZATION_RECOMEND' => $input['regularization_recomend'],
+				'NATURE_OF_APPOINTMENT' => $input['nature_of_appointment'],
+				'ADJUSTED_AGAINST' => $input['adjusted_against'],
+			);
+
+			// now insert new record
+			DB::table('TBL_EMP')->insert($data);
+		}
+
+		return Redirect::to('/employees/employees_list');
+	}
+
+	public function employees_list() {
+		if(!Auth::user()->can('employees_detail'))
+			abort(403);
+
+        $data = DB::table('V_EMP')->select([
+            'FP_ID',
+            'EMP_ID',
+            'EMP_NAME',
+            'F_H_NAME',
+            'DOB',
+            'CNIC',
+            'DOMICILE',
+            'BS',
+            'REF_FILE_NO',
+            'DATE_OF_APPOINTMENT',
+            'TYPE_OF_APPOINTMENT'
+        ])->get();
+
+
+		$page_title = 'Employees';
+		return view('employees.employees_list', compact('page_title','data'));
+	}
+	
+	public function employees_list_data(){
+		if(!Auth::user()->can('employees_detail'))
+			abort(403);
+
+		$emp = DB::table('V_EMP')->select(['FP_ID', 'EMP_ID', 'EMP_NAME', 'F_H_NAME', 'DOB', 'CNIC', 'DOMICILE', 'BS','REF_FILE_NO',
+										  'DATE_OF_APPOINTMENT', 'TYPE_OF_APPOINTMENT']);
+
+        return Datatables::of($emp)
+            ->addColumn('action', function ($emp) {
+				$profile_view = (Auth::user()->hasRole('admin')) ? '<a href="'.URL::to('/employee/profile').'/'.$emp->emp_id.'" class="btn btn-xs btn-default"><i class=" fa fa-picture-o"></i> Profile</a>' : '';
+                return '<a href="'.URL::to('/employee/icp_chart').'/'.$emp->emp_id.'" class="btn btn-xs btn-primary"><i class="fa fa-file-text-o"></i>  ICP Chart</a>'.$profile_view;
+            })
+			/*->addColumn('profile_picture', function($emp) {
+				return '<img src="'.URL::to('/storage/emp_pic').'/'.$emp->fp_id.'" class="img">';
+			})*/
+            ->editColumn('fp_id', function($emp) {
+				if(file_exists('storage/emp_pic/'.$emp->fp_id.'.jpg'))
+					return '<img src="'.URL::to('/storage/emp_pic').'/'.$emp->fp_id.'.jpg" style="width:60px;" class="img-responsive">';
+				else
+					return '<img src="'.URL::to('/storage/emp_pic').'/default.png" style="width:60px;" class="img-responsive">';
+			})
+            ->make();
+	}
+	
+	/**
+	 *  Show ICP chart of an employee
+	 *
+	 *  @param int $id
+	 *  @return 
+	 */
+	public function employee_icp($id) {
+		if(!Auth::user()->can('employees_detail'))
+			abort(403);
+		$emp 		= DB::table('TBL_EMP')->where('EMP_ID', $id)->first();
+		$education 	= DB::table('TBL_EDUCATION')->where('EMP_ID', $emp->emp_id)->get();
+		$career 	= DB::table('V_CARRIER')->where('EMP_ID', $emp->emp_id)->orderBy('JOINING_DATE', 'DESC')->orderBy('BS', 'DESC')->orderBy('RELIEVING_DATE', 'DESC')->get();
+		$training 	= DB::table('TRAININGS')->where('EMP_ID', $emp->emp_id)->get();
+		$reward 	= DB::table('V_REWARDS')->where('EMP_ID', $emp->emp_id)->get();
+		$penalties 	= DB::table('V_PENALTIE')->where('EMP_ID', $emp->emp_id)->get();
+		$experience	= DB::table('TBL_EXPERIENCE')->where('EMP_ID', $emp->emp_id)->get();
+		$assets 	= DB::table('TBL_ASSETS')->join('TBL_YEAR', 'TBL_ASSETS.YEAR_ID', '=', 'TBL_YEAR.YEAR_ID')->where('TBL_ASSETS.EMP_ID', $emp->emp_id)->get();
+		$acrs 	    = DB::table('V_ACR')->where('EMP_ID', $emp->emp_id)->get();
+		//$monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->where('EMPNO', '=', $emp->fp_id)->get();
+        $monthly_attendance = '';
+		/*$conn = DB::connection('sqlsrv_fin');
+		// Sp_PaySlip ("17301-8391053-1", 1, 2016)
+		$finance = $conn->select('EXEC dbo.Sp_EmpPayments ?', array($emp->cnic));*/
+        $finance = "";
+
+		if($emp) {
+			$page_title = $emp->emp_name;
+		}
+		else {
+			Session::flash('error', 'No Record Found!!');
+		}
+		
+		return view('employees.employee_detail', compact('page_title', 'emp', 'education', 'career', 'training', 'reward', 'penalties', 'experience', 'assets', 'monthly_attendance', 'finance','acrs'));
+	}
+	
+	public function acr_list() {
+		$page_title = 'ACR';
+		return view('employees.acr_list', compact('page_title'));
+	}
+	
+	public function acr_data(){
+		$acr = DB::table('TBL_ACR acr')->select('acr.ACR_ID', 'emp.EMP_NAME', 'acr.DATE_FROM', 'acr.DATE_TO')->rightjoin('TBL_EMP emp', 'acr.EMP_ID', '=', 'emp.EMP_ID')->orderby('acr.DATE_FROM', 'ASC');
+		return Datatables::of($acr)->make();
+	}
+	
+	public function employee_reward() {
+		$page_title = "Employee Reward";
+		$reward_types = DB::table('TBL_REWARD_TYPE')->select('REWARD_TYPE_ID', 'RT_TITLE')->get();
+		$reward_purpose = DB::table('TBL_REWARD_PURPOSE')->select('REWARD_PURPOSE_ID', 'RP_TITLE')->get();
+		
+		return view('employees.employee_reward', compact('page_title', 'reward_types', 'reward_purpose'));
+	}
+	
+	// employee detail view
+	public function detail() {
+		
+		$emp 		= DB::table('TBL_EMP')->where('EMP_ID', Auth::user()->emp_id)->first();
+		$education 	= DB::table('TBL_EDUCATION')->where('EMP_ID', $emp->emp_id)->get();
+		$career 	= DB::table('V_CARRIER')->where('EMP_ID', $emp->emp_id)->orderBy('BS', 'DESC')->orderBy('JOINING_DATE', 'DESC')->orderBy('RELIEVING_DATE', 'DESC')->get();
+		$training 	= DB::table('TRAININGS')->where('EMP_ID', $emp->emp_id)->get();
+		$reward 	= DB::table('V_REWARDS')->where('EMP_ID', $emp->emp_id)->get();
+		$penalties 	= DB::table('V_PENALTIE')->where('EMP_ID', $emp->emp_id)->get();
+		$experience	= DB::table('TBL_EXPERIENCE')->where('EMP_ID', $emp->emp_id)->get();
+		$assets 	= DB::table('TBL_ASSETS')->join('TBL_YEAR', 'TBL_ASSETS.YEAR_ID', '=', 'TBL_YEAR.YEAR_ID')->where('TBL_ASSETS.EMP_ID', $emp->emp_id)->get();
+		$monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->where('EMPNO', '=', $emp->fp_id)->get();
+		
+		$conn = DB::connection('sqlsrv_fin');
+		// Sp_PaySlip ("17301-8391053-1", 1, 2016)
+		$finance = $conn->select('EXEC dbo.Sp_EmpPayments ?', array($emp->cnic));
+		
+		if($emp) {
+			$page_title = $emp->emp_name;
+		}
+		else {
+			Session::flash('error', 'No Record Found against given CNIC');
+		}
+		
+		return view('employees.employee_detail', compact('page_title', 'emp', 'education', 'career', 'training', 'reward', 'penalties', 'experience', 'assets', 'monthly_attendance', 'finance'));
+	}
+	
+	// employee temporary removed
+	public function employee_detail($id) {
+
+		$emp 		= DB::table('TBL_EMP')->where('EMP_ID', $id)->first();
+		$education 	= DB::table('TBL_EDUCATION')->where('EMP_ID', $emp->emp_id)->get();
+		$career 	= DB::table('V_CARRIER')->where('EMP_ID', $emp->emp_id)->orderBy('BS', 'DESC')->orderBy('JOINING_DATE', 'DESC')->orderBy('RELIEVING_DATE', 'DESC')->get();
+		$training 	= DB::table('TRAININGS')->where('EMP_ID', $emp->emp_id)->get();
+		$reward 	= DB::table('V_REWARDS')->where('EMP_ID', $emp->emp_id)->get();
+		$penalties 	= DB::table('V_PENALTIE')->where('EMP_ID', $emp->emp_id)->get();
+		$experience	= DB::table('TBL_EXPERIENCE')->where('EMP_ID', $emp->emp_id)->get();
+		$assets 	= DB::table('TBL_ASSETS')->join('TBL_YEAR', 'TBL_ASSETS.YEAR_ID', '=', 'TBL_YEAR.YEAR_ID')->where('TBL_ASSETS.EMP_ID', $emp->emp_id)->get();
+		//$monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->where('EMPNO', '=', '3829')->get();
+		$monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->where('EMPNO', '=', $emp->fp_id)->get();
+
+		$conn = DB::connection('sqlsrv_fin');
+		// Sp_PaySlip ("17301-8391053-1", 1, 2016)
+		$finance = $conn->select('EXEC dbo.Sp_EmpPayments ?', array($emp->cnic));
+
+		if($emp) {
+			$page_title = $emp->emp_name;
+		}
+		else {
+			Session::flash('error', 'No Record Found against given employee');
+		}
+		
+		return view('employees.employee_detail', compact('page_title', 'emp', 'education', 'career', 'training', 'reward', 'penalties', 'experience', 'assets', 'monthly_attendance', 'finance'));
+	}
+	
+	/*
+	*
+	*  Get Employee Attendance record
+	*  @access public
+	*  @param  id
+	*  @return json
+	*
+	*/
+	public function get_attendance($emp_id) {
+		//$monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->where('EMPNO', '=', '3829')->get();
+		$emp 		= DB::table('TBL_EMP')->where('EMP_ID', $emp_id)->first();
+		$monthly_attendance = DB::connection('sqlsrv')->table('VIEWMONTHLYDATA')->orderBy('Period', 'DESC')->where('EMPNO', '=', $emp->fp_id)->get();
+		
+		$data = $result = array();
+		$month = array('name' => 'Absent');
+
+		if(!$monthly_attendance) return;
+		
+		foreach($monthly_attendance as $row) {
+
+			$tmp = substr($row->Period, 0, strlen($row->Period)-4).'/01/'.substr($row->Period, -4);
+
+			$month['data'][] = date('m', strtotime($tmp)).'-'.date('y', strtotime($tmp));
+			$data['data'][] = $row->AbDays;
+		}
+
+		array_push($result, $month['data']);
+		array_push($result, array('data' => $data['data'], 'name' => 'Absent Days'));
+		return json_encode($result, JSON_NUMERIC_CHECK);
+	}
+
+	public function ajax_get_payslip($c, $m, $y) {
+		// Sp_PaySlip ("17301-8591053-1", 1, 2016)
+		$conn = DB::connection('sqlsrv_fin');
+		$result = $conn->select('EXEC dbo.Sp_PaySlip ?, ?, ?', array($c, $m, $y));
+
+		return response()->json($result);
+	}
+
+	public function profile($id) {
+		if(!Auth::user()->can('employees_detail'))
+			abort(403);
+
+		$user = User::where('EMP_ID', '=', $id)->first();
+		$login_user = Employees::find($id);
+
+		return view('employees.edit_profile', compact('user', 'login_user'));
+	}
+
+	public function save_profile(Request $request) {
+		if(!Auth::user()->can('employees_detail'))
+			abort(403);
+
+		$validation = Validator::make($request->all(),
+			[
+				'password' 				=> 	'required|min:5',
+				'password_confirmation' =>  'required|same:password',
+				'profile_picture'		=>	'mimes:jpeg,bmp,png,jpg|max:1000',
+			]);
+
+		if ($validation->fails())
+		{
+			return redirect()->back()->withInput()->withErrors($validation->errors());
+		}
+
+		$user = User::find($request->input('user_id'));
+		$emp = Employees::find($user->emp_id);
+		$user->password = bcrypt($request->password);
+
+		if ($request->hasFile('profile_picture')) {
+			$file = $request->file('profile_picture');
+			$imageName = $emp->fp_id . '.' . $file->getClientOriginalExtension();;
+			$request->file('profile_picture')->move(
+				base_path() . '/storage/emp_pic/', $imageName
+			);
+		}
+
+		$user->save();
+
+		Session::flash('success', 'Profile updated successfully.');
+
+		return Redirect::to('/employees/employees_list');
+	}
+	
+	public function employee_current() {
+		return view('employees.employee_current');
+	}
+
+	public function employee_current_data() {
+		$emp = DB::table('V_EMP_CURRENT')->select(['EMP_NAME','F_H_NAME','DOB','GENDER','CNIC','RELIGION','HOME_DISTRICT','FP_ID','REF_FILE_NO','BS','JOINING_DATE','RELIEVING_DATE','STRENGTH_NAME','REMARKS','POST_NAME','ZONE_TITLE','REGION_NAME','PLACE_TITLE','PLACE_TYPE','WING_NAME','SECTION_NAME','WING_HEAD']);
+		return Datatables::of($emp)
+			->editColumn('dob', '{{date("d-m-Y", strtotime($dob))}}')
+			->editColumn('joining_date', '{{date("d-m-Y", strtotime($joining_date))}}')
+			->editColumn('relieving_date', '{{date("d-m-Y", strtotime($relieving_date))}}')
+			->make();
+	}
+}

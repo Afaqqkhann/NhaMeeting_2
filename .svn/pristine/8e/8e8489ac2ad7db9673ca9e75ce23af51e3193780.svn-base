@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ACR extends Model
+{
+    //
+	protected $table = 'TBL_ACR';
+	protected $primaryKey = 'ACR_ID';
+	
+	public function employee() {
+		return $this->belongsTo('App\Models\Employees', 'EMP_ID');
+	}
+}

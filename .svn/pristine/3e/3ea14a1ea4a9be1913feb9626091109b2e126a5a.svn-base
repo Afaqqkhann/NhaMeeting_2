@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Books extends Model
+{
+    //
+    protected $table = 'TBL_BOOKS';
+    protected $primaryKey = 'BOOK_ID';
+
+    public $timestamps = false;
+
+    public function subcategory() {
+        return $this->belongsTo('App\Models\Subcategory', 'sc_id');
+    }
+}

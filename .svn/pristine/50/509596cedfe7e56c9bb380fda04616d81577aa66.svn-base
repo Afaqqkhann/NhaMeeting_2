@@ -1,0 +1,193 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employees</h3>
+			
+			<div class="box-tools">
+
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table" id="employee_table" cellspacing="0">
+				<thead>
+				<tr>
+					<th>Profile Picture</th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Father Name</th>
+					<th>DOB</th>
+					<th>CNIC</th>
+					<th>Domicile</th>
+					<th>BS</th>
+					<th>Post Name</th>
+					<th>Ref File No.</th>
+					<th>Date of Appointment</th>
+					<th>Type of Appointment</th>
+					<th>Action</th>
+				</tr>
+				</thead>
+				
+				<thead class="multi_search">
+				<tr>
+					<th>Profile Picture</th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Father Name</th>
+					<th>DOB</th>
+					<th>CNIC</th>
+					<th>Domicile</th>
+					<th>BS</th>
+					<th>Post Name</th>
+					<th>Ref File No.</th>
+					<th>Date of Appointment</th>
+					<th>Type of Appointment</th>
+					<th>Action</th>
+				</tr>
+				</thead>
+				
+				
+				
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+<?php echo Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css'); ?>
+
+
+<style>	
+div.dataTables_wrapper {
+		width: 100% !important;
+		margin: 0 auto;
+	}
+</style>
+
+<?php $__env->startSection('js'); ?>
+	
+	$('#employee_table thead th').each( function () {
+		var title = $(this).text();
+		
+		if(title == 'ID')
+			$(this).html( '<div style="width:60px">'+title+'</div>' );
+		else
+			$(this).html( '<div style="width:155px">'+title+'</div>' );
+	} );
+	
+	// Setup - add a text input to each header cell
+	$('#employee_table thead.multi_search th').each( function () {
+		var title = $(this).text();
+		var css;
+		
+		if(title == 'ID') css = 'style="width:60px;"';
+		if(title == 'Action') return;
+		if(title == 'Profile Picture') return;
+		$(this).html( '<input type="text" placeholder="Search '+title+'" '+css+'/>' );
+	} );
+	
+	var table = $('#employee_table').DataTable({
+        processing: true,
+        serverSide: true,
+		scrollX: true,
+		scrollXInner: '100%',
+		scrollCollapse: true,
+		lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		// to export data
+		dom: 'lrtipB',
+        buttons: [
+
+            'copy', 'csv', 'excel', 'pdf', 'print'
+
+        ],
+        ajax: '<?php echo e(url("employees/employees_list_data")); ?>',
+		columns: [
+			null,
+			null,
+			null,
+			null,
+            {
+				type: 'date',
+				render: function(data) {
+					if(data) {
+						var tmp = data.split(' ');
+						var date = new Date(tmp[0]);
+						var year = date.getFullYear().toString();
+						var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+						var day  = date.getDate().toString();
+						return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+					}
+					else
+						return data;
+				},
+			},
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+				type: 'date',
+				render: function(data) {
+					if(data) {
+						var tmp = data.split(' ');
+						var date = new Date(tmp[0]);
+						var year = date.getFullYear().toString();
+						var month = (date.getMonth()+1).toString(); // getMonth() is zero-based
+						var day  = date.getDate().toString();
+						return (day[1]?day:"0"+day[0]) + '/' + (month[1]?month:"0"+month[0]) + '/' + year; // padding
+					}
+					else
+						return data;
+				},
+			},
+            {orderable: false, searchable: false},
+            {orderable: false, searchable: false}
+        ]
+      });
+	  
+	  /* Apply the search for individual columns*/
+	table.columns().every( function () {
+
+		var that = this;
+
+		$( 'input', this.footer() ).on( 'keydown', function (ev) {
+
+			 if (ev.keyCode == 13) { //only on enter keypress (code 13)
+
+				that
+					.column( $(this).parent().index()+':visible')
+					.search( this.value )
+					.draw();
+			 }
+		});
+	});
+	  
+<?php $__env->stopSection(); ?>
+
+<?php echo Html::script("https://code.jquery.com/jquery-1.11.3.min.js"); ?>
+
+<?php echo Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"); ?>
+
+<?php echo Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js"); ?>
+
+<?php echo Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.flash.min.js"); ?>
+
+<?php echo Html::script("https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"); ?>
+
+<?php echo Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"); ?>
+
+<?php echo Html::script("https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"); ?>
+
+<?php echo Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js"); ?>
+
+<?php echo Html::script("https://cdn.datatables.net/buttons/1.1.0/js/buttons.print.min.js"); ?>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

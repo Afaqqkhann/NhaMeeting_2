@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class HRD extends Model
+{
+    //
+    protected $table = 'TBL_TRAININGS_HRD';
+    protected $primaryKey = 'TH_ID';
+
+    public $timestamps = false;
+
+}

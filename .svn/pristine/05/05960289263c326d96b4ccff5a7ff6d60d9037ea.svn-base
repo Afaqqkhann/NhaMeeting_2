@@ -1,0 +1,45 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+    <!--<h1>Advertisement(s)</h1>-->
+@endsection
+
+
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Post Detail:</h3>
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<dl class="dl-horizontal">
+				<dt>Designation</dt>
+				<dd>AD Computer</dd>
+				
+				<dt>No. of Post(s):</dt>
+				<dd>5</dd>
+				
+				<dt>Required Qualification</dt>
+				<dd>MBA</dd>
+				
+				<dt>Age:</dt>
+				<dd>25-32</dd>
+				
+				<dt>Experience:</dt>
+				<dd>7 Years</dd>
+				
+				<dt>BPS:</dt>
+				<dd>17</dd>
+				
+				<dt>Detail:</dt>
+				<dd>Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</dd>
+				
+			</dl><!-- /.dl-horizontal -->
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+@stop

@@ -1,0 +1,30 @@
+<link href="<?php echo e(URL::to('/public/plugins/datatables/dataTables.bootstrap.css')); ?>" rel="stylesheet">
+
+<?php $__env->startSection('sidebar'); ?>
+@parent
+        <!--<h1>Advertisement(s)</h1>-->
+<?php $__env->stopSection(); ?>
+
+
+
+<?php $__env->startSection('content'); ?>
+
+    <table id="users-table" class="table table-condensed">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Dated</th>
+            <th>Status</th>
+            <th>Last Dated</th>
+            <th>E Doc</th>
+        </tr>
+        </thead>
+    </table>
+
+
+
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

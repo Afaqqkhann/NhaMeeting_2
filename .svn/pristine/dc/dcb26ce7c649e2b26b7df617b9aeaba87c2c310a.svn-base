@@ -1,0 +1,340 @@
+@extends("base")
+
+@section('sidebar')
+    @parent
+    <h1>Trainings</h1>
+@endsection
+
+<style>
+    .small-box-footer {
+        text-align: right !important;
+        padding-right: 8px !important;
+        font-weight: bold !important;
+    }
+</style>
+
+@section('content')
+
+        <!-- Main content -->
+<section class="content">
+
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+
+        <div class="col-lg-3 col-xs-12 col-sm-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{$training_tt_local[0]->training_tt_local}} / {{$training_local_current[0]->training_local_current}}</h3>
+                    <p>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current Year</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-arrow-graph-up-right"></i>
+                </div>
+                <a href="{{URL::to('/trainings')}}" class="small-box-footer">Local Training <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+
+        <div class="col-lg-3 col-xs-12 col-sm-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{{$training_tt_foreign[0]->training_tt_foreign}} / {{$training_foreign_current[0]->training_foreign_current}}</h3>
+                    <p>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current Year</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-people"></i>
+                </div>
+                <a href="{{URL::to('/trainings')}}" class="small-box-footer">Foriegn Training <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+
+        <div class="col-lg-3 col-xs-12 col-sm-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>17210 / 114</h3>
+                    <p>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current Year</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-paper-airplane"></i>
+                </div>
+                <a href="{{URL::to('/trainings')}}" class="small-box-footer">Capacity Building <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-12 col-sm-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>20121 / 64</h3>
+                    <p>Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current Year</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-lightbulb"></i>
+                </div>
+                <a href="{{URL::to('/trainings')}}" class="small-box-footer">Official Obligation <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div><!-- ./col -->
+    </div><!-- /.row -->
+
+
+    <!-- Charts row -->
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 class="box-title">Trainings Places</h3>
+
+                    <div class="text-center">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-2">
+                                    <label class="control-label col-md-6">Year:</label>
+                                    <div class="col-md-6">
+                                        <select name="place_years" class="form-control" id="place_years">
+                                            @foreach($place_years as $row)
+                                                @if($row->years == 2015)
+                                                    <option selected="selected" value="{{$row->years}}">{{$row->years}}</option>
+                                                @else
+                                                    <option value="{{$row->years}}">{{$row->years}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div><!-- /.col-md-4 -->
+                            </div><!-- /.form-group -->
+                        </form> <!-- /.form-horizontal -->
+                    </div><!-- /.text-center -->
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="row col-xs-12">
+                        <div class="chart" id="training_chart_fy" style="margin:0 auto; height: 430px;"></div>
+                    </div><!-- /.row -->
+                </div><!-- /.box-body -->
+                <div class="box-footer text-center">
+                </div><!-- /.box-footer -->
+            </div><!-- /.box -->
+
+        </div><!-- /.col-lg-12 -->
+
+    </div><!-- /.row -->
+
+    <!-- Charts row -->
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 class="box-title">Training Course</h3>
+
+                    <div class="text-center">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-2">
+                                    <label class="control-label col-md-6">Year:</label>
+                                    <div class="col-md-6">
+                                        <select name="years" class="form-control" id="years">
+                                            @foreach($years as $year)
+                                                @if($year->years == 2015)
+                                                    <option selected="selected" value="{{$year->years}}">{{$year->years}}</option>
+                                                @else
+                                                    <option value="{{$year->years}}">{{$year->years}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div><!-- /.col-md-4 -->
+                            </div><!-- /.form-group -->
+                        </form> <!-- /.form-horizontal -->
+                    </div><!-- /.text-center -->
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="row col-xs-12">
+                        <div class="chart" id="training_chart" style="margin:0 auto; height: 430px;"></div>
+                    </div><!-- /.row -->
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+
+        </div><!-- /.col-lg-12 -->
+
+    </div><!-- /.row -->
+
+</section><!-- /.content -->
+
+
+<script src="{{URL::to('public/js/highcharts/highcharts.js')}}"></script>
+<script src="{{URL::to('public/js/highcharts/exporting.js')}}"></script>
+
+
+<!-- script -->
+<script>
+    $(function () {
+        var training_chart_fy = {
+            chart: {
+                type: 'column',
+                renderTo: 'training_chart_fy'
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                categories: []
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total Training'
+                },
+                stackLabels: {
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<b>{point.x}</b><br/>',
+                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                        style: {
+                            textShadow: '0 0 3px black'
+                        }
+                    }
+                }
+            },
+            series: [{}, {}]
+        };
+
+        $("#place_years").change(function() {
+            var v = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{URL::to('trainings/get_training_place_data')}}/"+v,
+                dataType: "json",
+                data: {_token: CSRF_TOKEN},
+                success: function(data){
+
+                    training_chart_fy.xAxis.categories = data['categories'];
+                    training_chart_fy.series[0].name = 'Local';
+                    training_chart_fy.series[0].data = data['local'];
+                    training_chart_fy.series[1].name = 'Foreign';
+                    training_chart_fy.series[1].data = data['foreign'];
+
+                    chart = new Highcharts.Chart(training_chart_fy);
+                    chart.setTitle({text: 'Training Place of '+ v});
+                }
+            });
+        });
+        $("#place_years").trigger('change');
+
+        //
+        var training_chart = {
+            chart: {
+                type: 'column',
+                panning: true,
+                panKey: 'shift',
+                renderTo: 'training_chart'
+            },
+            title: {
+                text: 'Training Course'
+            },
+            xAxis: {
+                type: 'category',
+
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Participants'
+                },
+                allowDecimals: false
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: 'Participants: <b>{point.y:1} </b>'
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                        style: {
+                            textShadow: '0 0 3px black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Participants',
+                data: [
+                    ['Computer', 237],
+                    ['Engineer', 161],
+                    ['Exploration', 142],
+                    ['File Tracking', 140],
+                    ['First Aid', 125],
+                    ['Finance', 121],
+                    ['Land', 118]
+                ],
+                dataLabels: {
+                    enabled: true,
+                    //rotation: -90,
+                    color: '#FFFFFF',
+                    //align: 'right',
+                    format: '{point.y}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        }
+
+        $("#years").change(function() {
+            var v = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{URL::to('trainings/get_yearwise_data')}}/"+v,
+                dataType: "json",
+                data: {_token: CSRF_TOKEN},
+                success: function(data){
+                    //console.log(data);
+                    training_chart.xAxis.categories = data[0];
+                    training_chart.series[0] = data[1];
+
+                    chart = new Highcharts.Chart(training_chart);
+                    chart.setTitle({text: 'Training Course of '+ v});
+					chart.xAxis[0].setExtremes(10, 10);
+                }
+            });
+        });
+
+        $("#years").trigger('change');
+
+    });
+</script>
+@stop

@@ -1,0 +1,24 @@
+<?php $__env->startSection('content'); ?>
+<div class="row-fluid sortable">
+    <div class="span12">
+
+        <h1><span class="break"></span><?php echo e($role->display_name); ?></h1>
+
+
+            <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                        <th class="span3">Short Name</th>
+                        <td><?php echo e($role->name); ?></td>
+                    </tr>
+                  </tbody>
+             </table>
+
+                     <a href="<?php echo e(URL::to('role')); ?>" class="btn btn-primary">Back</a>
+
+
+    </div><!--/span-->
+</div><!--/row-->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,52 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+          <!-- Default box -->
+          <h3 class="box-title text-blue">Edit Advertisement:</h3>
+		<form class="form-horizontal">
+		  <div class="box box-primary">
+		   
+            <div class="box-body">
+                    <div class="form-group">
+					<label class="col-sm-2 control-label">Advertisement Date:</label>
+					<div class="input-group col-sm-6">
+						<div class="input-group-addon">
+							<i class="fa fa-calendar"></i>
+						</div>
+					<input class="form-control date_field" type="text" name="advert_date" value="04/13/2015" id="advert_date" placeholder="Pick Advertisement Date" />
+					</div>
+                    </div>
+                    <div class="form-group">
+					<label class="col-sm-2 control-label">Last Date:</label>
+					<div class="input-group col-sm-6">
+						<div class="input-group-addon">
+							<i class="fa fa-calendar"></i>
+						</div>
+					<input class="form-control date_field" type="text" name="advert_last_date"  value="04/13/2015" id="advert_last_date" placeholder="Pick Advertisement Last Date" />
+					</div>
+                    </div>
+
+                    <div class="form-group">
+					<label class="col-sm-2 control-label">E Doc:</label>
+					<div class="col-sm-6">
+					<input class="form-control" type="file" name="e_doc" id="e_doc"	/>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+				</div><!-- /.box-body -->	  
+		  
+			<div class="box-footer">
+				<div class="col-md-3 col-md-offset-6 text-right">
+					<input class="btn btn-primary" type="submit" name="save" value="Save Advertisement" />
+				</div><!-- /.col-md-3 -->
+			  </div><!-- /.box-footer -->
+			  
+			</div><!-- /.box-primary -->	
+			
+			
+		</form>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

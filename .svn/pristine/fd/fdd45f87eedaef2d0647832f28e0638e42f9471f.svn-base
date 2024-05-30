@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CommunityPicture extends Model
+{
+    //
+    protected $table = 'TBL_COMMUNITY_PICTURE';
+    protected $primaryKey = 'PIC_ID';
+
+    public function community_message() {
+        return $this->belongsTo('App\Models\CommunityMsg', 'COMMUNITY_ID');
+    }
+}

@@ -1,0 +1,55 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+    <!--<h1>Advertisement(s)</h1>-->
+@endsection
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Advertisement(s)</h3>
+			
+			<div class="box-tools">
+				<a href="{{URL::to('/advertisement/create_advertisement')}}" class="btn btn-primary"><i class="fa fa-star"></i>  Create Advertisement</a>
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped">
+				<tr>
+					<th>#</th>
+					<th>Advertisement No.</th>
+					<th class="text-center">Total No. of Posts</th>
+					<th>Last Date</th>
+					<th class="text-center" style="width:15%;">Action</th>
+				</tr>
+
+				@foreach($advertisements as $index => $advert)
+				<tr>
+					<td>{{$index+1}}</td>
+					<td>{{$advert->advertisement_no}}</td>
+					<td class="text-center">{{$advert->no_of_post}}</td>
+					<td>{{date('d-M-Y', strtotime($advert->adv_last_dated))}}</td>
+					<td>
+						<div class="col-sm-1">
+							<a href='{{URL::to("/advertisement/view_advertisement/$advert->adv_id")}}' title="View"><i class="fa fa-search"></i></a>
+						</div><!-- /.col-sm-1 -->
+						<div class="col-sm-1">
+							<a href='{{URL::to("/advertisement/edit_advertisement/$advert->adv_id")}}' title="Edit"><i class="fa fa-pencil"></i></a>
+						</div><!-- /.col-sm-1 -->
+						<div class="col-sm-1">
+							<a href='{{URL::to("/advertisement/delete_advertisement/$advert->adv_id")}}' title="Delete"><i class="fa fa-trash"></i></a>
+						</div><!-- /.col-sm-1 -->
+					</td>
+				</tr>
+				@endforeach
+
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+
+@stop

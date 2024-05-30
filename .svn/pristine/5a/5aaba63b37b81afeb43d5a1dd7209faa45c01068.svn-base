@@ -1,0 +1,964 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+	@if(!empty($errors->all()) or !empty(Session::get('error')))
+		<div class="alert alert-danger" role="alert">
+			{{Session::get('error')}}
+			<ul>
+				@foreach($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
+
+	@if(!empty(Session::get('success')))
+		<div class="alert alert-success" role="alter">
+			{{Session::get('success')}}
+		</div>
+	@endif
+{{dd($emp)}}
+	
+	<?php 
+		$profile_picture = ($emp->fp_id && file_exists('storage/emp_pic/'.$emp->fp_id.'.jpg')) ? URL::to('storage/emp_pic/').'/'.$emp->fp_id.'.jpg' : URL::to('storage/emp_pic/default.png');
+	?>
+	
+	  <!-- Main content -->
+      <section class="invoice">
+		<div class="row" style="margin-bottom:20px;">
+			<div class="col-md-6 col-md-offset-3 text-center">
+				<h1 style="margin-bottom:0px;">National Highway Authority</h1>
+				<h3 style="margin-top:4px;">Personnel Bureau</h3>
+				<h3 style="margin-top:4px; margin-bottom:20px;"><u><strong>Individual Career Planning (ICP) Chart</strong></u></h3>
+			</div>
+			<div class="col-md-3 text-right">
+				<img src="{{$profile_picture}}" alt="{{$emp->emp_name}}" style="width:60%" >
+			</div>
+		</div><!-- /.row -->
+		
+			
+		@if($emp <> null)
+			
+		<div class="row">
+			<table class="table table-bordered table-striped">
+			  <tr>
+				<th>Pers No</th>
+				<th>Emp Name</th>
+				<th>Father/Husband Name</th>
+				<th>Designation</th>
+				<th>BS</th>
+				<th>CNIC</th>
+			  </tr>
+			  <tr>
+				<td>{{$emp->pers_no}}</td>
+				<td>{{$emp->emp_name}}</td>
+				<td>{{$emp->f_h_name}}</td>
+				<td>{{$emp->designation}}</td>
+				<td>{{$emp->bs}}</td>
+				<td>{{$emp->cnic}}</td>
+			  </tr>
+			  
+			  <tr>
+				<th>Mobile No</th>
+				<th>Res. Phone No</th>
+				<th>Emergancy Contact Person & No</th>
+				<th>Home District</th>
+				<th>Date of Birth</th>
+				<th>Service Type</th>
+			  </tr>
+			  <tr>
+				<td>{{$emp->mobile_no}}</td>
+				<td>{{$emp->res_phone_no}}</td>
+				<td>{{$emp->emrgcy_contact_name}}-{{$emp->emrgcy_contact_phoneno}}</td>
+				<td>{{$emp->home_district}}</td>
+				<td>{{date('d-M-Y', strtotime($emp->dob))}}</td>
+				<td>{{$emp->service_type}}</td>
+			  </tr>
+			</table>
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Qualification Details:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Exam Name</th>
+							<th>Exam Group</th>
+							<th>Institute Name</th>
+							<th>Year of Passing</th>
+							<th>Obtained Marks</th>
+							<th>Total Marks</th>
+							<th>%age Marks</th>
+							<th>Div</th>
+						</tr>
+
+                        <?php $collection_edu = collect($education); ?>
+                        <?php $education = $collection_edu->sortByDesc('sessions'); ?>
+
+						@forelse($education as $key => $edu)
+
+                            <?php
+                            switch($edu->document_type_id) {
+                                case 1:
+                                    $document_type = 'Middle';
+                                    break;
+                                case 2:
+                                    $document_type = 'Matric/O-Level';
+                                    break;
+                                case 3:
+                                    $document_type = 'FA/FSc/A-Level';
+                                    break;
+                                case 4:
+                                    $document_type = 'Diploma';
+                                    break;
+                                case 5:
+                                    $document_type = 'BA/BSc';
+                                    break;
+                                case 6:
+                                    $document_type = 'Professional Certification';
+                                    break;
+                                case 7:
+                                    $document_type = 'Master/Bacholar Honuors';
+                                    break;
+                                case 8:
+                                    $document_type = 'MS';
+                                    break;
+                                case 9:
+                                    $document_type = 'PhD';
+                                    break;
+                                default:
+                                    $document_type = 'No Record';
+                                    break;
+                            }
+                            ?>
+
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$document_type}}</td>
+								<td>{{$edu->document_name}}</td>
+								<td>{{$edu->institute_name}}</td>
+								<td>{{date('Y', strtotime($edu->sessions))}}</td>
+								<td>{{$edu->obtained_marks}}</td>
+								<td>{{$edu->total_marks}}</td>
+								<td>{{($edu->obtained_marks <> null and $edu->total_marks <> null) ? round($edu->obtained_marks/$edu->total_marks*100) : 0}}%</td>
+								<td></td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Posting Details:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Post Name</th>
+							<th>BS</th>
+							<th>Place of Posting</th>
+							<th>Region</th>
+							<th>Nature of Appointment</th>
+							<th>Joining Date</th>
+							<th>Releiving Date</th>
+							<th>Section/Project/Unit</th>
+							<th>Reason of Posting</th>
+							<th>Remarks</th>
+						</tr>
+
+						@forelse($career as $key => $posting)
+
+                            <?php $tmp = explode(' @ ', $posting->remarks); ?>
+
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$posting->post_name}}</td>
+								<td>{{$posting->bs}}</td>
+								<td>{{$tmp[1] or ''}}</td>
+								<td>{{$tmp[0] or ''}}</td>
+								<td>{{$posting->charge_title}}</td>
+								<td>{{$posting->joining_date ? date('d-M-Y', strtotime($posting->joining_date)) : '-'}}</td>
+								<td>{{$posting->relieving_date ? date('d-M-Y', strtotime($posting->relieving_date)) : '-'}}</td>
+								<td>{{$tmp[2] or ''}}</td>
+								<td></td>
+								<td>{{$posting->remarks}}</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Training Details:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Course Name</th>
+							<th>Institute Name</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Participation</th>
+							<th>Earned Through</th>
+						</tr>
+
+						@forelse($training as $key => $training)
+
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$training->course_name}}</td>
+								<td>{{$training->institute_name}}</td>
+								<td>{{($training->start_date) ? date('d-M-Y', strtotime($training->start_date)) : null}}</td>
+								<td>{{($training->end_date) ? date('d-M-Y', strtotime($training->end_date)) : null}}</td>
+								<td>{{$training->participation}}</td>
+								<td>{{$training->earned_through}}</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Rewards Detail:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Kind of Reward</th>
+							<th>Purpose</th>
+							<th>Date</th>
+							<th>Approving Authority</th>
+						</tr>
+
+						@forelse($reward as $key => $reward)
+
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$reward->kind_of_reward}}</td>
+								<td>{{$reward->purpose}}</td>
+								<td>{{($reward->letter_date) ? date('d-M-Y', strtotime($reward->letter_date)) : null}}</td>
+								<td>{{$reward->app_auth}}</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Penalties:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Allegation</th>
+							<th>Nature of Penalty</th>
+							<th>Date</th>
+							<th>Approving Authority</th>
+						</tr>
+
+						@forelse($penalties as $key => $penalty)
+
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$penalty->allegation}}</td>
+								<td>{{$penalty->nature_of_penalty}}</td>
+								<td>{{($penalty->off_order_date) ? date('d-M-Y', strtotime($penalty->off_order_date)) : null}}</td>
+								<td>{{$penalty->app_auth}}</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->
+		
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Previous Service Details:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Organization Name</th>
+							<th>Organization Type</th>
+							<th>Post Name</th>
+							<th>Job Description</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Reason For Leaving</th>
+						</tr>
+
+						@forelse($experience as $key => $experience)
+
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$experience->org_name}}</td>
+								<td>{{$experience->org_type}}</td>
+								<td>{{$experience->designation}}</td>
+								<td>{{$experience->job_description}}</td>
+								<td>{{($experience->joining_date) ? date('d-M-Y', strtotime($experience->joining_date)) : null}}</td>
+								<td>{{($experience->ending_date) ? date('d-M-Y', strtotime($experience->ending_date)) : null}}</td>
+								<td>{{$experience->reason_leaving}}</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->
+
+
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="box box-default box-solid">
+					<div class="box-header with-border">
+						<h3 class="box-title">Assets Declaration:</h3>
+						<div class="box-tools pull-right no-print">
+							<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+						</div><!-- /.box-tools -->
+					</div><!-- /.box-header -->
+					<div class="box-body">
+						<table class="table table-bordered table-striped">
+							<tr>
+								<th>S#</th>
+								<th>Year</th>
+								<th>Submitted</th>
+							</tr>
+
+							@forelse($assets as $key => $asset)
+
+								<tr>
+									<td>{{$key+1}}</td>
+									<td>{{$asset->year_title}}</td>
+									<td>@if($asset->assets_status == 1) Yes @elseif($asset->assets_status == 0) No @endif</td>
+								</tr>
+							@empty
+								<tr>
+									<td colspan="8">No record found!</td>
+								</tr>
+							@endforelse
+
+						</table>
+					</div><!-- /.box-body -->
+				</div><!-- /.box -->
+			</div>
+
+			  <div class="col-lg-6">
+				  <div class="box box-default box-solid">
+					  <div class="box-header with-border">
+						  <h3 class="box-title">ACR Details:</h3>
+						  <div class="box-tools pull-right no-print">
+							  <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+						  </div><!-- /.box-tools -->
+					  </div><!-- /.box-header -->
+					  <div class="box-body">
+						  <table class="table table-bordered table-striped">
+							  <tr>
+								  <th>S#</th>
+								  <th>Year</th>
+								  <th>Status</th>
+							  </tr>
+
+							  @forelse($acrs as $key => $acr)
+
+								  <tr>
+									  <td>{{$key+1}}</td>
+									  <td>{{$acr->year_title}}</td>
+									  <td>@if($acr->acr_status == 1) Yes @elseif($acr->acr_status == 0) No @endif</td>
+								  </tr>
+							  @empty
+								  <tr>
+									  <td colspan="8">No record found!</td>
+								  </tr>
+							  @endforelse
+
+						  </table>
+					  </div><!-- /.box-body -->
+				  </div><!-- /.box -->
+			  </div>
+		</div>
+
+			  <!-- /.row -->
+		
+		
+		{{--
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Monthly Attendance:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>S#</th>
+							<th>Month</th>
+							<th>Total No. of Days</th>
+							<th>Gazetted Days</th>
+							<th>Leave</th>
+							<th>Absent</th>
+						</tr>
+
+						@forelse($monthly_attendance as $key => $attendance)
+
+							<tr>
+								<td>{{$key+1}}</td>
+                                <?php $tmp = substr($attendance->Period, 0, strlen($attendance->Period)-4).'/01/'.substr($attendance->Period, -4); ?>
+								<td>{{date('M', strtotime($tmp))}}-{{date('y', strtotime($tmp))}}</td>
+								<td>{{round($attendance->TotalDays)}}</td>
+								<td><small class="label bg-green">{{round($attendance->GZDays)}}</small></td>
+								<td><small class="label bg-purple">{{round($attendance->LeaveDays)}}</small></td>
+								<td>@if (round($attendance->AbDays) > 0)
+										<small class="label bg-red">{{round($attendance->AbDays)}}</small>
+									@else
+										<small class="label bg-blue">{{round($attendance->AbDays)}}</small>
+									@endif
+								</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div>
+		--}}
+
+
+		  <!-- /.row -->
+
+		
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Overall Payment:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered table-striped" id="payment_table">
+						<thead>
+						<tr>
+							<th>S#</th>
+							<th>Year</th>
+							<th>Month</th>
+							<th>Title</th>
+							<th>Detail</th>
+							<th>Amount</th>
+							<th>Allowance</th>
+							<th>Region</th>
+						</tr>
+						</thead>
+
+						<tfoot>
+						<tr>
+							<th colspan="5" class="text-right">Total</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+						</tfoot>
+
+                        <?php $collection_fin = collect($finance); $collection_fin->sortBy('Year'); ?>
+                        <?php $total_amount = $total_allow = 0; ?>
+						@forelse($collection_fin as $key => $fin)
+
+							@if($fin->CNIC == '17301-8391053-1' && strpos($fin->Title, 'TA/DA') !== false )
+                                <?php continue; ?>
+							@endif
+
+                            <?php $total_amount = (int)$fin->Amount + $total_amount; $total_allow = (int)$fin->Allow + $total_allow;?>
+							<tr>
+								<td>{{$key+1}}</td>
+								<td>{{$fin->Year}}</td>
+								<td>
+                                    <?php
+                                    switch($fin->Month) {
+                                        case 1:
+                                            echo 'January';
+                                            break;
+                                        case 2:
+                                            echo 'February';
+                                            break;
+                                        case 3:
+                                            echo 'March';
+                                            break;
+                                        case 4:
+                                            echo 'April';
+                                            break;
+                                        case 5:
+                                            echo 'May';
+                                            break;
+                                        case 6:
+                                            echo 'June';
+                                            break;
+                                        case 7:
+                                            echo 'July';
+                                            break;
+                                        case 8:
+                                            echo 'August';
+                                            break;
+                                        case 9:
+                                            echo 'September';
+                                            break;
+                                        case 10:
+                                            echo 'October';
+                                            break;
+                                        case 11:
+                                            echo 'November';
+                                            break;
+                                        case 12:
+                                            echo 'December';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ?></td>
+								<td>{{$fin->Title}}</td>
+								<td>{{$fin->COA}}</td>
+								<td>{{number_format($fin->Amount)}}</td>
+								<td>{{number_format($fin->Allow)}}</td>
+								<td>{{$fin->region}}</td>
+							</tr>
+						@empty
+							<tr>
+								<td colspan="8">No record found!</td>
+							</tr>
+						@endforelse
+
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div><!-- /.row -->	
+		
+		@else
+
+		<!-- title row -->
+        <div class="row">
+			<div class="col-xs-12">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title"></h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					No Record Found !!
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+          </div><!-- /.col -->
+        </div>
+        <!-- info row -->
+		@endif
+
+		
+		
+		<!-- Biometric chart -->
+		{{--<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Biometric / Attendance Info:</h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<div id="monthly_chart"></div>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+		</div>--}}
+		<!-- Biometric chart end -->
+
+		<!-- pay slip -->
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title text-center">Pay Slip <span id="payslip_month"></span></h3>
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<div class="row" style="margin-bottom:10px;">
+						<div class="col-md-12 text-center">
+
+							<label class="col-md-2 text-right">Pay Slip Month: </label>
+							<div class="col-md-3">
+								<select class="form-control" name="payslip_month_select" id="payslip_month_select">
+									<option value="1">January</option>
+									<option value="2">February</option>
+									<option value="3">March</option>
+									<option value="4">April</option>
+									<option value="5">May</option>
+									<option value="6">June</option>
+									<option value="7">July</option>
+									<option value="8">August</option>
+									<option value="9">September</option>
+									<option value="10">October</option>
+									<option value="11">November</option>
+									<option value="12">December</option>
+								</select>
+							</div>
+
+							<label class="col-md-2 text-right">Year: </label>
+							<div class="col-md-3">
+								<select class="col-md-4 form-control" name="year" id="payslip_year_select">
+									@for($i=2016; $i>=1948; $i--)
+										<option value="{{$i}}">{{$i}}</option>
+									@endfor
+								</select>
+							</div>
+
+							<div class="col-md-2">
+								<button id="payslip_show" class="btn btn-primary">Show</button>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<label class="col-md-6">Emp Name:</label>
+						<div class="col-md-6">{{$emp->emp_name}}</div>
+					</div>
+					<div class="col-md-4  col-md-offset-4">
+						<label class="col-md-6">Post:</label>
+						<div class="col-md-6" id="post"></div>
+					</div>
+
+					<div class="col-md-4">
+						<label class="col-md-6">Project Name:</label>
+						<div class="col-md-6" id="project_name"></div>
+					</div>
+					<div class="col-md-4">
+						<label class="col-md-6">CNIC No:</label>
+						<div class="col-md-6">{{$emp->cnic}}</div>
+					</div>
+					<div class="col-md-4">
+						<label class="col-md-6">S/D/W of:</label>
+						<div class="col-md-6">{{$emp->f_h_name}}</div>
+					</div>
+
+					<div class="col-md-4">
+						<label class="col-md-6">Designation:</label>
+						<div class="col-md-6" id="designation"></div>
+					</div>
+					<div class="col-md-4">
+						<label class="col-md-6">Grade:</label>
+						<div class="col-md-6" id="grade"></div>
+					</div>
+					<div class="col-md-4">
+						<label class="col-md-6">Account No:</label>
+						<div class="col-md-6" id="account_no"></div>
+					</div>
+
+					<div class="col-md-4">
+						<label class="col-md-6">MTS:</label>
+						<div class="col-md-6" id="mts"></div>
+					</div>
+					<div class="col-md-4  col-md-offset-4">
+						<label class="col-md-6">NTN/CPF:</label>
+						<div class="col-md-6" id="ntn"></div>
+					</div>
+
+					<div class="col-md-4">
+						<label class="col-md-6">With Pay Leave:</label>
+						<div class="col-md-6" id="with_pay_leave"></div>
+					</div>
+					<div class="col-md-4  col-md-offset-4">
+						<label class="col-md-6">Without Pay Leave:</label>
+						<div class="col-md-6" id="without_pay_leave"></div>
+					</div>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+
+		</div><!-- /.row -->
+
+		<div class="row">
+			<div class="box box-default box-solid">
+				<div class="box-header with-border">
+					<div class="box-tools pull-right no-print">
+						<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+					</div><!-- /.box-tools -->
+				</div><!-- /.box-header -->
+				<div class="box-body">
+					<table class="table table-bordered">
+						<thead>
+						<tr style="background-color:#ccc">
+							<th colspan="2" class="text-center">PAY & ALLOWANCES</th>
+							<th colspan="2" class="text-center">DEDUCTIONS</th>
+						</tr>
+						<tr style="background-color:#ccc">
+							<th class="text-center">Description</th>
+							<th class="text-center">Amount</th>
+
+							<th class="text-center">Description</th>
+							<th class="text-center">Amount</th>
+						</tr>
+						</thead>
+
+						<tbody id="payslip_data"></tbody>
+					</table>
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+
+		</div>
+		
+	</section><!-- /.content -->
+	
+	<style>
+	.heading { padding: 10px; background-color: #ddd;}
+	</style>
+	
+	<script src="{{URL::to('/public/js/highcharts/highcharts.js')}}"></script>
+    <script src="{{URL::to('/public/js/highcharts/exporting.js')}}"></script>
+
+	@section('js')
+	
+	var monthly_chart = {
+            chart: {
+                renderTo: 'monthly_chart',
+                type: 'column',
+				marginRight: 130,
+				marginBottom: 25
+			},
+			title: {
+				text: 'Attendance Information',
+				x: -20 //center
+			},
+			subtitle: {
+				text: '',
+				x: -20
+			},
+			xAxis: {
+				categories: []
+			},
+			yAxis: {
+				title: {
+					text: 'Absent Days'
+				},
+				plotLines: [{
+					value: 0,
+					width: 1,
+					color: '#808080'
+				}]
+			},
+			tooltip: {
+				useHTML: true,
+				formatter: function() {
+						return '<b>Attendance</b><br/>Abset Days: ' + this.point.y;
+				}
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'top',
+				x: -10,
+				y: 100,
+				borderWidth: 0,
+				enabled: false
+			},
+			series: []
+		}
+        
+        $.ajax({
+            type: "GET",
+            url: "{{URL::to('employee/attendance')}}/{{$emp->emp_id}}",
+			dataType: "json",
+			data: {_token: CSRF_TOKEN},
+            success: function(data){
+	console.log(data);
+				monthly_chart.xAxis.categories = data[0];
+                monthly_chart.series[0] = data[1];
+                chart = new Highcharts.Chart(monthly_chart);
+            }
+        });
+
+	@endsection
+
+
+	<script>
+
+		$(document).ready(function() {
+
+			$("#payslip_show").click(function() {
+				var m = $("#payslip_month_select").val();
+				var y = $("#payslip_year_select").val();
+				var c = "{{$emp->cnic}}";
+				var thtml = '';
+
+				$.ajax({
+					 type: "GET",
+					 dataType: "json",
+					 data: {_token: CSRF_TOKEN},
+					 url: "{{URL::to('employee/ajax_get_payslip')}}/" + c + "/" + m + "/" + y,
+					 success: function(data) {
+						 $.each(data, function(i, v) {
+							$("#project_name").html(v.ProjectName);
+							$("#account_no").html(v.AccountNo);
+							$("#post").html(v.PostName);
+							$("#designation").html(v.Designation);
+							$("#grade").html(v.BPS);
+							$("#mts").html(v.MTS);
+							$("#ntn").html(v.NTN);
+							$("#with_pay_leave").html(v.WithPayLeave);
+							$("#without_pay_leave").html(v.WithOutPayLeave);
+
+							 thtml += '<tr><td>' + v.AllowCode + '</td><td>' + addCommas(v.AllowAmount) + '</td><td>' + v.DedCode + '</td><td>' + addCommas(v.DedAmount) + '</td></tr>';
+						 });
+						 $("#payslip_data").html(thtml);
+					 }
+				});
+			});
+
+			function addCommas(nStr)
+			{
+				nStr += '';
+				x = nStr.split('.');
+				x1 = x[0];
+				x2 = x.length > 1 ? '.' + x[1] : '';
+				var rgx = /(\d+)(\d{3})/;
+				while (rgx.test(x1)) {
+					x1 = x1.replace(rgx, '$1' + ',' + '$2');
+				}
+				return x1 + x2;
+			}
+
+			$('#payment_table').DataTable( {
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+				"footerCallback": function ( row, data, start, end, display ) {
+					var api = this.api(), data;
+
+					// Remove the formatting to get integer data for summation
+					var intVal = function ( i ) {
+						return typeof i === 'string' ?
+						i.replace(/[\$,]/g, '')*1 :
+								typeof i === 'number' ?
+										i : 0;
+					};
+
+					// Total over all pages
+					var total = api
+							.column( 5 )
+							.data()
+							.reduce( function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0 );
+
+					var total2 = api
+							.column( 6 )
+							.data()
+							.reduce( function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0 );
+
+					// Total over this page
+					var pageTotal = api
+							.column( 5, { page: 'current'} )
+							.data()
+							.reduce( function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0 );
+					var pageTotal2 = api
+							.column( 6, { page: 'current'} )
+							.data()
+							.reduce( function (a, b) {
+								return intVal(a) + intVal(b);
+							}, 0 );
+
+					// Update footer
+					$( api.column( 5 ).footer() ).html(
+							addCommas(pageTotal) + ' ('+ addCommas(total) +' total)'
+					);
+					$( api.column( 6 ).footer() ).html(
+							addCommas(pageTotal2) + ' ('+ addCommas(total2) +' total)'
+					);
+
+				}
+			} );
+		} );
+
+	</script>
+
+@stop

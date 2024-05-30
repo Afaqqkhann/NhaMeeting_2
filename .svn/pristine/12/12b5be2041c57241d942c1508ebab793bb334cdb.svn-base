@@ -1,0 +1,37 @@
+<?php $__env->startSection('content'); ?>
+
+	<h2>User Management</h2>
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Users</h3>
+			
+			<div class="box-tools">
+
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped" id="user_management_table">
+				<thead>
+                      <tr>
+                          <th>Emp Name</th>
+                          <th>CINC</th>
+						  <th>Roles</th>
+                          <th>Status</th>
+                          <th class="text-center">Action</th>
+                      </tr>
+                  </thead>
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+<?php $__env->startSection('js'); ?>
+	$('#user_management_table').DataTable({
+		processing: true,
+		serverSide: true,
+		ajax: '<?php echo e(url("user_management/get_data")); ?>',
+	});
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

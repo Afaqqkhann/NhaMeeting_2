@@ -1,0 +1,24 @@
+@extends('master')
+
+@section('content')
+<div class="row-fluid sortable">
+    <div class="span12">
+
+            <h1><span class="break"></span>{{ $userType->name  }}</h1>
+
+
+            <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                        <th class="span3">Short Name</th>
+                        <td>{{ $userType->short_name }}</td>
+                    </tr>
+                  </tbody>
+             </table>
+                     <a href="{{ URL::to('userType') }}" class="btn">Back</a>
+
+
+    </div><!--/span-->
+</div><!--/row-->
+
+@stop

@@ -1,0 +1,178 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Posting / Transfer</h1>
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+
+        <!-- Main content -->
+        <section class="content">
+		  		 
+		 <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-4 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3>58 / 37 / 21</h3>
+                  <p>Total&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;>=3</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-ios-people"></i>
+                </div>
+                <a href="#" class="small-box-footer">Posting <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-4 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>51 &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5 &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp; 2</h3>
+                  <p>Actualized&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;Not Actualized&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;Cancelled</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-paper-airplane"></i>
+                </div>
+                <a href="#" class="small-box-footer">Posting Status <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-4 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3>21 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11</h3>
+                  <p>3 Years Same Post &nbsp;&nbsp;/&nbsp;&nbsp;5 Years Same Station</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">Tenure Complete <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+          </div><!-- /.row -->
+		  
+		  <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-6 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-blue">
+                <div class="inner">
+                  <h3>489-95% / 24-5%</h3>
+                  <p>Verified &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Awaited</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-ios-people"></i>
+                </div>
+                <a href="#" class="small-box-footer">Degree Verification <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg-6 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-maroon">
+                <div class="inner">
+                  <h3>21 / 42</h3>
+                  <p>Officers &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Staff</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-paper-airplane"></i>
+                </div>
+                <a href="#" class="small-box-footer">Rewards <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+          </div><!-- /.row -->
+		  
+		  
+		  <!-- Charts row -->
+		 <div class="row">
+			<div class="col-lg-12">
+			  
+			  <div class="box box-success">
+                <div class="box-header">
+                  <i class="fa fa-bar-chart-o"></i>
+                  <h3 class="box-title">Posting / Transfer Chart</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+				  <div class="row col-xs-12">
+					  <div class="chart" id="posting_transfer_chart" style="min-width:310px; margin:0 auto; height: 400px;"></div>
+				  </div><!-- /.row -->
+			     </div><!-- /.box-body -->
+                
+			   </div><!-- /.box -->
+			   
+			</div><!-- /.col-lg-12 -->
+
+		 </div><!-- /.row -->
+
+        </section><!-- /.content -->
+
+
+        <script src="public/js/highcharts/highcharts.js"></script>
+        <script src="public/js/highcharts/exporting.js"></script>
+
+		<style>
+			.small-box-footer { text-align: right !important; padding-right:8px !important; font-weight: bold !important;}
+			.inner > p { font-size: 15px; }
+		</style>
+
+        <!-- script -->
+        <script>
+          $(function () {
+			$('#posting_transfer_chart').highcharts({
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: ''
+				},
+				xAxis: {
+					categories: ['Grade-21', 'Grade-20', 'Grade-19', 'Grade-18', 'Grade-17'],
+				},
+				yAxis: {
+					min: 0,
+					title: {
+						text: 'No of Employees'
+					},
+					stackLabels: {
+						enabled: true,
+						style: {
+							fontWeight: 'bold',
+							color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+						}
+					}
+				},
+				tooltip: {
+					headerFormat: '<b>{point.x}</b><br/>',
+					pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+				},
+				plotOptions: {
+					column: {
+						stacking: 'normal',
+						dataLabels: {
+							enabled: true,
+							color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+							style: {
+								textShadow: '0 0 3px black'
+							}
+						}
+					}
+				},
+				series: [{
+					name: 'Actualized',
+					data: [2, 6, 4, 3, 1]
+				}, {
+					name: 'Not Actualized',
+					data: [8, 12, 3, 8, 6]
+				}, {
+					name: 'Cancelled/Withdraw',
+					data: [3, 4, 8, 10, 2]
+				}]
+			});
+		});
+        </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,47 @@
+@extends('master')
+
+@section('content')
+
+<div class="row-fluid sortable">
+    <div class="box span12">
+        <div class="box-header" data-original-title>
+            <h2><i class="icon-user-md"></i><span class="break"></span>User Type Form</h2>
+            <div class="box-icon">
+
+            </div>
+        </div>
+        <div class="box-content">
+                @if($errors->first())
+                    <div class="alert alert-danger">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+               {{ Form::open(array('url' => 'userType', 'role' => 'form', 'class' => 'form-horizontal')) }}
+                <fieldset>
+                  <div class="control-group">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                      {{ Form::text('name', Input::old('name'), array('class' => 'input-xlarge', 'placeholder' => 'Enter Type Name')) }}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                      <label class="control-label">Short Name</label>
+                      <div class="controls">
+                        {{ Form::text('short_name', NULL, array('class' => 'input-xlarge', 'placeholder' => 'Enter short name')) }}
+                      </div>
+                    </div>
+                  <div class="form-actions">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                        <a href="{{ URL::to('userType') }}" class="btn">Back</a>
+                    </div>
+                  </div>
+                </fieldset>
+              {{ Form::close() }}
+
+        </div>
+    </div><!--/span-->
+
+</div> <!--/row-->
+
+@stop

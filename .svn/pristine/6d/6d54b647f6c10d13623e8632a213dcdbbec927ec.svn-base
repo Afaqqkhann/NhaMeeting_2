@@ -1,0 +1,36 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Employee ACR</h3>
+			
+			<div class="box-tools">
+				<!--<a href="{{URL::to('/employees/add_employee')}}" class="btn btn-primary"><i class="fa fa-star"></i>  Add Employee</a>-->
+			</div><!-- /.box-tools -->
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped" id="acr_table">
+				<thead>
+				<tr>
+					<th>ID</th>
+					<th>Employee Name</th>
+					<th>Date From</th>
+					<th>Date To</th>
+				</tr>
+				</thead>
+
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+
+@stop

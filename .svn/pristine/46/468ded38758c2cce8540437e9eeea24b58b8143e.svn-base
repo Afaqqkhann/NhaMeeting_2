@@ -1,0 +1,145 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use DB;
+use App\User;
+use App\Models\Employees\Employees;
+use Auth;
+
+class RecruitmentController extends Controller
+{
+	public function __construct() {
+		
+		$this->middleware('auth');
+    }
+	
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        if(!Auth::user()->can('recruitment_dss_dashboard'))
+            abort(403);
+        //
+		$page_title = 'Recruitment Dashboard';
+		$years = DB::table('V_APPOINTMENT_YEARS')->select('years')->distinct('years')->orderby('years', 'desc')->get();
+		
+        return view('recruitment_dashboard.index', compact('page_title', 'years'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    /**
+     * @param $year
+     * @return string
+     */
+    public function get_yearwise_data($year) {
+        $years = DB::table('V_APPOINTMENT_YEARS')->where('years', '=', $year)->get();
+
+        $data = $result = array();
+        $year = array('name' => 'Recruitment');
+
+        foreach($years as $row) {
+            $year['data'][] = $row->months;
+            $data['data'][] = $row->no_of_appointments;
+        }
+
+        array_push($result, $year['data']);
+        array_push($result, array('data' => $data['data'], 'name' => 'Recruitments'));
+
+        return json_encode($result, JSON_NUMERIC_CHECK);
+    }
+
+    /**
+     * @return string
+     */
+    public function get_advertisement_data() {
+        // Advertisement data
+        $data = array();
+        $adverts = DB::table('V_ADVERTISEMENT')->get();
+
+        foreach($adverts as $advert) {
+            $data['categories'][] = $advert->strength_name;
+            $data['series']['total_applicants'][] = $advert->total_applicants;
+            $data['series']['total_applicants_short'][] = $advert->total_applicants_short;
+            $data['series']['total_applicants_interview'][] = $advert->total_applicants_interview;
+        }
+        // convert array string values into int
+        $data['series']['total_applicants'] = array_map('intval', $data['series']['total_applicants']);
+        $data['series']['total_applicants_short'] = array_map('intval', $data['series']['total_applicants_short']);
+        $data['series']['total_applicants_interview'] = array_map('intval', $data['series']['total_applicants_interview']);
+
+        return json_encode($data);
+    }
+}

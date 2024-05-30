@@ -1,0 +1,71 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <!--<h1>Advertisement(s)</h1>-->
+<?php $__env->stopSection(); ?>
+
+
+
+<?php $__env->startSection('content'); ?>
+
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Advertisement</h3>
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<dl class="dl-horizontal">
+				<dt>Advertisement No</dt>
+				<dd><?php echo e($advertisement->advertisement_no); ?></dd>
+				<dt>Total No. of Post(s)</dt>
+				<dd><?php echo e($advertisement->no_of_post); ?></dd>
+				<dt>Advertisement Date</dt>
+				<dd><?php echo e(date('d-M-Y', strtotime($advertisement->adv_dated))); ?></dd>
+				<dt>Advertisement Last Date</dt>
+				<dd><?php echo e(date('d-M-Y', strtotime($advertisement->adv_last_dated))); ?></dd>
+			</dl><!-- /.dl-horizontal -->
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+	
+	<div class="box box-info">
+		<div class="box-header with-border">
+			<h3 class="box-title">Advertisement Detail</h3>
+		</div><!-- /.box-header -->
+
+		<div class="box-body">
+			<table class="table table-bordered table-striped">
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>No. of Post</th>
+					<th>Detail</th>
+					<th class="text-center" style="width:15%;">Action</th>
+				</tr>
+				
+				<?php foreach($posts as $index => $post): ?>
+				<tr>
+					<td><?php echo e($index+1); ?></td>
+					<td><?php echo e($post->strength_name); ?></td>
+					<td>4</td>
+					<td><?php echo e($post->comments); ?></td>
+					<td>
+						<div class="col-sm-1">
+							<a href='<?php echo e(URL::to("/advertisement/view_post/$post->post_id")); ?>'" title="View"><i class="fa fa-search"></i></a>
+						</div><!-- /.col-sm-1 -->
+						<div class="col-sm-1">
+							<a href='<?php echo e(URL::to("/advertisement/edit_post/$post->post_id")); ?>' title="Edit"><i class="fa fa-pencil"></i></a>
+						</div><!-- /.col-sm-1 -->
+						<div class="col-sm-1">
+							<a href='<?php echo e(URL::to("/advertisement/delete_post/$post->post_id")); ?>' title="Delete"><i class="fa fa-trash"></i></a>
+						</div><!-- /.col-sm-1 -->
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
+		</div><!-- /.box-body -->
+
+	</div><!-- /.box -->
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

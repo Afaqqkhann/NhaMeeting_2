@@ -1,0 +1,84 @@
+     <?php $__env->startSection('sidebar'); ?>
+     @parent
+         <h1>Permission</h1>
+     <?php $__env->stopSection(); ?>
+
+     <?php $__env->startSection('content'); ?>
+          <div class="box box-primary">
+              <div class="box-header">
+                 <h4>Create Permission</h4>
+
+                  <?php if(!empty($errors->all()) or !empty(Session::get('error'))): ?>
+                      <div class="alert alert-danger" role="alert">
+                          <?php echo e(Session::get('error')); ?>
+
+                          <ul>
+                              <?php foreach($errors->all() as $error): ?>
+                                  <li><?php echo e($error); ?></li>
+                              <?php endforeach; ?>
+                          </ul>
+                      </div>
+                  <?php endif; ?>
+
+                  <?php if(!empty(Session::get('success'))): ?>
+                      <div class="alert alert-success" role="alter">
+                          <?php echo e(Session::get('success')); ?>
+
+                      </div>
+                  <?php endif; ?>
+
+              </div>
+              <div class="box-body">
+               <?php echo Form::open(array('url' => 'permission', 'class' => 'form-horizontal')); ?>
+
+
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label">Display Name</label>
+                      <div class="col-sm-3">
+                          <?php echo Form::text('display_name', null, array('class' => 'form-control input-sm')); ?>
+
+                      </div>
+					  
+					  <label class="col-sm-2 control-label">Name</label>
+                      <div class="col-sm-3">
+                          <?php echo Form::text('name', null, array('class' => 'form-control input-sm')); ?>
+
+                      </div>
+                  </div>
+
+				  <div class="form-group">
+					  <label class="col-sm-2 control-label">Parent</label>
+                      <div class="col-sm-2">
+                          <?php echo Form::select('parent', $parent, null, array('class' => 'form-control')); ?>
+
+                      </div>
+					  
+					  <label class="col-sm-1 control-label">Icon</label>
+                      <div class="col-sm-2">
+                          <?php echo Form::text('icon', null, array('class' => 'form-control input-sm')); ?>
+
+                      </div>
+					  
+					  <label class="col-sm-1 control-label">Link</label>
+                      <div class="col-sm-2">
+                          <?php echo Form::text('link', null, array('class' => 'form-control input-sm')); ?>
+
+                      </div>
+				  </div>
+				  
+                 <div class="form-group">
+                     <label class="col-sm-2 control-label">Description</label>
+                     <div class="col-sm-8">
+                        <?php echo Form::textarea('description', null, array('class' => 'form-control input-sm')); ?>
+
+                     </div>
+                 </div>
+
+                 <button type="submit" class="btn btn-primary pull-right">Save</button>
+               <?php echo Form::close(); ?>
+
+              </div>
+          </div>
+     <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

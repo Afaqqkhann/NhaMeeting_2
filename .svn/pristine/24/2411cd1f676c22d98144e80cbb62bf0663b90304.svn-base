@@ -1,0 +1,78 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+		  <!-- Default box -->
+          <h3 class="box-title text-blue">Employee Reward:</h3>
+          <form class="form-horizontal">
+		  
+		<div class="box box-primary">
+		   <div class="box-header with-border">
+			<h3 class="box-title">Reward Detail</h3>
+		   </div><!-- /.box-header -->
+            <div class="box-body">
+								
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Reward Type:</label>
+					<div class="col-sm-7">
+					<select class="form-control">
+						<option>Select Type</option>
+						<?php foreach($reward_types as $row): ?>
+						<option value="<?php echo e($row->reward_type_id); ?>"><?php echo e($row->rt_title); ?></option>
+						<?php endforeach; ?>
+					</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+				  
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Reward Purpose:</label>
+					<div class="col-sm-7">
+					<select class="form-control">
+						<option>Select Purpose</option>
+						<?php foreach($reward_purpose as $row): ?>
+						<option value="<?php echo e($row->reward_purpose_id); ?>"><?php echo e($row->rp_title); ?></option>
+						<?php endforeach; ?>
+					</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Order ID:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="" placeholder="Enter Order ID" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Amount:</label>
+					<div class="col-sm-7">
+					<input type="text" name="emp_fname" value="0" placeholder="Enter Amount" class="form-control" />
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Comments:</label>
+					<div class="col-sm-7">
+					<textarea class="form-control"></textarea>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  
+		  </div><!-- /.box-body -->
+
+		  <div class="box-footer">
+			<div class="col-md-3 col-md-offset-6 text-right">
+				<input class="btn btn-primary" type="submit" name="save" value="Save Reward" />
+			</div><!-- /.col-md-3 -->
+		  </div><!-- /.box-footer -->
+		  
+		</div><!-- /.box-primary -->
+		
+			
+		</form>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

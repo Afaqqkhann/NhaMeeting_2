@@ -1,0 +1,113 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+		  <!-- Default box -->
+          <h3 class="box-title text-blue">Employee Detail:</h3>
+
+			<?php if(!empty($errors->all()) or !empty(Session::get('error'))): ?>
+				<div class="alert alert-danger" role="alert">
+					<?php echo e(Session::get('error')); ?>
+
+					<ul>
+						<?php foreach($errors->all() as $error): ?>
+							<li><?php echo e($error); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+
+			<?php if(!empty(Session::get('success'))): ?>
+				<div class="alert alert-success" role="alter">
+					<?php echo e(Session::get('success')); ?>
+
+				</div>
+			<?php endif; ?>
+
+		  <?php echo Form::open(array('url' => 'employees/employee_detail', 'class'=>'form-horizontal')); ?>
+
+		  
+		<div class="box box-primary">
+		   <div class="box-header with-border">
+			<h3 class="box-title">Enter Employee CNIC & Password</h3>
+		   </div><!-- /.box-header -->
+            <div class="box-body">
+				<div class="form-group">
+					<?php echo Form::label('cnic', 'Employee CNIC:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::text('cnic', null, ['class' => 'form-control', 'placeholder' => 'Enter Employee CNIC', 'onkeypress' => 'return onlyCNIC($(this), event)']); ?>
+
+					</div><!-- /.col-sm-7 -->
+				</div><!-- /.form-group -->
+				
+				<div class="form-group">
+					<?php echo Form::label('password', 'Password:', ['class' => 'col-sm-2 control-label']); ?>
+
+					<div class="col-sm-4">
+					<?php echo Form::password('password', ['class' => 'form-control', 'placeholder' => 'Enter Password']); ?>
+
+					<p style="color:#ccc;">* Default password is demo123</p>
+					</div><!-- /.col-sm-7 -->
+				</div><!-- /.form-group -->				  
+		  </div><!-- /.box-body -->
+
+		  <div class="box-footer">
+			<div class="col-md-6 text-right">
+				<input class="btn btn-primary" type="submit" name="submit" value="Submit" />
+			</div><!-- /.col-md-6 -->
+		  </div><!-- /.box-footer -->
+		  
+		</div><!-- /.box-primary -->
+		
+			
+		<?php echo Form::close(); ?>
+
+
+	<?php $__env->startSection('js'); ?>
+
+		//// function to validate cnic
+		function onlyCNIC(obj, evt) {
+
+		obj.on('paste', function(e){
+		/// v variable have paste value
+		//var v = e.originalEvent.clipboardData.getData('Text');
+		return false;
+		obj.val('');
+		});
+
+		var charCode = (evt.which) ? evt.which : event.keyCode;
+
+		if(obj.val().length < 15)
+		{
+		if(onlyDigits(charCode))
+		{
+		if(obj.val().length == 5 || obj.val().length == 13)
+		obj.val(obj.val()+'-');
+		}
+		else
+		return false;
+		}
+		else
+		return false;
+		}
+
+
+		//// only digits function
+		function onlyDigits(charCode)
+		{
+
+		if(charCode > 31 && (charCode < 48 || charCode > 57)) {
+		return false;
+		}
+		else
+		{
+		return true;
+		}
+		}
+	<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

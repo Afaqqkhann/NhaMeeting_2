@@ -1,0 +1,352 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+	<?php if(!empty($errors->all()) or !empty(Session::get('error'))): ?>
+		<div class="alert alert-danger" role="alert">
+			<?php echo e(Session::get('error')); ?>
+
+			<ul>
+				<?php foreach($errors->all() as $error): ?>
+					<li><?php echo e($error); ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php endif; ?>
+
+	<?php if(!empty(Session::get('success'))): ?>
+		<div class="alert alert-success" role="alter">
+			<?php echo e(Session::get('success')); ?>
+
+		</div>
+	<?php endif; ?>
+
+	  <!-- Main content -->
+      <section class="invoice">
+		<div class="row text-center">
+			<h1 style="margin-bottom:0px;">National Highway Authority</h1>
+			<h3 style="margin-top:4px;">Personnel Bureau</h3>
+			<h3 style="margin-top:4px; margin-bottom:20px;"><u><strong>Individual Career Planning (ICP) Chart</strong></u></h3>
+		</div><!-- /.row -->
+		
+		<?php if($emp <> null): ?>
+			
+		<div class="row">
+			<table class="table table-bordered table-striped">
+			  <tr>
+				<th>Pers No</th>
+				<th>Emp Name</th>
+				<th>Father/Husband Name</th>
+				<th>Designation</th>
+				<th>BS</th>
+				<th>CNIC</th>
+				<th>Home District</th>
+				<th>Date of Birth</th>
+				<th>Service Type</th>
+			  </tr>
+			  <tr>
+				<td><?php echo e($emp->pers_no); ?></td>
+				<td><?php echo e($emp->emp_name); ?></td>
+				<td><?php echo e($emp->f_h_name); ?></td>
+				<td><?php echo e($emp->designation); ?></td>
+				<td><?php echo e($emp->bs); ?></td>
+				<td><?php echo e($emp->cnic); ?></td>
+				<td><?php echo e($emp->home_district); ?></td>
+				<td><?php echo e(date('d-M-Y', strtotime($emp->dob))); ?></td>
+				<td><?php echo e($emp->service_type); ?></td>
+			  </tr>
+			</table>
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<h3 class="heading">Qualification Details:</h3>
+			<table class="table table-bordered table-striped">
+			  <tr>
+				<th>S#</th>
+				<th>Exam Name</th>
+				<th>Exam Group</th>
+				<th>Institute Name</th>
+				<th>Year of Passing</th>
+				<th>Obtained Marks</th>
+				<th>Total Marks</th>
+				<th>%age Marks</th>
+				<th>Div</th>
+			  </tr>
+
+			<?php $__empty_1 = true; foreach($education as $key => $edu): $__empty_1 = false; ?>
+			
+			<?php
+				switch($edu->document_type_id) {
+					case 1:
+						$document_type = 'Middle';
+						break;
+					case 2:
+						$document_type = 'Matric/O-Level';
+						break;
+					case 3:
+						$document_type = 'FA/FSc/A-Level';
+						break;
+					case 4:
+						$document_type = 'Diploma';
+						break;
+					case 5:
+						$document_type = 'BA/BSc';
+						break;
+					case 6:
+						$document_type = 'Professional Certification';
+						break;
+					case 7:
+						$document_type = 'Master/Bacholar Honuors';
+						break;
+					case 8:
+						$document_type = 'MS';
+						break;
+					case 9:
+						$document_type = 'PhD';
+						break;
+					default:
+						$document_type = 'No Record';
+						break;
+				}
+			?>
+			
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($document_type); ?></td>
+				<td><?php echo e($edu->document_name); ?></td>
+				<td><?php echo e($edu->institute_name); ?></td>
+				<td><?php echo e(date('Y', strtotime($edu->sessions))); ?></td>
+				<td><?php echo e($edu->obtained_marks); ?></td>
+				<td><?php echo e($edu->total_marks); ?></td>
+				<td><?php echo e(($edu->obtained_marks <> null or $edu->total_marks <> null) ? round($edu->obtained_marks/$edu->total_marks*100) : 0); ?>%</td>
+				<td></td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+
+			</table>
+		</div><!-- /.row -->
+		
+		<div class="row">
+		  <h3 class="heading">Posting Details:</h3>
+		  <table class="table table-bordered table-striped">
+		    <tr>
+				<th>S#</th>
+				<th>Post Name</th>
+				<th>BS</th>
+				<th>Place of Posting</th>
+				<th>Region</th>
+				<th>Nature of Appointment</th>
+				<th>Joining Date</th>
+				<th>Releiving Date</th>
+				<th>Section/Project/Unit</th>
+				<th>Reason of Posting</th>
+				<th>Remarks</th>
+			</tr>
+			
+			<?php $__empty_1 = true; foreach($career as $key => $posting): $__empty_1 = false; ?>
+			
+			<?php $tmp = explode(' @ ', $posting->remarks); ?>
+			
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($posting->post_name); ?></td>
+				<td><?php echo e($posting->bs); ?></td>
+				<td><?php echo e($tmp[1]); ?></td>
+				<td><?php echo e($tmp[0]); ?></td>
+				<td><?php echo e($posting->charge_title); ?></td>
+				<td><?php echo e($posting->joining_date ? date('d-M-Y', strtotime($posting->joining_date)) : '-'); ?></td>
+				<td><?php echo e($posting->relieving_date ? date('d-M-Y', strtotime($posting->relieving_date)) : '-'); ?></td>
+				<td><?php echo e(isset($tmp[2]) ? $tmp[2] : ''); ?></td>
+				<td></td>
+				<td><?php echo e($posting->remarks); ?></td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+			
+		  </table>
+		</div><!-- /.row -->
+		
+		<div class="row">
+		  <h3 class="heading">Training Details:</h3>
+		  <table class="table table-bordered table-striped">
+		    <tr>
+				<th>S#</th>
+				<th>Course Name</th>
+				<th>Institute Name</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Participation</th>
+				<th>Earned Through</th>
+			</tr>
+			
+			<?php $__empty_1 = true; foreach($training as $key => $training): $__empty_1 = false; ?>
+						
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($training->course_name); ?></td>
+				<td><?php echo e($training->institute_name); ?></td>
+				<td><?php echo e(($training->start_date) ? date('d-M-Y', strtotime($training->start_date)) : null); ?></td>
+				<td><?php echo e(($training->end_date) ? date('d-M-Y', strtotime($training->end_date)) : null); ?></td>
+				<td><?php echo e($training->participation); ?></td>
+				<td><?php echo e($training->earned_through); ?></td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+			
+		  </table>
+		</div><!-- /.row -->
+		
+		<div class="row">
+		  <h3 class="heading">Rewards Detail:</h3>
+		  <table class="table table-bordered table-striped">
+		    <tr>
+				<th>S#</th>
+				<th>Kind of Reward</th>
+				<th>Purpose</th>
+				<th>Date</th>
+				<th>Approving Authority</th>
+			</tr>
+			
+			<?php $__empty_1 = true; foreach($reward as $key => $reward): $__empty_1 = false; ?>
+						
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($reward->kind_of_reward); ?></td>
+				<td><?php echo e($reward->purpose); ?></td>
+				<td><?php echo e(($reward->letter_date) ? date('d-M-Y', strtotime($reward->letter_date)) : null); ?></td>
+				<td><?php echo e($reward->app_auth); ?></td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+			
+		  </table>
+		</div><!-- /.row -->
+		
+		<div class="row">
+		  <h3 class="heading">Penalties:</h3>
+		  <table class="table table-bordered table-striped">
+		    <tr>
+				<th>S#</th>
+				<th>Allegation</th>
+				<th>Nature of Penalty</th>
+				<th>Date</th>
+				<th>Approving Authority</th>
+			</tr>
+			
+			<?php $__empty_1 = true; foreach($penalties as $key => $penalty): $__empty_1 = false; ?>
+						
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($penalty->allegation); ?></td>
+				<td><?php echo e($penalty->nature_of_penalty); ?></td>
+				<td><?php echo e(($penalty->off_order_date) ? date('d-M-Y', strtotime($penalty->off_order_date)) : null); ?></td>
+				<td><?php echo e($penalty->app_auth); ?></td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+			
+		  </table>
+		</div><!-- /.row -->
+		
+		
+		<div class="row">
+		  <h3 class="heading">Previous Service Details:</h3>
+		  <table class="table table-bordered table-striped">
+		    <tr>
+				<th>S#</th>
+				<th>Organization Name</th>
+				<th>Organization Type</th>
+				<th>Post Name</th>
+				<th>Job Description</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Reason For Leaving</th>
+			</tr>
+			
+			<?php $__empty_1 = true; foreach($experience as $key => $experience): $__empty_1 = false; ?>
+						
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($experience->org_name); ?></td>
+				<td><?php echo e($experience->org_type); ?></td>
+				<td><?php echo e($experience->designation); ?></td>
+				<td><?php echo e($experience->job_description); ?></td>
+				<td><?php echo e(($experience->joining_date) ? date('d-M-Y', strtotime($experience->joining_date)) : null); ?></td>
+				<td><?php echo e(($experience->ending_date) ? date('d-M-Y', strtotime($experience->ending_date)) : null); ?></td>
+				<td><?php echo e($experience->reason_leaving); ?></td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+			
+		  </table>
+		</div><!-- /.row -->
+		
+		
+		<div class="row">
+		  <h3 class="heading">Assets Declaration:</h3>
+		  <table class="table table-bordered table-striped">
+		    <tr>
+				<th>S#</th>
+				<th>Year</th>
+				<th>Submitted</th>
+			</tr>
+			
+			<?php $__empty_1 = true; foreach($assets as $key => $asset): $__empty_1 = false; ?>
+						
+			<tr>
+				<td><?php echo e($key+1); ?></td>
+				<td><?php echo e($asset->year_title); ?></td>
+				<td>Yes</td>
+			</tr>
+			<?php endforeach; if ($__empty_1): ?>
+				<tr>
+					<td colspan="8">No record found!</td>
+				</tr>
+			<?php endif; ?>
+			
+		  </table>
+		</div><!-- /.row -->	
+		
+		<?php else: ?>
+
+		<!-- title row -->
+        <div class="row">
+          <div class="col-xs-12">
+            <h2 class="page-header">No Record Found</h2>
+          </div><!-- /.col -->
+        </div>
+        <!-- info row -->
+		<?php endif; ?>
+
+		
+		
+	</section><!-- /.content -->
+	
+	<style>
+	.heading { padding: 10px; background-color: #ddd;}
+	</style>
+	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

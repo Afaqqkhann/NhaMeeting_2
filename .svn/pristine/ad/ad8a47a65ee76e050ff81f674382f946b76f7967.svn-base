@@ -1,0 +1,28 @@
+<?php $__env->startSection('sidebar'); ?>
+@parent
+    <h1>Role</h1>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+
+<div class="box  box-primary">
+    <div class="box-body">
+      <table class="table table-bordered table-stripped table-responsive">
+          <tr>
+              <th>Role Name</th><td><?php echo e($role->name); ?></td>
+          </tr>
+          <tr>
+              <th>Role Display Name</th><td><?php echo e($role->display_name); ?></td>
+          </tr>
+          <tr>
+              <th>Description</th><td><?php echo e($role->description); ?></td>
+          </tr>
+      </table>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+<a href="<?php echo e(URL::to('role')); ?>" class="btn btn-primary" >Back</a>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make("base", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

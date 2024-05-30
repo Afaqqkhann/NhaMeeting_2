@@ -1,0 +1,166 @@
+@extends("base")
+
+@section('sidebar')
+@parent
+
+@endsection
+
+@section('content')
+
+		  <!-- Default box -->
+          <h3 class="box-title text-blue">Edit Post:</h3>
+          <form class="form-horizontal">
+		  
+		<div class="box box-primary">
+		   <div class="box-header with-border">
+			<h3 class="box-title">Post Detail</h3>
+		   </div><!-- /.box-header -->
+            <div class="box-body">
+								
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Designation:</label>
+					<div class="col-sm-7">
+					<select name="designation" class="form-control">
+                        <option value="" selected="">Select Designtaion</option>
+					<option value="25">Analytic Chemist                            </option>
+					<option value="24">Office Assistant                            </option>
+					<option value="22">Naib Qasid                            </option>
+					<option value="20">Security Guard                            </option>
+					<option value="19">Driver                            </option>
+					<option value="18">Computer Operator                            </option>
+					<option value="17">Advocate                            </option>
+					<option value="16">Deputy Director Mineral-IV                            </option>
+					<option value="15">Assistant Gemologist                            </option>
+					<option value="13">Assistant Engineer Civil                            </option>
+					<option value="12">Assistant Gemologist                            </option>
+					<option value="11">Database Administrator                            </option>
+					<option value="10">Assistant Director (Planning &amp; Development)                            </option>
+					<option value="9">Assistant Director (Mining Engineer)                            </option>
+					<option value="8">Assistant Director (Geologist)                            </option>
+					<option value="7">Inspector of Mines                            </option>
+					<option value="6">Assistant Commissioner Mines Labor Welfare                            </option>
+					<option value="5">Geologist                            </option>
+					<option value="4" selected>Assistant Director (Technical)                            </option>
+					<option value="3">Senior Mineral Processing Engineer                            </option>
+					<option value="2">Deputy Comissioner Labor Welfare                            </option>
+					<option value="1">Chief Geochemist                            </option>
+					</select>
+					</div><!-- /.col-sm-10 -->
+                    </div>
+					
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">No. of Post:</label>
+					<div class="col-sm-3">
+					<select name="no_of_post" class="form-control">
+						<option>Select No. of Post</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5" selected>5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+					</select>
+					</div><!-- /.col-sm-3 -->
+					
+					<label class="control-label col-sm-1">Vacant</label>
+					<div class="col-sm-3">
+						<input type="text" disabled name="vacant_post" id="vacant_post" title="Vacant Posts" class="form-control" value="10 - Posts Vacant" />
+					</div><!-- /.col-sm-3 -->
+                    </div><!-- /.form-group -->
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Required Qualification</label>
+						<div class="col-sm-3">
+							<select name="qualification[]" id="qualification" data-placeholder="Select Qualification" class="form-control">
+								<option value="" selected="">Select Qualification</option>
+								<option value="39">MSC                        </option>
+								<option value="40">BSC                        </option>
+								<option value="41">FSC                        </option>
+								<option value="42">FA                        </option>
+								<option value="43">Matric                        </option>
+								<option value="55" selected>MBA                        </option>
+								<option value="64">BS (Hons)                        </option>
+								<option value="166">Primary                        </option>
+							  </select>
+						</div><!-- /.col-sm-3 -->
+
+						<label class="col-sm-1 control-label">Age</label>
+						<div class="col-sm-3">
+							<select name="age[]" id="age" data-placeholder="Select Age" class="form-control">
+								<option value="" selected="">Select Age Range</option>
+                                    <option value="6">20-25</option>
+                                    <option value="6" selected>26-32</option>
+                                    <option value="6">33-45</option>
+                                    </select>
+						</div><!-- /.col-sm-3 -->
+					</div><!-- /.form-group -->
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Required Experience</label>
+						<div class="col-sm-3">
+							<select name="experience[]" id="experience" data-placeholder="Select Experience" class="form-control">
+								<option value="" selected="">Select Experience</option>
+								<option value="44">1-Year                </option>
+								<option value="45">2-Years                </option>
+								<option value="46">3-Years                </option>
+								<option value="47">4-Years                </option>
+								<option value="48" selected>5-Years                </option>
+								<option value="49">6-Years                </option>
+							</select>
+						</div><!-- /.col-sm-3 -->
+
+						<label class="col-sm-1 control-label">BPS</label>
+						<div class="col-sm-3">
+							<select name="bps[]" id="bps" data-placeholder="Select BPS" class="form-control">
+									<option value="" selected="">Select BPS</option>
+                                        <option value="3">BPS-1                    </option>
+                                        <option value="4">BPS-2                    </option>
+                                        <option value="5">BPS-3                    </option>
+                                        <option value="8">BPS-4                    </option>
+                                        <option value="9">BPS-5                    </option>
+                                        <option value="10">BPS-6                    </option>
+                                        <option value="11">BPS-7                    </option>
+                                        <option value="12">BPS-8                    </option>
+                                        <option value="13">BPS-9                    </option>
+                                        <option value="14">BPS-10                    </option>
+                                        <option value="15">BPS-11                    </option>
+                                        <option value="16">BPS-12                    </option>
+                                        <option value="17">BPS-13                    </option>
+                                        <option value="18">BPS-14                    </option>
+                                        <option value="19">BPS-15                    </option>
+                                        <option value="20">BPS-16                    </option>
+                                        <option value="21" selected>BPS-17                    </option>
+                                        <option value="22">BPS-18                    </option>
+                                        <option value="23">BPS-19                    </option>
+                                        <option value="24">BPS-20                    </option>
+                                        <option value="25">BPS-21                    </option>
+                                        <option value="287">BPS-22                    </option>
+                                    </select>
+						</div><!-- /.col-sm-3 -->
+					</div><!-- /.form-group -->
+
+				  <div class="form-group">
+					<label class="col-sm-2 control-label">Detail:</label>
+					<div class="col-sm-7">
+						<textarea class="form-control" rows="3" placeholder="Enter Detail">Lorem ipsum represents a long-held tradition for designers, typographers and the like. Some people hate it and argue for its demise, but others ignore the hate as they create awesome tools to help create filler text for everyone from bacon lovers to Charlie Sheen fans.</textarea>
+					</div><!-- /.col-sm-6 -->
+				  </div><!-- /.form-group -->
+				
+		  </div><!-- /.box-body -->
+
+		  <div class="box-footer">
+			<div class="col-md-3 col-md-offset-6 text-right">
+				<input class="btn btn-primary" type="submit" name="save" value="Save Post" />
+			</div><!-- /.col-md-3 -->
+		  </div><!-- /.box-footer -->
+		  
+		</div><!-- /.box-primary -->
+		
+			
+		</form>
+
+@stop

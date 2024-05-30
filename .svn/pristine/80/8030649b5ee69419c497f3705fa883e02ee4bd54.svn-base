@@ -1,0 +1,182 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Models\HRD;
+use Validator;
+use Session;
+use DB;
+class HRDController extends Controller
+{
+
+    public function __construct()
+    {
+        DB::setDateFormat('DD-Mon-YY');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $page_title = 'Trainings HRD';
+        $data = HRD::all();
+
+        return view('trainings_hrd.index', compact('page_title', 'data'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $page_title = 'Trainings HRD';
+
+        return view('trainings_hrd.create', compact('page_title'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validation = Validator::make($request->all(),
+            [
+                'course_title'  => 	'required',
+                //'duration_days' =>  'required',
+                //'edoc'	    =>	'mimes:jpeg,bmp,png,jpg|max:1000',
+            ]);
+
+        if ($validation->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($validation->errors());
+        }
+
+        $record = HRD::orderBy('th_id', 'desc')->first();
+
+        $hrd = new HRD();
+        $hrd->th_id = ($record) ? $record->th_id + 1 : 1;
+        $hrd->course_title = $request->input('course_title');
+       // $hrd->duration_days = $request->input('duration_days');
+        $hrd->start_dated = ($request->input('start_dated')) ? date('y-M-d', strtotime($request->input('start_dated'))) : null;
+        $hrd->apply_dated = ($request->input('apply_dated')) ? date('y-M-d', strtotime($request->input('apply_dated'))) : null;
+        $hrd->end_dated = ($request->input('end_dated')) ? date('y-M-d', strtotime($request->input('end_dated'))) : null;
+        $hrd->training_loc = $request->input('training_loc');
+        $hrd->comments = $request->input('comments');
+
+        if ($request->hasFile('edoc')) {
+            $file = $request->file('edoc');
+            $fileName = sha1(time()) . '.' . $file->getClientOriginalExtension();;
+            $request->file('edoc')->move(
+                base_path() . '/storage/trainings_hrd/', $fileName
+            );
+            $hrd->edoc = $fileName;
+        }
+
+        $hrd->th_status = 1;
+        $hrd->save();
+
+        Session::flash('success', 'Trainings HRD created successfully.');
+
+        return redirect('trainings_hrd');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $page_title = 'Trainings HRD';
+        $data = HRD::find($id);
+
+        return view('trainings_hrd.show', compact('page_title', 'data'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $page_title = 'Trainings HRD';
+        $data = HRD::find($id);
+
+        return view('trainings_hrd.edit', compact('page_title', 'data'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $validation = Validator::make($request->all(),
+            [
+                'course_title'  => 	'required',
+               // 'duration_days' =>  'required',
+                //'edoc'	    =>	'mimes:jpeg,bmp,png,jpg|max:1000',
+            ]);
+
+        if ($validation->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($validation->errors());
+        }
+
+        $hrd = HRD::find($id);
+        $hrd->course_title = $request->input('course_title');
+        //$hrd->duration_days = $request->input('duration_days');
+        $hrd->start_dated = ($request->input('start_dated')) ? date('y-M-d', strtotime($request->input('start_dated'))) : null;
+        $hrd->apply_dated = ($request->input('apply_dated')) ? date('y-M-d', strtotime($request->input('apply_dated'))) : null;
+        $hrd->end_dated = ($request->input('end_dated')) ? date('y-M-d', strtotime($request->input('end_dated'))) : null;
+        $hrd->training_loc = $request->input('training_loc');
+        $hrd->comments = $request->input('comments');
+
+        if ($request->hasFile('edoc')) {
+            $file = $request->file('edoc');
+            $fileName = sha1(time()) . '.' . $file->getClientOriginalExtension();;
+            $request->file('edoc')->move(
+                base_path() . '/storage/trainings_hrd/', $fileName
+            );
+            $hrd->edoc = $fileName;
+        }
+        $hrd->th_status = 1;
+        $hrd->save();
+
+        Session::flash('success', 'Trainings HRD updated successfully.');
+
+        return redirect('trainings_hrd');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        HRD::where('TH_ID', '=', $id)->delete();
+        Session::flash('success', 'Training HRD has been deleted successfully.');
+
+        return redirect('trainings_hrd');
+    }
+}
