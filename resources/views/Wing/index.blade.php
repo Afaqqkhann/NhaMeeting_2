@@ -193,12 +193,12 @@
                         initComplete: function() {
                             $('.dataTables_filter').css({
                                 // 'float': 'right',
-                                'margin-top': '20px',
-                                'margin-right': '20px'
+                                // 'margin-top': '20px',
+                                // 'margin-right': '20px'
                             });
                             $('.dataTables_length ').css({
                                 
-                                'margin-top': '40px',
+                                // 'margin-top': '40px',
                                 
                             });
                         }
