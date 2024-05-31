@@ -143,12 +143,12 @@
                    
 
                     <td>
-                        <a class="btn btn-xs pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" title="">
                             <i class="fa fa-edit "></i>
                         </a>
                    
                     
-                        <a class="btn btn-xs pull-left" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
                         </a>
                     </td>

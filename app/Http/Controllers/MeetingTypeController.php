@@ -73,7 +73,11 @@ class MeetingTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        // $meetings = MeetingType::find($id);
+
+       
+           
+        // return view('Meeting.create');
     }
 
     /**

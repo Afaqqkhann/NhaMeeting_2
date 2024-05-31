@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Wing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
@@ -34,7 +35,7 @@ class MeetingAgendasController extends Controller
      */
     public function create()
     {
-        $agendas = Agenda::with('wing')->get();
+        $agendas = Wing::all();
         return view('meeting_agenda.create',compact('agendas'));
     }
 
@@ -107,7 +108,7 @@ class MeetingAgendasController extends Controller
 {
     // Find the agenda by ID
     $meetingAgenda = Agenda::findOrFail($id);
-    $allagendas = Agenda::with('wing')->get();
+    $allagendas = Wing::all();
    
     return view('meeting_agenda.edit', compact('meetingAgenda','allagendas'));
 }

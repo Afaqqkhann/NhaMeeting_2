@@ -60,7 +60,7 @@
                 <div class="col-xs-4" class="js-select2 form-control input-sm">
                 <select name="meeting_type" class="form-control">
                     @foreach($meetings as $meeting)
-                        <option value="{{ $meeting->meetingType->mt_id }}">{{ $meeting->meetingType->mt_title }}</option>
+                        <option value="{{ $meeting->mt_id }}">{{ $meeting->mt_title }}</option>
                     @endforeach
                 </select>
             </div>

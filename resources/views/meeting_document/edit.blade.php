@@ -68,21 +68,20 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="doc_id" class="col-xs-2 control-label">Meeting Type<span class="required" style="color: red">*</span></label>
-                    <div class="col-xs-4" class="js-select2 form-control input-sm">
-                    <select name="doc_id" class="form-control">
-                        <option value="" > {{ $meetingDoc->doctsandard->doc_title }} </option>
-                        @foreach($alldoc as $doc)
-                        @if($doc->doctsandard)
-                            <option value="{{ $doc->doctsandard->doc_id }}">
-                                {{ $doc->doctsandard->doc_title }}
-                            </option>
-                        @endif
-                    @endforeach
-              
-                    </select>
+                    <label for="doc_id" class="col-xs-2 control-label">Doc<span class="required" style="color: red">*</span></label>
+                    <div class="col-xs-4">
+                        <select name="doc_id" id="doc_id" class="form-control js-select2 input-sm">
+                            <option value="{{ $meetingDoc->doctsandard->doc_id }}">{{ $meetingDoc->doctsandard->doc_title }}</option>
+                            @foreach($alldoc as $doc)
+                                @if($doc->doc_id != $meetingDoc->doctsandard->doc_id)
+                                    <option value="{{ $doc->doc_id }}">
+                                        {{ $doc->doc_title }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                </div>  
                 {{-- <div class="form-group">
                     <label class="col-xs-2 control-label">Meeting Type <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">

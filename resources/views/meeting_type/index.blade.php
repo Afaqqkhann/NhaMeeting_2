@@ -142,12 +142,12 @@
                    
 
                     <td>
-                        <a class="btn btn-xs pull-left" href="{{ route('editmeetingtype.edit', ['id' => $type->mt_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('editmeetingtype.edit', ['id' => $type->mt_id]) }}" title="">
                             <i class="fa fa-edit "></i>
                         </a>
                    
                     
-                        <a class="btn btn-xs pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
                         </a>
                     </td>

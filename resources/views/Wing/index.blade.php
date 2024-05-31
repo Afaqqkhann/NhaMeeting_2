@@ -143,13 +143,13 @@
                    
 
                     <td>
-                        <a class="btn btn-xs pull-left" href="{{ route('editwing.edit', ['id' => $type->action_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('editwing.edit', ['id' => $type->action_id]) }}" title="">
                             <i class="fa fa-edit "></i>
                         </a>
                      
                    
                     
-                        <a class="btn btn-xs pull-left" href="{{ route('wing.destroy', ['id' => $type->action_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('wing.destroy', ['id' => $type->action_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
                         </a>
                     </td>

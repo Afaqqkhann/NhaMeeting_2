@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\MeetingType;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Validator;
@@ -31,8 +32,9 @@ class MeetingController extends Controller
      */
     public function create()
     {
-        $meetings = Meeting::with('meetingType')->get();
-        return view ('Meeting.create',compact( 'meetings'));
+        $meetings = MeetingType::all();
+        // dd($meetings); 
+        return view('Meeting.create', compact('meetings'));
     }
 
     /**
@@ -111,7 +113,7 @@ public function store(Request $request)
     public function edit($id)
 {
     $meeting = Meeting::with('meetingType')->find($id); 
-    $allMeetings = Meeting::with('meetingType')->get(); // Assuming you want to show all meeting types in the dropdown
+    $allMeetings = MeetingType::all(); // Assuming you want to show all meeting types in the dropdown
     return view('Meeting.edit', ['meetings' => $meeting, 'allMeetings' => $allMeetings]);
 }
 

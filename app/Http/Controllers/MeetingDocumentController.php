@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\DocStandard;
 use Illuminate\Support\Facades\Validator;
 use App\Models\MeetingDocument;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class MeetingDocumentController extends Controller
      */
     public function create()
     {
-        $meeting_doc = MeetingDocument::with('doctsandard')->get();
+        $meeting_doc = DocStandard::all();
         return view('meeting_document.create',compact('meeting_doc'));
     }
 
@@ -99,8 +100,8 @@ class MeetingDocumentController extends Controller
     {
       
     $meetingDoc= MeetingDocument::findOrFail($id);
-    
-    $alldoc= MeetingDocument::with('doctsandard')->get();
+    $meetingDoc = MeetingDocument::with('doctsandard')->find($id); 
+    $alldoc= DocStandard::all();
     return view('meeting_document.edit', compact('meetingDoc','alldoc'));
     }
 

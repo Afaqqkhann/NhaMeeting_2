@@ -71,7 +71,7 @@
                 <div class="col-xs-4" class="js-select2 form-control input-sm">
                 <select name="action_id" class="form-control">
                     @foreach($agendas as $agenda)
-                        <option value="{{ $agenda->wing->action_id }}">{{ $agenda->wing->action_title }}</option>
+                        <option value="{{ $agenda->action_id }}">{{ $agenda->action_title }}</option>
                     @endforeach
                 </select>
             </div>

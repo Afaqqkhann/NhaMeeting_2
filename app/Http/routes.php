@@ -32,6 +32,7 @@ Route::post('meeting_types/store', 'MeetingTypeController@store')->name('storeme
 Route::get('/meetingtypes/edit/{id}', 'MeetingTypeController@edit')->name('editmeetingtype.edit');
 Route::put('/meetingtype/update/{id}', 'MeetingTypeController@update')->name('updatemeetingtype.update');
 Route::get('/meeting-delete/{id}', 'MeetingTypeController@destroy')->name('meeting-delete.destroy');
+Route::get('/meeting-show/{id}', 'MeetingTypeController@show')->name('meeting-show.show');
 // Route::get('/meeting','MeetingAgendasController@index');
 
 Route::get('wing', 'WingController@index');

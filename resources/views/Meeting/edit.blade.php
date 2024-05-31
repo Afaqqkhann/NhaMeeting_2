@@ -70,20 +70,19 @@
                 </div>
                 <div class="form-group">
                     <label for="meeting_type" class="col-xs-2 control-label">Meeting Type<span class="required" style="color: red">*</span></label>
-                    <div class="col-xs-4" class="js-select2 form-control input-sm">
-                    <select name="meeting_type" class="form-control">
-                        <option value="" > {{ $meetings->meetingType->mt_title }} </option>
-                        @foreach($allMeetings as $meeting)
-                        @if($meeting->meetingType)
-                            <option value="{{ $meeting->meetingType->mt_id }}">
-                                {{ $meeting->meetingType->mt_title }}
-                            </option>
-                        @endif
-                    @endforeach
-              
-                    </select>
+                    <div class="col-xs-4">
+                        <select name="meeting_type" id="meeting_type" class="form-control js-select2 input-sm">
+                            <option value="{{ $meetings->meetingType->mt_id }}">{{ $meetings->meetingType->mt_title }}</option>
+                            @foreach($allMeetings as $meeting)
+                                @if($meeting->mt_id != $meetings->mt_id)
+                                    <option value="{{ $meeting->mt_id }}">
+                                        {{ $meeting->mt_title }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                </div>      
                 <div class="form-group">
                     <label class="col-xs-2 control-label">Meeting_pdf <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">

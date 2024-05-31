@@ -68,21 +68,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="action_id" class="col-xs-2 control-label">Meeting Type<span class="required" style="color: red">*</span></label>
-                    <div class="col-xs-4" class="js-select2 form-control input-sm">
-                    <select name="action_id" class="form-control">
-                        <option value="" > {{ $meetingAgenda->wing->action_title }} </option>
-                        @foreach($allagendas as $agenda)
-                        @if($agenda->wing)
-                            <option value="{{ $agenda->wing->action_id }}">
-                                {{ $agenda->wing->action_title }}
-                            </option>
-                        @endif
-                    @endforeach
-              
-                    </select>
+                    <label for="action_id" class="col-xs-2 control-label">Wing<span class="required" style="color: red">*</span></label>
+                    <div class="col-xs-4">
+                        <select name="action_id" id="action_id" class="form-control js-select2 input-sm">
+                            <option value="{{ $meetingAgenda->wing->action_id }}">{{ $meetingAgenda->wing->action_title }}</option>
+                            @foreach($allagendas as $agenda)
+                                @if($agenda->action_id != $meetingAgenda->wing->action_id)
+                                    <option value="{{ $agenda->action_id }}">
+                                        {{ $agenda->action_title }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                </div>      
+                
                 {{-- <div class="form-group">
                     <label class="col-xs-2 control-label">Meeting Type <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
