@@ -185,13 +185,11 @@
 
 ///////////////////
 $('#meeting_agenda').DataTable({
-                        dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + 
-                        "<'row'<'col-sm-12'tr>>" + 
-                        "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'p>>", 
+                        dom: 'lrftipB', 
                         buttons: [
                             'csv', 'excel', 'pdf', 'print'
                         ],
-                        pageLength: 5,
+                        pageLength: 10,
                         initComplete: function() {
                             $('.dataTables_filter').css({
                                 // 'float': 'right',
