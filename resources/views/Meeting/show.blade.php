@@ -230,6 +230,7 @@
                     agendasHtml += '<thead style="background-color: #D1D1D1;"><tr><th>Wing</th><th>Agenda Title</th><th>EDoc</th><th>Action</th></tr></thead>';
                     agendasHtml += '<tbody>';
                     data.forEach(function(agenda) {
+                    var showRoute="{{ route('agenda.show', ['id' => ':agendaId']) }}".replace(':agendaId', agenda.ma_id);
                     var editRoute = "{{ route('editmeetingagenda.edit', ['id' => ':agendaId']) }}".replace(':agendaId', agenda.ma_id);
                     var deleteRoute = "{{ route('deletemeetingagenda.delete', ['id' => ':agendaId']) }}".replace(':agendaId', agenda.ma_id);
                     agendasHtml += '<tr>';
@@ -246,6 +247,7 @@
                     agendasHtml += '<td>';
                     agendasHtml += '<a href="' + editRoute + '" class="btn"><i class="fa fa-edit"></i></a>';
                     agendasHtml += '<a href="' + deleteRoute + '" class="btn"><i class="fa fa-trash-o"></i></a>';
+                    agendasHtml += '<a href="' + showRoute + '" class="btn"><i class="fa  fa-eye"></i></a>';
                     agendasHtml += '</td></tr>';
     });
                     agendasHtml += '</tbody></table>';
@@ -305,7 +307,7 @@
                     docHtml += '<a href="{{route('createmeetingdocument.create')}}" class="btn btn-primary " style="margin-bottom: 10px;"><i class="fa fa-user-plus "></i>Add-Document</a>';
                     docHtml += '</div>';
                     docHtml += '<table class="table table-bordered" id="doc-table">';
-                    docHtml += '<thead style="background-color: #D1D1D1;"><tr><th>doc_title</th><th>meeting_doc Title</th><th>EDoc</th><th>Action</th></tr></thead>';
+                    docHtml += '<thead style="background-color: #D1D1D1;"><tr><th>Docs</th><th>Meeting-Doc-Title</th><th>EDoc</th><th>Action</th></tr></thead>';
                     docHtml += '<tbody>';
                     data.forEach(function(doc) {
                     var editRoute1 = "{{ route('meetingdocedit.edit', ['id' => ':agendaId']) }}".replace(':agendaId', doc.md_id);

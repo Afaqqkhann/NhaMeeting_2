@@ -147,8 +147,11 @@
                         </a>
                    
                     
-                        <a class="btn btn-white pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }} " onclick="myConfirm()" title="">
                             <i class=" fa fa-trash-o" ></i>
+                        </a>
+                         <a class="btn btn-white pull-left" href=" {{ route('meetingType-show.show', ['id' => $type->mt_id]) }}" title="">
+                            <i class=" fa fa-eye" ></i>
                         </a>
                     </td>
 
@@ -213,6 +216,14 @@ setTimeout(function () {
     }
 }, 2000); 
 });
+function myConfirm(){
+    var result =confirm("Are you sure you want to delete ");
+    if(result ){
+        alert('delete');
+        window.location.href = "url_to_delete.php?action=delete&ID=12";
+    }
+}
+
 
 </script>
 

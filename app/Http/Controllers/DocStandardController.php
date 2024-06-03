@@ -72,7 +72,9 @@ class DocStandardController extends Controller
      */
     public function show($id)
     {
-        //
+        $docs = DocStandard::find($id);
+        return view ('DocStandard.show',compact('docs'));
+
     }
 
     /**

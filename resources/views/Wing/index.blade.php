@@ -152,6 +152,9 @@
                         <a class="btn btn-white pull-left" href="{{ route('wing.destroy', ['id' => $type->action_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
                         </a>
+                        <a class="btn btn-white pull-left" href="{{ route('wing.show.show', ['id' => $type->action_id]) }}" title="">
+                            <i class=" fa fa-eye" ></i>
+                        </a>
                     </td>
 
                 </tr>

@@ -143,13 +143,16 @@
                    
 
                     <td>
-                        <a class="btn btn-white pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" onclick="confirm()">
                             <i class="fa fa-edit "></i>
                         </a>
                    
                     
                         <a class="btn btn-white pull-left" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
+                        </a>
+                        <a class="btn btn-white pull-left" href="{{ route('documentstandard.show', ['id' => $type->doc_id]) }}" title="">
+                            <i class=" fa fa-eye" ></i>
                         </a>
                     </td>
 
@@ -211,6 +214,13 @@
             }
         }, 2000); 
     });
+    function confirm(){
+        var x=confirm('are you sure you want to delete ');
+        if(x)
+        return true;
+    else
+    return false;
+    }
 </script>
 
 @stop

@@ -73,11 +73,11 @@ class MeetingTypeController extends Controller
      */
     public function show($id)
     {
-        // $meetings = MeetingType::find($id);
+        $meetings = MeetingType::find($id);
 
-       
+    //    var_dump($meetings);
            
-        // return view('Meeting.create');
+        return view('meeting_type.show',compact('meetings'));
     }
 
     /**

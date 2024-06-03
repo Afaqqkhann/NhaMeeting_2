@@ -71,7 +71,8 @@ class WingController extends Controller
      */
     public function show($id)
     {
-        //
+        $wings= Wing::find($id);
+        return view('Wing.show',compact('wings'));
     }
 
     /**

@@ -157,25 +157,25 @@
           </li>
           <li class=" treeview">
             <a href="{{url('meeting_types')}}">
-              <i class="fa fa-book"></i> <span>Meeting Type</span>
+              <i class="fa  fa-circle-o"></i> <span>Meeting Type</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>
           <li class=" treeview">
             <a href="{{url('wing')}}">
-              <i class="fa fa-book"></i> <span>Wing</span>
+              <i class="fa  fa-circle-o"></i> <span>Wing</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>
           <li class=" treeview">
             <a href="{{url('docstandard')}}">
-              <i class="fa fa-book"></i> <span>Document-Standard</span>
+              <i class="fa  fa-circle-o"></i> <span>Document-Standard</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>
           <li class=" treeview">
             <a href="{{url('meeting')}}">
-              <i class="fa   fa-book"></i> <span>Meeting</span>
+              <i class="fa   fa-circle-o"></i> <span>Meeting</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>
