@@ -25,6 +25,8 @@ Route::post('meetingagendas/store', 'MeetingAgendasController@store')->name('sto
 Route::get('/meeting_agenda/{id}/edit', 'MeetingAgendasController@edit')->name('editmeetingagenda.edit');
 Route::put('/meeting_agenda/update/{id}', 'MeetingAgendasController@update')->name('updatemeetingagenda.update');
 Route::get('/meeting_agenda/{id}', 'MeetingAgendasController@destroy')->name('deletemeetingagenda.delete');
+Route::get('agendas/show_2/{id}', 'MeetingAgendasController@show_2')->name('agendas.show_2');
+
 
 Route::get('meeting_types', 'MeetingTypeController@index');
 Route::get('meeting_types/create', 'MeetingTypeController@create')->name('createmeetingtype.create');
@@ -65,3 +67,4 @@ Route::post('meeting_document/store', 'MeetingDocumentController@store')->name('
 Route::get('/meeting_document/edit/{id}', 'MeetingDocumentController@edit')->name('meetingdocedit.edit');
 Route::put('/meeting_document/update/{id}', 'MeetingDocumentController@update')->name('meetingdocupdate.update');
 Route::get('/meetingdocdelete/{id}', 'MeetingDocumentController@destroy')->name('meetingdocdelete.destroy');
+Route::get('doc/show2/{id}', 'MeetingDocumentController@show_2')->name('doc.show');

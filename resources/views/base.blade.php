@@ -163,7 +163,7 @@
           </li>
           <li class=" treeview">
             <a href="{{url('wing')}}">
-              <i class="fa  fa-circle-o"></i> <span>Wing</span>
+              <i class="fa  fa-circle-o" ></i> <span>Wing</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>

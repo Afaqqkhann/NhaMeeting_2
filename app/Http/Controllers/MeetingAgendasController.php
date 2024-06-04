@@ -96,7 +96,12 @@ class MeetingAgendasController extends Controller
         $agendas = Agenda::where('meeting_id', $id)->with('wing')->get();
       
         return response()->json($agendas);
+        // return view ('meeting_agenda.show',compact('agendas'));
+    }
+    public function show_2($id) {
+        $agendas = Agenda::find($id);
         return view ('meeting_agenda.show',compact('agendas'));
+        // You might want to return a response or render a view here
     }
 
     /**

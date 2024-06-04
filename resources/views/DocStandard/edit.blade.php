@@ -43,8 +43,8 @@
                     <label class="col-xs-2 control-label">Status <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
                         <select name="doc_status" class="js-select2 form-control input-sm">
-                            <option value="{{ $docStandards->doc_status }}" >Active</option>
-                            <option  value="{{ $docStandards->doc_status }}">Inactive</option>
+                            <option value="1" >Active</option>
+                            <option  value="0">InActive</option>
                         </select>
                     </div>
                 </div>

@@ -89,6 +89,11 @@ class MeetingDocumentController extends Controller
         $doc = MeetingDocument::where('meeting_id', $id)->with('doctsandard')->get();
         return response()->json($doc);
     }
+    public function show_2($id) {
+        $docs = MeetingDocument::find($id);
+        return view ('meeting_document.show',compact('docs'));
+        
+    }
 
     /**
      * Show the form for editing the specified resource.

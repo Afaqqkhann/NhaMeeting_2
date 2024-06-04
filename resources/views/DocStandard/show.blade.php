@@ -2,7 +2,7 @@
 
 @section('sidebar')
 @parent
-    <h1>View Meeting Type</h1>
+    <h1>View Document Standard </h1>
 @endsection
 
 @section('content')

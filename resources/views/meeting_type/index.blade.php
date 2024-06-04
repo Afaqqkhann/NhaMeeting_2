@@ -106,9 +106,6 @@
     }
 </style>
 {!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
-
-
-
 <div class="box  box-primary">
     <div class="box-header">
         <h3 class="box-title">List of {{$page_title or ''}}</h3>
@@ -135,8 +132,10 @@
                     <td>
                         @if ($type->mt_status == 1)
                             Active
+                            
                         @elseif ($type->mt_status == 0)
-                            Inactive
+                        InActive
+                      
                             @endif
                     </td>
                    
@@ -147,7 +146,7 @@
                         </a>
                    
                     
-                        <a class="btn btn-white pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }} " onclick="myConfirm()" title="">
+                        <a class="btn btn-white pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }} "  title="" >
                             <i class=" fa fa-trash-o" ></i>
                         </a>
                          <a class="btn btn-white pull-left" href=" {{ route('meetingType-show.show', ['id' => $type->mt_id]) }}" title="">
@@ -216,12 +215,12 @@ setTimeout(function () {
     }
 }, 2000); 
 });
-function myConfirm(){
-    var result =confirm("Are you sure you want to delete ");
-    if(result ){
-        alert('delete');
-        window.location.href = "url_to_delete.php?action=delete&ID=12";
-    }
+
+function confirmDelete(id, event) {
+event.preventDefault(); // prevent the default link behavior
+if (confirm("Are you sure you want to delete this meeting?")) {
+window.location.href = "{{ route('meeting-delete.destroy', ['id' => '" + id + "']) }}";
+}
 }
 
 
