@@ -13,7 +13,7 @@
            
             <tr>
                 <th>M_A id</th><td>{{ $agendas->ma_id }}</td>
-                <th>Wing Title</th><td>{{ $agendas->wing->action_title }}</td>
+                <th>Wing Title</th><td>{{ $agendas->wing->wing_head }}</td>
                 <th>Meeting Agendas Title</th><td>{{ $agendas->ma_title }}</td>
                 <th>Meeting_id</th><td>{{ $agendas->meeting->meeting_id }}</td>
             </tr>

@@ -142,7 +142,7 @@
 
                     <td>
                         <a class="btn btn-white pull-left" href="{{ route('editmeetingtype.edit', ['id' => $type->mt_id]) }}" title="">
-                            <i class="fa fa-edit "></i>
+                            <i class="fa fa-edit "></i> 
                         </a>
                    
                     
@@ -217,10 +217,10 @@ setTimeout(function () {
 });
 
 function confirmDelete(id, event) {
-event.preventDefault(); // prevent the default link behavior
-if (confirm("Are you sure you want to delete this meeting?")) {
-window.location.href = "{{ route('meeting-delete.destroy', ['id' => '" + id + "']) }}";
-}
+    event.preventDefault(); // prevent the default link behavior
+    if (confirm("Are you sure you want to delete this meeting?")) {
+        window.location.href = "{{ route('meeting-delete.destroy', ['id' => '']) }}" + id;
+    }
 }
 
 

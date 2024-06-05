@@ -70,12 +70,12 @@
                 <div class="form-group">
                     <label for="action_id" class="col-xs-2 control-label">Wing<span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <select name="action_id" id="action_id" class="form-control js-select2 input-sm">
-                            <option value="{{ $meetingAgenda->wing->action_id }}">{{ $meetingAgenda->wing->action_title }}</option>
+                        <select name="wing_id" id="wing_id" class="form-control js-select2 input-sm">
+                            <option value="{{ $meetingAgenda->wing->wing_id }}">{{ $meetingAgenda->wing->wing_head }}</option>
                             @foreach($allagendas as $agenda)
-                                @if($agenda->action_id != $meetingAgenda->wing->action_id)
-                                    <option value="{{ $agenda->action_id }}">
-                                        {{ $agenda->action_title }}
+                                @if($agenda->wing_id != $meetingAgenda->wing->wing_id)
+                                    <option value="{{ $agenda->wing_id }}">
+                                        {{ $agenda->wing_head }}
                                     </option>
                                 @endif
                             @endforeach

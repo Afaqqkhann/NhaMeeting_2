@@ -69,9 +69,9 @@
               <div class="form-group">
                 <label for="meeting_type" class="col-xs-2 control-label">Wing<span class="required" style="color: red">*</span></label>
                 <div class="col-xs-4" class="js-select2 form-control input-sm">
-                <select name="action_id" class="form-control">
+                <select name="wing_id" class="form-control">
                     @foreach($agendas as $agenda)
-                        <option value="{{ $agenda->action_id }}">{{ $agenda->action_title }}</option>
+                        <option value="{{ $agenda->wing_id }}">{{ $agenda->wing_head }}</option>
                     @endforeach
                 </select>
             </div>

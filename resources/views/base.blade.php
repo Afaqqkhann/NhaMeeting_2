@@ -161,12 +161,12 @@
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>
-          <li class=" treeview">
+          {{-- <li class=" treeview">
             <a href="{{url('wing')}}">
               <i class="fa  fa-circle-o" ></i> <span>Wing</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
-          </li>
+          </li> --}}
           <li class=" treeview">
             <a href="{{url('docstandard')}}">
               <i class="fa  fa-circle-o"></i> <span>Document-Standard</span>

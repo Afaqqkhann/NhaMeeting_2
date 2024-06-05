@@ -236,7 +236,7 @@
                     <td> {{ $agenda->ma_title or '' }} </td>
 
                     <td>
-                        {{ $agenda->wing->action_title or '' }}
+                        {{ $agenda->wing->wing_head or '' }}
                     </td>
 
                     <td>

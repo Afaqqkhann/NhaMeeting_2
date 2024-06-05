@@ -19,9 +19,9 @@
             </tr>
             <tr>
                 <th>Upload date</th><td>{{ $docs->md_upload_date }}</td>
-                <th>Agendas pdf</th> <td>
+                <th>MeetingDoc pdf</th> <td>
                     @if($docs->md_edoc)
-                    <a class="btn btn-white pull-left" href="{{ URL::to('public/meeting/'.$docs->md_edoc) }}" title="{{$docs->md_edoc}}">
+                    <a class="btn btn-white pull-left" href="{{ URL::to('public/Meeting-Document/'.$docs->md_edoc) }}" title="{{$docs->md_edoc}}">
                         <i class="fa  fa-file-pdf-o" style="color:#7e0b0b">{{$docs->md_edoc}}</i>
                     </a>
                     @endif

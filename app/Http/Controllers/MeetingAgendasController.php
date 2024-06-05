@@ -52,7 +52,7 @@ class MeetingAgendasController extends Controller
             'ma_status' => 'required|string|max:255',
             'ma_edoc' => 'mimes:jpeg,bmp,png,jpg,xlsx,pdf,html|max:1000',
             'ma_upload_date' => 'required|string|max:255',
-            'action_id' => 'required|integer', // Changed to integer
+            'wing_id' => 'required|integer', // Changed to integer
             'meeting_id' => 'required|integer', // Changed to integer
         ];
         
@@ -70,7 +70,7 @@ class MeetingAgendasController extends Controller
         $meetingagenda->ma_status = $request->ma_status;
         // $meetingagenda->ma_edoc = $request->ma_edoc;
         $meetingagenda->ma_upload_date = $request->ma_upload_date;
-        $meetingagenda->action_id = (int)$request->action_id; 
+        $meetingagenda->wing_id = (int)$request->wing_id; 
         $meetingagenda->meeting_id = (int)$request->meeting_id; 
         if ($request->hasFile('ma_edoc')) {
             $file = $request->file('ma_edoc');
@@ -134,7 +134,7 @@ class MeetingAgendasController extends Controller
             'ma_status' => 'required|string|max:255',
             'ma_edoc' => 'mimes:jpeg,bmp,png,jpg,xlsx,pdf,html|max:1000',
             'ma_upload_date' => 'required|string|max:255',
-            'action_id' => 'required|integer',
+            'wing_id' => 'required|integer',
             'meeting_id' => 'required|integer',
         ];
     
@@ -152,7 +152,7 @@ class MeetingAgendasController extends Controller
         $meetingAgenda->ma_status = $request->ma_status;
         // $meetingAgenda->ma_edoc = $request->ma_edoc;
         $meetingAgenda->ma_upload_date = $request->ma_upload_date;
-        $meetingAgenda->action_id = (int)$request->action_id;
+        $meetingAgenda->wing_id = (int)$request->wing_id;
         $meetingAgenda->meeting_id = (int)$request->meeting_id;
         if ($request->hasFile('ma_edoc')) {
             $file = $request->file('ma_edoc');

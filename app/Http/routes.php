@@ -37,13 +37,13 @@ Route::get('/meeting-delete/{id}', 'MeetingTypeController@destroy')->name('meeti
 Route::get('/meetingtypes/show/{id}', 'MeetingTypeController@show')->name('meetingType-show.show');
 // Route::get('/meeting','MeetingAgendasController@index');
 
-Route::get('wing', 'WingController@index');
-Route::get('wingcreate', 'WingController@create')->name('wingcreate.create');
-Route::post('wingstore', 'WingController@store')->name('wingstore.store');
-Route::get('/editwing/{id}', 'WingController@edit')->name('editwing.edit');
-Route::get('/wing/show/{id}', 'WingController@show')->name('wing.show.show');
-Route::put('/updatewing/{id}', 'WingController@update')->name('editwing.update');
-Route::get('/deletewing/{id}', 'WingController@destroy')->name('wing.destroy');
+// Route::get('wing', 'WingController@index');
+// Route::get('wingcreate', 'WingController@create')->name('wingcreate.create');
+// Route::post('wingstore', 'WingController@store')->name('wingstore.store');
+// Route::get('/editwing/{id}', 'WingController@edit')->name('editwing.edit');
+// Route::get('/wing/show/{id}', 'WingController@show')->name('wing.show.show');
+// Route::put('/updatewing/{id}', 'WingController@update')->name('editwing.update');
+// Route::get('/deletewing/{id}', 'WingController@destroy')->name('wing.destroy');
 
 Route::get('docstandard','DocStandardController@index');
 Route::get('docstandard/create', 'DocStandardController@create')->name('docstandardcreate.create');

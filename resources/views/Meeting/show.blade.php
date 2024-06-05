@@ -234,7 +234,7 @@
                     var editRoute = "{{ route('editmeetingagenda.edit', ['id' => ':agendaId']) }}".replace(':agendaId', agenda.ma_id);
                     var deleteRoute = "{{ route('deletemeetingagenda.delete', ['id' => ':agendaId']) }}".replace(':agendaId', agenda.ma_id);
                     agendasHtml += '<tr>';
-                    agendasHtml += '<td>' + (agenda.wing.action_title || '') + '</td>';
+                    agendasHtml += '<td>' + (agenda.wing.wing_head || '') + '</td>';
                     agendasHtml += '<td>' + (agenda.ma_title || '') + '</td>';
                     agendasHtml += '<td>';
                     if (agenda.ma_edoc) {

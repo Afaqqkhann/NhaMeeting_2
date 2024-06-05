@@ -26,6 +26,6 @@ class Agenda extends Model
 
     public function wing()
     {
-        return $this->belongsTo('App\Models\Wing', 'action_id', 'action_id');
+        return $this->belongsTo('App\Models\Wing', 'action_id', 'wing_id');
     }
 }

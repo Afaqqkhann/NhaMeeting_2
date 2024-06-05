@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wing extends Model
 {
-    protected $table = 'tbl_action';
-    protected $primaryKey = 'action_id';
+    protected $connection='orcl_hrmis';
+    protected $table = 'tbl_wing';
+    protected $primaryKey = 'wing_id';
 
     protected $fillable=[
-        'action_title',
-        'action_status'
+        'wing_head'
     ];
     public $timestamps = false;
 }
