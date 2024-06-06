@@ -13,8 +13,15 @@
           <table class="table table-bordered table-striped dtable dataTables">
             <tr>
                 <th>Meeting Type Title</th><td>{{$meetings->mt_title}}</td>
-                <th>Status</th><td>{{$meetings->mt_status}}</td>
-            </tr>
+                <th>Status</th> <td>
+                    @if ($meetings->mt_status == 1)
+                        Active
+                        
+                    @elseif ($meetings->mt_status == 0)
+                    InActive
+                  
+                        @endif
+                </td>
            
             
            

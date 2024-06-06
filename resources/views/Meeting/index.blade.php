@@ -159,7 +159,7 @@
                         <a class="btn btn-white pull-left" href="{{ route('meetingedit.edit', ['id' => $type->meeting_id]) }}" title="">
                             <i class="fa fa-edit "></i>
                         </a>
-                        <a class="btn btn-white pull-left" href="{{ route('deletemeeting.destroy', ['id' => $type->meeting_id]) }}" title="">
+                        <a class="btn btn-white pull-left delete-button" href="{{ route('deletemeeting.destroy', ['id' => $type->meeting_id]) }}" title="">
                             <i class=" fa fa-trash-o"></i>
                         </a>
                         <a class="btn btn-white pull-left" href="{{ route('meeting.show', ['id' => $type->meeting_id]) }}" title="">
@@ -200,7 +200,7 @@
         $('#meeting_agenda').DataTable({
             dom: 'lrftipB',
             buttons: [
-                'csv', 'excel', 'pdf', 'print'
+                'copy','csv', 'excel', 'pdf', 'print'
             ],
             footerCallback: function(row, data, start, end, display) {
                 var api = this.api();
@@ -360,13 +360,28 @@
             }
         });
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.delete-button');
+
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            var userConfirmed = confirm('Are you sure you want to delete this item?');
+            if (userConfirmed) {
+                window.location.href = button.href; 
+            }
+            
+        });
+    });
+});
     document.addEventListener('DOMContentLoaded', function () {
         setTimeout(function () {
             var flashMessage = document.getElementById('flash-message');
             if (flashMessage) {
                 flashMessage.style.display = 'none';
             }
-        }, 2000); 
+        }, 1000); 
     });
+    
 </script>
 @stop

@@ -137,18 +137,18 @@
                         @if ($type->doc_status == 1)
                             Active
                         @elseif ($type->doc_status == 0)
-                            Inactive
+                            InActive
                             @endif
                     </td>
                    
 
                     <td>
-                        <a class="btn btn-white pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" onclick="confirm()">
+                        <a class="btn btn-white pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" >
                             <i class="fa fa-edit "></i>
                         </a>
                    
                     
-                        <a class="btn btn-white pull-left" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
+                        <a class="btn btn-white pull-left delete-button" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
                         </a>
                         <a class="btn btn-white pull-left" href="{{ route('documentstandard.show', ['id' => $type->doc_id]) }}" title="">
@@ -189,7 +189,7 @@
         $('#meeting_agenda').DataTable({
                         dom: 'lrftipB', 
                         buttons: [
-                            'csv', 'excel', 'pdf', 'print'
+                            'copy','csv', 'excel', 'pdf', 'print'
                         ],
                         pageLength: 10,
                         initComplete: function() {
@@ -214,13 +214,21 @@
             }
         }, 2000); 
     });
-    function confirm(){
-        var x=confirm('are you sure you want to delete ');
-        if(x)
-        return true;
-    else
-    return false;
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.delete-button');
+
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            var userConfirmed = confirm('Are you sure you want to delete this raw?');
+            if (userConfirmed) {
+                window.location.href = button.href; 
+            }
+            
+            
+        });
+    });
+});
 </script>
 
 @stop

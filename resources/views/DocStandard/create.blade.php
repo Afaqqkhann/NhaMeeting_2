@@ -43,7 +43,7 @@
                     <div class="col-xs-4">
                       <select name="doc_status" class="js-select2 form-control input-sm">
                           <option value="1">Active</option>
-                          <option value="0">Inactive</option>
+                          <option value="0">InActive</option>
                       </select>
                   </div>
                 </div>

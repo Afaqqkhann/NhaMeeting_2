@@ -104,6 +104,7 @@
     .table-bordered>tfoot>tr>td {
         border: 1px solid #ded7d7;
     }
+    
 </style>
 {!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
 <div class="box  box-primary">
@@ -146,9 +147,10 @@
                         </a>
                    
                     
-                        <a class="btn btn-white pull-left" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }} "  title="" >
-                            <i class=" fa fa-trash-o" ></i>
+                        <a class="btn btn-white pull-left delete-button" href="{{ route('meeting-delete.destroy', ['id' => $type->mt_id]) }}" title="">
+                            <i class="fa fa-trash-o"></i>
                         </a>
+                        
                          <a class="btn btn-white pull-left" href=" {{ route('meetingType-show.show', ['id' => $type->mt_id]) }}" title="">
                             <i class=" fa fa-eye" ></i>
                         </a>
@@ -189,7 +191,7 @@
 $('#meeting_agenda').DataTable({
                         dom: 'lrftipB', 
                         buttons: [
-                            'csv', 'excel', 'pdf', 'print'
+                            'copy','csv', 'excel', 'pdf', 'print'
                         ],
                         pageLength: 10,
                         initComplete: function() {
@@ -216,12 +218,20 @@ setTimeout(function () {
 }, 2000); 
 });
 
-function confirmDelete(id, event) {
-    event.preventDefault(); // prevent the default link behavior
-    if (confirm("Are you sure you want to delete this meeting?")) {
-        window.location.href = "{{ route('meeting-delete.destroy', ['id' => '']) }}" + id;
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.delete-button');
+
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            var userConfirmed = confirm('Are you sure you want to delete this row?');
+            if (userConfirmed) {
+                window.location.href = button.href; 
+            }
+            
+        });
+    });
+});
 
 
 </script>

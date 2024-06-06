@@ -43,7 +43,7 @@
                     <div class="col-xs-4">
                       <select name="md_status" class="js-select2 form-control input-sm">
                           <option value="1">Active</option>
-                          <option value="0">Inactive</option>
+                          <option value="0">InActive</option>
                       </select>
                   </div>
                 </div>
@@ -61,7 +61,7 @@
                   </div>
               </div>
               <div class="form-group">
-                <label class="col-xs-2 control-label">Meeting Id <span class="required" style="color: red">*</span></label>
+                <label class="col-xs-2 control-label">Meeting ID <span class="required" style="color: red">*</span></label>
                 <div class="col-xs-4">
                     <input type="number" name="meeting_id" class="form-control input-sm" id="title" placeholder="Meeting ID">
                 </div>

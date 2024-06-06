@@ -102,6 +102,7 @@ public function store(Request $request)
         }
            
         return view('Meeting.show', compact('page_title','meeting'));
+       
     }
 
     /**
