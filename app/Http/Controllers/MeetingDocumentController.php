@@ -88,6 +88,8 @@ class MeetingDocumentController extends Controller
     {
         $doc = MeetingDocument::where('meeting_id', $id)->with('doctsandard')->get();
         return response()->json($doc);
+        // $docall = MeetingDocument::where('meeting_id', $id)->with('doctsandard')->get();
+        // return view('meeting_document.create',compact('docall'));
     }
     public function show_2($id) {
         $docs = MeetingDocument::find($id);

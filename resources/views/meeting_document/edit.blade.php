@@ -89,11 +89,16 @@
                     </div>
                 </div> --}}
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">Meeting Doc pdf <span class="required" style="color: red">*</span></label>
+                    <label class="col-xs-2 control-label">Meeting Doc PDF <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="file" name="md_edoc" class="form-control input-sm" id="title" value="{{ $meetingDoc->md_edoc }}">
+                        <!-- Display existing file if available -->
+                        @if(!empty($meetingDoc->md_edoc))
+                            <p>Current file: <a href="{{ asset('path/to/your/files/' . $meetingDoc->md_edoc) }}" target="_blank">{{ $meetingDoc->md_edoc }}</a></p>
+                        @endif
+                        <input type="file" name="md_edoc" class="form-control input-sm" id="title">
                     </div>
                 </div>
+                
 
                 <button type="submit" class="btn btn-primary pull-right">Update</button>
             </form>

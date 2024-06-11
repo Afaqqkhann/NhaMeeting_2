@@ -156,7 +156,7 @@
             </a>
           </li>
           <li class=" treeview">
-            <a href="{{url('meeting_types')}}">
+            <a href="{{url('dashboard/meeting_types')}}">
               <i class="fa  fa-circle-o"></i> <span>Meeting Type</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
@@ -168,13 +168,13 @@
             </a>
           </li> --}}
           <li class=" treeview">
-            <a href="{{url('docstandard')}}">
+            <a href="{{url('dashboard/docstandard')}}">
               <i class="fa  fa-circle-o"></i> <span>Document-Standard</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>
           </li>
           <li class=" treeview">
-            <a href="{{url('meeting')}}">
+            <a href="{{url('dashboard/meeting')}}">
               <i class="fa   fa-circle-o"></i> <span>Meeting</span>
               <!--<i class="fa fa-users"></i> <span>Hajj Draw Special</span> -->
             </a>

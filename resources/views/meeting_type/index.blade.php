@@ -215,7 +215,7 @@ setTimeout(function () {
     if (flashMessage) {
         flashMessage.style.display = 'none';
     }
-}, 2000); 
+}, 1000); 
 });
 
 document.addEventListener('DOMContentLoaded', function() {

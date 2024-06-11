@@ -12,6 +12,7 @@
         
           <table class="table table-bordered table-striped dtable dataTables">
             <tr>
+                <th>Meeting Type ID</th><td>{{$meetings->mt_id}}</td>
                 <th>Meeting Type Title</th><td>{{$meetings->mt_title}}</td>
                 <th>Status</th> <td>
                     @if ($meetings->mt_status == 1)

@@ -28,7 +28,7 @@ Route::get('/meeting_agenda/{id}', 'MeetingAgendasController@destroy')->name('de
 Route::get('agendas/show_2/{id}', 'MeetingAgendasController@show_2')->name('agendas.show_2');
 
 
-Route::get('meeting_types', 'MeetingTypeController@index');
+Route::get('dashboard/meeting_types', 'MeetingTypeController@index');
 Route::get('meeting_types/create', 'MeetingTypeController@create')->name('createmeetingtype.create');
 Route::post('meeting_types/store', 'MeetingTypeController@store')->name('storemeetingtype.store');
 Route::get('/meetingtypes/edit/{id}', 'MeetingTypeController@edit')->name('editmeetingtype.edit');
@@ -45,7 +45,7 @@ Route::get('/meetingtypes/show/{id}', 'MeetingTypeController@show')->name('meeti
 // Route::put('/updatewing/{id}', 'WingController@update')->name('editwing.update');
 // Route::get('/deletewing/{id}', 'WingController@destroy')->name('wing.destroy');
 
-Route::get('docstandard','DocStandardController@index');
+Route::get('dashboard/docstandard','DocStandardController@index');
 Route::get('docstandard/create', 'DocStandardController@create')->name('docstandardcreate.create');
 Route::post('docstandard/store', 'DocStandardController@store')->name('docstandardstore.store');
 Route::get('/docstandard/edit/{id}', 'DocStandardController@edit')->name('docstandard.edit');
@@ -53,7 +53,7 @@ Route::put('/docstandard/update/{id}', 'DocStandardController@update')->name('do
 Route::get('/deletedocument/{id}', 'DocStandardController@destroy')->name('documentstandard.destroy');
 Route::get('/docstandard/show{id}', 'DocStandardController@show')->name('documentstandard.show');
 
-Route::get('meeting','MeetingController@index');
+Route::get('dashboard/meeting','MeetingController@index');
 Route::get('meeting/create', 'MeetingController@create')->name('meetingcreate.create');
 Route::post('meeting/store', 'MeetingController@store')->name('meetingstore.store');
 Route::get('/meeting/edit/{id}', 'MeetingController@edit')->name('meetingedit.edit');

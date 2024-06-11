@@ -12,6 +12,7 @@
         
           <table class="table table-bordered table-striped dtable dataTables">
             <tr>
+                 <th>Doc Type ID</th><td>{{$docs->doc_id}}</td>
                 <th>Doc Type Title</th><td>{{$docs->doc_title}}</td>
                 <th>Status</th> <td>
                     @if ($docs->doc_status == 1)

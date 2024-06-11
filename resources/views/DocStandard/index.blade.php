@@ -143,12 +143,12 @@
                    
 
                     <td>
-                        <a class="btn btn-white pull-left" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" >
+                        <a class="btn btn-white pull-left" style="margin-right: 5px;" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" >
                             <i class="fa fa-edit "></i>
                         </a>
                    
                     
-                        <a class="btn btn-white pull-left delete-button" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
+                        <a class="btn btn-white pull-left delete-button" style="margin-right: 5px;" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
                             <i class=" fa fa-trash-o" ></i>
                         </a>
                         <a class="btn btn-white pull-left" href="{{ route('documentstandard.show', ['id' => $type->doc_id]) }}" title="">

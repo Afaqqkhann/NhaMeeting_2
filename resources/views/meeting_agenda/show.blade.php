@@ -18,7 +18,7 @@
                 <th>Meeting_id</th><td>{{ $agendas->meeting->meeting_id }}</td>
             </tr>
             <tr>
-                <td> <?php echo $agendas->ma_upload_date ?  date('d-m-Y', strtotime($agendas->ma_upload_date)) : '' ?> </td>
+                <th>MeetingAgenda-Upload-Time</th><td> <?php echo $agendas->ma_upload_date ?  date('d-m-Y', strtotime($agendas->ma_upload_date)) : '' ?> </td>
                 <th>Agendas pdf</th> <td>
                     @if($agendas->ma_edoc)
                     <a class="btn btn-white pull-left" href="{{ URL::to('public/agendas/'.$agendas->ma_edoc) }}" title="{{$agendas->meeting_edoc}}">
@@ -26,7 +26,7 @@
                     </a>
                     @endif
                 </td>
-                <th>status</th> <td>
+                <th>Status</th> <td>
                     @if ($agendas->ma_status == 1)
                         Active
                         
