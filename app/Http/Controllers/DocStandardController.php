@@ -61,7 +61,7 @@ class DocStandardController extends Controller
 
     // Redirect to the index page
     Session::flash('success', 'Document standard created successfully');
-    return redirect('/docstandard');
+    return redirect('dashboard/docstandard');
     }
 
     /**
@@ -118,7 +118,7 @@ class DocStandardController extends Controller
 
     // Redirect to the index page
     Session::flash('success', 'Document standard update successfully');
-    return redirect('/docstandard');
+    return redirect('dashboard/docstandard');
     }
 
     /**

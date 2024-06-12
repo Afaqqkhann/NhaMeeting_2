@@ -59,5 +59,5 @@
             </form>
         </div>
     </div>
-    <a href="{{ URL::to('meeting_types') }}" class="btn btn-primary"><i class="fa fa-arrow-circle-left">Back</i></a>
+    <a href="{{ URL::to('dashboard/meeting_types') }}" class="btn btn-primary"><i class="fa fa-arrow-circle-left">Back</i></a>
 @endsection

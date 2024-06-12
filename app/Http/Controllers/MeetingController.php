@@ -82,7 +82,7 @@ public function store(Request $request)
 
     // Redirect to the index page
     Session::flash('success', 'Meeting created successfully');
-    return redirect('/meeting');
+    return redirect('dashboard/meeting');
 }
 
 
@@ -96,13 +96,16 @@ public function store(Request $request)
     {
         $page_title = "Meeting Information";
         $meeting = Meeting::find($id);
-
+        // $meetingall = Meeting::find($id);
+        // return view('meeting_document.create', compact('meeting'));
         if (!$meeting) {
             abort(404); // Or handle the error appropriately
         }
-           
+        
         return view('Meeting.show', compact('page_title','meeting'));
-       
+
+        
+        
     }
 
     /**
@@ -167,7 +170,7 @@ public function store(Request $request)
 
     // Redirect to the index page
     Session::flash('success', 'Meeting update successfully');
-    return redirect('/meeting');
+    return redirect('dashboard/meeting');
     }
 
     /**

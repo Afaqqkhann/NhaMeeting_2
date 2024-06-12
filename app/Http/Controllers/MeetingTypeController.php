@@ -62,7 +62,7 @@ class MeetingTypeController extends Controller
     $meeting_type->save();
 
     Session::flash('success', 'Meeting Type has been added successfully.');
-    return redirect('/meeting_types');
+    return redirect('dashboard/meeting_types');
     }
 
     /**
@@ -121,7 +121,7 @@ class MeetingTypeController extends Controller
 
     // Redirect to the index page
     Session::flash('success', 'Meeting Type has been updated  successfully.');
-    return redirect('/meeting_types');
+    return redirect('dashboard/meeting_types');
     }
 
     /**

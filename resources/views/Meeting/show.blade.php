@@ -186,7 +186,7 @@
                 <div id="agenda-container"  style="background-color: white"></div>
                 <div id="doc-container" style="background-color: white"></div>
 </div>
-<a href="{{ URL::to('meeting') }}" class="btn btn-primary"><i class="fa fa-arrow-circle-left">Back</i></a>
+<a href="{{ URL::to('dashboard/meeting') }}" class="btn btn-primary"><i class="fa fa-arrow-circle-left">Back</i></a>
 {!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
 {!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
 {!! Html::script("https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js") !!}
@@ -264,16 +264,16 @@
                         buttons: [
                             'csv', 'excel', 'pdf', 'print'
                         ],
-                        pageLength: 5,
+                        pageLength: 10,
                         initComplete: function() {
                             $('.dataTables_filter').css({
                                 // 'float': 'right',
-                                'margin-top': '20px',
-                                'margin-right': '20px'
+                                'margin-top': '0px',
+                                'margin-right': '0px'
                             });
                             $('.dataTables_length ').css({
                                 // 'float': 'right',
-                                'margin-top': '40px',
+                                'margin-top': '0px',
                                 // 'margin-right': '20px'
                             });
                         }
@@ -344,16 +344,16 @@
                         buttons: [
                             'csv', 'excel', 'pdf', 'print'
                         ],
-                        pageLength: 5,
+                        pageLength: 10,
                         initComplete: function() {
                             $('.dataTables_filter').css({
                                 // 'float': 'right',
-                                'margin-right': '20px',
-                                'margin-top': '20px',
+                                'margin-right': '0px',
+                                'margin-top': '0px',
                             });
                             $('.dataTables_length ').css({
                                 // 'float': 'right',
-                                'margin-top': '50px',
+                                'margin-top': '0px',
                                 // 'margin-right': '20px'
                             });
                         }

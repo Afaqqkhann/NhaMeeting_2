@@ -39,7 +39,7 @@
            
             
         </table>
-        <a href="{{ URL::to('meeting') }}" class="btn btn-primary">Back</a>
+        <a href="{{ URL::to('dashboard/meeting') }}" class="btn btn-primary">Back</a>
     </div><!-- /.box-body -->
 </div><!-- /.box -->
 

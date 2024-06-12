@@ -30,7 +30,7 @@
          
          
     </div><!-- /.box-body -->
-    <a href="{{URL::to('meeting_types')}}" class="btn btn-primary">Back</a>
+    <a href="{{URL::to('dashboard/meeting_types')}}" class="btn btn-primary">Back</a>
 </div><!-- /.box -->
 
 @stop

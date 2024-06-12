@@ -22,7 +22,7 @@
          
          
     </div><!-- /.box-body -->
-    <a href="{{URL::to('wing')}}" class="btn btn-primary">Back</a>
+    <a href="{{URL::to('dashboard/wing')}}" class="btn btn-primary">Back</a>
 </div><!-- /.box -->
 
 @stop

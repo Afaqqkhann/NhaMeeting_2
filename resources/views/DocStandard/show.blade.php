@@ -31,7 +31,7 @@
          
          
     </div><!-- /.box-body -->
-    <a href="{{URL::to('docstandard')}}" class="btn btn-primary">Back</a>
+    <a href="{{URL::to('dashboard/docstandard')}}" class="btn btn-primary">Back</a>
 </div><!-- /.box -->
 
 @stop

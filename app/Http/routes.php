@@ -37,7 +37,7 @@ Route::get('/meeting-delete/{id}', 'MeetingTypeController@destroy')->name('meeti
 Route::get('/meetingtypes/show/{id}', 'MeetingTypeController@show')->name('meetingType-show.show');
 // Route::get('/meeting','MeetingAgendasController@index');
 
-// Route::get('wing', 'WingController@index');
+// Route::get('dashboard/wing', 'WingController@index');
 // Route::get('wingcreate', 'WingController@create')->name('wingcreate.create');
 // Route::post('wingstore', 'WingController@store')->name('wingstore.store');
 // Route::get('/editwing/{id}', 'WingController@edit')->name('editwing.edit');

@@ -63,7 +63,7 @@
               <div class="form-group">
                 <label class="col-xs-2 control-label">Meeting ID <span class="required" style="color: red">*</span></label>
                 <div class="col-xs-4">
-                    <input type="number" name="meeting_id" class="form-control input-sm" id="title" placeholder="Meeting ID">
+                    <input type="number" name="meeting_id" class="form-control input-sm" placeholder="Meeting ID">
                 </div>
             </div>
             <div class="form-group">
