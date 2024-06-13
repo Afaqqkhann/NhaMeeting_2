@@ -43,8 +43,8 @@
                     <label class="col-xs-2 control-label">Status <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
                         <select name="ma_status" class="js-select2 form-control input-sm">
-                            <option value="1" >Active</option>
-                            <option  value="0">InActive</option>
+                            <option value="1" {{ $meetingAgenda->ma_status == 1 ? 'selected' : '' }}>Active</option>
+                            <option  value="0" {{ $meetingAgenda->ma_status == 0 ? 'selected' : '' }}>InActive</option>
                         </select>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">Upload date <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="date" name="ma_upload_date" class="form-control input-sm" id="title" value="{{ $meetingAgenda->ma_upload_date }}">
+                        <input type="date" name="ma_upload_date" class="form-control input-sm" id="ma_upload_date" value="{{ $meetingAgenda->ma_upload_date ? date('Y-m-d', strtotime($meetingAgenda->ma_upload_date)) : '' }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -90,12 +90,15 @@
                     </div>
                 </div> --}}
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">Meeting Agenda pdf <span class="required" style="color: red">*</span></label>
+                    <label class="col-xs-2 control-label">Meeting Agenda PDF <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="file" name="ma_edoc" class="form-control input-sm" id="title" value="{{ $meetingAgenda->ma_edoc }}">
+                        <!-- Display existing file if available -->
+                        @if(!empty($meetingAgenda->ma_edoc))
+                            <p>Current file: <a href="{{ asset('path/to/your/files/' . $meetingAgenda->ma_edoc) }}" target="_blank" style="color:red;">{{ $meetingAgenda->ma_edoc }}</a></p>
+                        @endif
+                        <input type="file" name="ma_edoc" class="form-control input-sm" id="title">
                     </div>
                 </div>
-
                 <button type="submit" class="btn btn-primary pull-right">Update</button>
             </form>
         </div>

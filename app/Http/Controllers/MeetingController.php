@@ -150,22 +150,19 @@ public function store(Request $request)
     
         $meetings =  Meeting::find($id);
         $meetings->meeting_no = $request->meeting_no;
-        $meetings->meeting_edoc = $request->meeting_edoc;
+        // $meetings->meeting_edoc = $request->meeting_edoc;
         $meetings->meeting_status = $request->meeting_status;
         $meetings->meeting_upload_date = $request->meeting_upload_date;
         $meetings->meeting_type = $request->meeting_type;
         $meetings->meeting_date = $request->meeting_date;
-        $id = $meetings->meeting_id;
-        if($request->hasFile('meeting_edoc')) {
+       
+        if ($request->hasFile('meeting_edoc')) {
             $file = $request->file('meeting_edoc');
-            $new_filename = 'meeting_edoc_' . $id;
-            $path = 'public/meeting_edoc';
-            $path = str_replace('&', '_', $path);
-            $extension = $file->getClientOriginalExtension();
-            $file->move($path, $new_filename . '.' . $extension);
-            $completeUrl = $path . '/' . $new_filename . '.' . $extension;
-            $meetings->meeting_edoc = $completeUrl;
-        }
+              $destinationPath = 'public/meetings';
+              $filename = time() . '_' . $file->getClientOriginalName();
+              $file->move($destinationPath, $filename);
+              $meetings->meeting_edoc = $filename;
+          }
         $meetings->update();
 
     // Redirect to the index page

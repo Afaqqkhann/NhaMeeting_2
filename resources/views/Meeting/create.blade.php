@@ -43,7 +43,7 @@
                     <div class="col-xs-4">
                       <select name="meeting_status" class="js-select2 form-control input-sm">
                           <option value="1">Active</option>
-                          <option value="0">Inactive</option>
+                          <option value="0">InActive</option>
                       </select>
                   </div>
                 </div>
@@ -55,6 +55,12 @@
                       <input type="date" name="meeting_upload_date" class="form-control input-sm" id="title" placeholder="Upload Date">
                   </div>
               </div>
+              <div class="form-group">
+                <label class="col-xs-2 control-label">Meeting Date <span class="required" style="color: red">*</span></label>
+                <div class="col-xs-4">
+                    <input type="date" name="meeting_date" class="form-control input-sm" id="title" placeholder="Meeting Date">
+                </div>
+            </div>
               <div class="form-group">
                 <label for="meeting_type" class="col-xs-2 control-label">Meeting Type<span class="required" style="color: red">*</span></label>
                 <div class="col-xs-4" class="js-select2 form-control input-sm">
@@ -71,12 +77,7 @@
                   <input type="text" name="meeting_no" class="form-control input-sm" id="title" placeholder="Meeting No">
               </div>
           </div>
-            <div class="form-group">
-              <label class="col-xs-2 control-label">Meeting Date <span class="required" style="color: red">*</span></label>
-              <div class="col-xs-4">
-                  <input type="date" name="meeting_date" class="form-control input-sm" id="title" placeholder="Meeting Date">
-              </div>
-          </div>
+            
           <div class="form-group">
             <label class="col-xs-2 control-label">Meeting pdf <span class="required" style="color: red">*</span></label>
             <div class="col-xs-4">

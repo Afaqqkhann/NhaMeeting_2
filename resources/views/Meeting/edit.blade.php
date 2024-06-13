@@ -43,8 +43,8 @@
                     <label class="col-xs-2 control-label">Status <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
                         <select name="meeting_status" class="js-select2 form-control input-sm">
-                            <option value="1" >Active</option>
-                            <option  value="0">InActive</option>
+                            <option value="1" {{ $meetings->meeting_status == 1 ? 'selected' : '' }}>Active</option>
+                            <option  value="0" {{ $meetings->meeting_status == 0 ? 'selected' : '' }}>InActive</option>
                         </select>
                     </div>
                 </div>
@@ -53,13 +53,17 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">Upload date <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="date" name="meeting_upload_date" class="form-control input-sm" id="title" value="{{ $meetings->meeting_upload_date }}">
+                        <input type="date" name="meeting_upload_date" class="form-control input-sm" id="meeting_upload_date" value="{{ $meetings->meeting_upload_date ? date('Y-m-d', strtotime($meetings->meeting_upload_date)) : '' }}">
                     </div>
                 </div>
+                
+                
+                
+                
                 <div class="form-group">
                     <label class="col-xs-2 control-label">Meeting date <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="date" name="meeting_date" class="form-control input-sm" id="title" value="{{ $meetings->meeting_date }}">
+                        <input type="date" name="meeting_date" class="form-control input-sm" id="title" value="{{ $meetings->meeting_date ? date('Y-m-d', strtotime($meetings->meeting_date)) : '' }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -84,9 +88,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">Meeting_pdf <span class="required" style="color: red">*</span></label>
+                    <label class="col-xs-2 control-label">Meeting PDF <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="file" name="meeting_edoc" class="form-control input-sm" id="title" value="{{ $meetings->meeting_edoc }}">
+                        @if (!empty($meetings->meeting_edoc))
+                            <p>Current file: <a href="{{ asset('path/to/your/files/' . $meetings->meeting_edoc) }}" target="_blank" style="color: red;">{{ $meetings->meeting_edoc }}</a></p>
+                        @endif
+                        <input type="file" name="meeting_edoc" class="form-control input-sm" id="meeting_edoc">
                     </div>
                 </div>
 

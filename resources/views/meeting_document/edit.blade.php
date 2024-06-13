@@ -43,8 +43,8 @@
                     <label class="col-xs-2 control-label">Status <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
                         <select name="md_status" class="js-select2 form-control input-sm">
-                            <option value="1" >Active</option>
-                            <option  value="0">InActive</option>
+                            <option value="1" {{ $meetingDoc->md_status == 1 ? 'selected' : '' }}>Active</option>
+                            <option  value="0" {{ $meetingDoc->md_status == 0 ? 'selected' : '' }}>InActive</option>
                         </select>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <label class="col-xs-2 control-label">Upload date <span class="required" style="color: red">*</span></label>
                     <div class="col-xs-4">
-                        <input type="date" name="md_upload_date" class="form-control input-sm" id="title" value="{{ $meetingDoc->md_upload_date }}">
+                        <input type="date" name="md_upload_date" class="form-control input-sm" id="ma_upload_date" value="{{ $meetingDoc->md_upload_date ? date('Y-m-d', strtotime($meetingDoc->md_upload_date)) : '' }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -93,7 +93,7 @@
                     <div class="col-xs-4">
                         <!-- Display existing file if available -->
                         @if(!empty($meetingDoc->md_edoc))
-                            <p>Current file: <a href="{{ asset('path/to/your/files/' . $meetingDoc->md_edoc) }}" target="_blank">{{ $meetingDoc->md_edoc }}</a></p>
+                            <p>Current file: <a href="{{ asset('path/to/your/files/' . $meetingDoc->md_edoc) }}" target="_blank" style="color:red;">{{ $meetingDoc->md_edoc }}</a></p>
                         @endif
                         <input type="file" name="md_edoc" class="form-control input-sm" id="title">
                     </div>

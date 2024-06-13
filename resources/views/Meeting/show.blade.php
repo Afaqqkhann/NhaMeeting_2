@@ -246,7 +246,7 @@
                     agendasHtml += '</td>';
                     agendasHtml += '<td>';
                     agendasHtml += '<a href="' + editRoute + '" class="btn btn-white"><i class="fa fa-edit"></i></a>';
-                    agendasHtml += '<a href="' + deleteRoute + '" class="btn btn-white delete-button"><i class="fa fa-trash-o"></i></a>';
+                    agendasHtml += '<a href="' + deleteRoute + '" class="btn btn-white pull-left delete-button" onclick="return confirm(\'Are you sure you want to delete this document?\');"><i class="fa fa-trash-o"></i></a>';
                     agendasHtml += '<a href="' + showRoute+ '" class="btn" btn-white><i class="fa fa-eye"></i></a>';
                     agendasHtml += '</td></tr>';
     });
@@ -326,7 +326,8 @@
                     docHtml += '</td>';
                     docHtml += '<td>';
                     docHtml += '<a href="' + editRoute1 + '" class="btn btn-white"><i class="fa fa-edit"></i></a>';
-                    docHtml += '<a href="' + deleteRoute1 + '" class="btn btn-white delete-button"><i class="fa fa-trash-o"></i></a>';
+                    docHtml += '<a href="' + deleteRoute1 + '" class="btn btn-white pull-left delete-button" onclick="return confirm(\'Are you sure you want to delete this document?\');"><i class="fa fa-trash-o"></i></a>';
+
                     docHtml += '<a href="' + showRoute1 + '" class="btn btn-white"><i class="fa fa-eye"></i></a>';
                     docHtml += '</td>';
                     docHtml += '</tr>';
@@ -387,11 +388,9 @@
             if (userConfirmed) {
                 window.location.href = button.href; 
             }
-
             
         });
     });
-    
 });
 
 </script>

@@ -18,7 +18,7 @@
                 <th>Meeting_id</th><td>{{ $docs->meeting->meeting_id }}</td>
             </tr>
             <tr>
-                <th>Meeting Upload-Time</th><td> <?php echo $docs->md_upload_date ?  date('d-m-Y', strtotime($docs->mt_upload_date)) : '' ?> </td>
+                <th>Meeting Upload-Time</th><td> <?php echo $docs->md_upload_date ?  date('d-m-Y', strtotime($docs->md_upload_date)) : '' ?> </td>
                 <th>MeetingDoc pdf</th> <td>
                     @if($docs->md_edoc)
                     <a class="btn btn-white pull-left" href="{{ URL::to('public/Meeting-Document/'.$docs->md_edoc) }}" title="{{$docs->md_edoc}}">

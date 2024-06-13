@@ -144,7 +144,7 @@
                         @if ($type->meeting_status == 1)
                             Active
                         @elseif ($type->meeting_status == 0)
-                            Inactive
+                            InActive
                             @endif
                     </td>
 

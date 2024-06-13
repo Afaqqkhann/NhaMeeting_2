@@ -57,7 +57,7 @@
                 <div class="form-group">
                   <label class="col-xs-2 control-label">Upload Date <span class="required" style="color: red">*</span></label>
                   <div class="col-xs-4">
-                      <input type="date" name="md_upload_date" class="form-control input-sm" id="title" placeholder="Upload Date">
+                      <input type="date" name="md_upload_date" class="form-control input-sm" id="title" placeholder="Agenda Upload Date">
                   </div>
               </div>
               <div class="form-group">
