@@ -104,6 +104,72 @@
     .table-bordered>tfoot>tr>td {
         border: 1px solid #ded7d7;
     }
+    .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0, 0, 0); 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; 
+    padding: 10px;
+    border: 1px solid #888;
+    width: 40%; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.modal-button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-button.confirm {
+    background-color: #4CAF50; 
+    color: white;
+}
+
+.modal-button.confirm:hover {
+    background-color: #45a049;
+}
+
+.modal-button.cancel {
+    background-color: #f44336; 
+    color: white;
+}
+
+.modal-button.cancel:hover {
+    background-color: #da190b;
+}
 </style>
 {!! Html::style('https://cdn.datatables.net/buttons/1.1.0/css/buttons.dataTables.min.css') !!}
 
@@ -144,15 +210,16 @@
 
                     <td>
                         <a class="btn btn-white pull-left" style="margin-right: 5px;" href="{{ route('docstandard.edit', ['id' => $type->doc_id]) }}" >
-                            <i class="fa fa-edit "></i>
+                            <i class="fa fa-edit " style="color: black;"></i>
                         </a>
                    
                     
                         <a class="btn btn-white pull-left delete-button" style="margin-right: 5px;" href="{{ route('documentstandard.destroy', ['id' => $type->doc_id]) }}" title="">
-                            <i class=" fa fa-trash-o" ></i>
+                            <i class=" fa fa-trash-o" style="color: black;"></i>
                         </a>
+                        
                         <a class="btn btn-white pull-left" href="{{ route('documentstandard.show', ['id' => $type->doc_id]) }}" title="">
-                            <i class=" fa fa-eye" ></i>
+                            <i class=" fa fa-eye" style="color: black;" ></i>
                         </a>
                     </td>
 
@@ -163,6 +230,14 @@
         </table>
     </div><!-- /.box-body -->
 </div><!-- /.box -->
+<div id="customModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Are you sure you want to delete this row?</p>
+        <button id="confirmDelete" class="modal-button confirm">Yes</button>
+        <button id="cancelDelete" class="modal-button cancel">No</button>
+    </div>
+</div>
 <a href="{{ URL::to('dashboard') }}" class="btn btn-primary"><i class="fa fa-arrow-circle-left">Back</i></a>
 {!! Html::script("https://code.jquery.com/jquery-1.11.3.min.js") !!}
 {!! Html::script("https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js") !!}
@@ -216,16 +291,33 @@
     });
     document.addEventListener('DOMContentLoaded', function() {
     var deleteButtons = document.querySelectorAll('.delete-button');
+    var modal = document.getElementById("customModal");
+    var closeModal = document.getElementsByClassName("close")[0];
+    var confirmDelete = document.getElementById("confirmDelete");
+    var cancelDelete = document.getElementById("cancelDelete");
 
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function(event) {
             event.preventDefault(); 
-            var userConfirmed = confirm('Are you sure you want to delete this raw?');
-            if (userConfirmed) {
-                window.location.href = button.href; 
-            }
-            
-            
+            modal.style.display = "block";
+
+            confirmDelete.onclick = function() {
+                window.location.href = button.href;
+            };
+
+            cancelDelete.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            closeModal.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
         });
     });
 });

@@ -63,9 +63,10 @@
               <div class="form-group">
                 <label class="col-xs-2 control-label">Meeting ID <span class="required" style="color: red">*</span></label>
                 <div class="col-xs-4">
-                    <input type="number" name="meeting_id" class="form-control input-sm" placeholder="Meeting ID">
+                    <input type="number" name="meeting_id" class="form-control input-sm" id="modal-meeting-id" placeholder="Meeting ID">
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="meeting_document" class="col-xs-2 control-label">Doc<span class="required" style="color: red">*</span></label>
                 <div class="col-xs-4" class="js-select2 form-control input-sm">

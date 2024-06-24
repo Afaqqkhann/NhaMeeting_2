@@ -304,7 +304,8 @@
                 type: 'GET',
                 success: function(data) {
                     var docHtml = '<div style="text-align: right; margin-bottom: 10px;">';
-                    docHtml += '<a href="{{route('createmeetingdocument.create')}}" class="btn btn-primary " style="margin-top: 10px;"><i class="fa fa-user-plus "></i>Add-Document</a>';
+                        docHtml += '<a href="{{route('createmeetingdocument.create')}}" class="btn btn-primary add-document" data-meeting-id="' + meetingId + '" style="margin-top: 10px;"><i class="fa fa-user-plus "></i>Add-Document</a>';
+
                     docHtml += '</div>';
                     docHtml += '<table class="table table-bordered" id="doc-table">';
                     docHtml += '<thead style="background-color: #D1D1D1;"><tr><th>Doc</th><th>Meeting-Doc-Title</th><th>EDoc</th><th>Action</th></tr></thead>';
@@ -325,10 +326,10 @@
                     }
                     docHtml += '</td>';
                     docHtml += '<td>';
-                    docHtml += '<a href="' + editRoute1 + '" class="btn btn-white"><i class="fa fa-edit"></i></a>';
-                    docHtml += '<a href="' + deleteRoute1 + '" class="btn btn-white pull-left delete-button" onclick="return confirm(\'Are you sure you want to delete this document?\');"><i class="fa fa-trash-o"></i></a>';
+                    docHtml += '<a href="' + editRoute1 + '" class="btn btn-white" style="color:black;"><i class="fa fa-edit"></i></a>';
+                    docHtml += '<a href="' + deleteRoute1 + '" class="btn btn-white pull-left delete-button"style="color:black;" onclick="return confirm(\'Are you sure you want to delete this document?\');"><i class="fa fa-trash-o"></i></a>';
 
-                    docHtml += '<a href="' + showRoute1 + '" class="btn btn-white"><i class="fa fa-eye"></i></a>';
+                    docHtml += '<a href="' + showRoute1 + '" class="btn btn-white" style="color:black;"><i class="fa fa-eye"></i></a>';
                     docHtml += '</td>';
                     docHtml += '</tr>';
                     });
